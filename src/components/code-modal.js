@@ -1,5 +1,6 @@
 /**
  * Infrastructure as Code (IaC) Export Modal Component
+ * Synthesizes Terraform HCL, Kubernetes Helm Charts, AWS CloudFormation, Docker Compose, and TypeScript.
  */
 
 import { IaCGenerator } from '../canvas/iac-generator.js';
@@ -34,15 +35,17 @@ export class CodeModal {
     }
 
     // Modal tabs
-    const tabs = this.modalEl.querySelectorAll('.tab-btn');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        this.activeLang = tab.getAttribute('data-lang');
-        this.updateCode();
+    if (this.modalEl) {
+      const tabs = this.modalEl.querySelectorAll('.tab-btn');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          this.activeLang = tab.getAttribute('data-lang');
+          this.updateCode();
+        });
       });
-    });
+    }
 
     // Copy to clipboard
     if (copyBtn) {
@@ -67,12 +70,16 @@ export class CodeModal {
   }
 
   open() {
-    this.modalEl.classList.remove('hidden');
-    this.updateCode();
+    if (this.modalEl) {
+      this.modalEl.classList.remove('hidden');
+      this.updateCode();
+    }
   }
 
   close() {
-    this.modalEl.classList.add('hidden');
+    if (this.modalEl) {
+      this.modalEl.classList.add('hidden');
+    }
   }
 
   updateCode() {
@@ -87,17 +94,25 @@ export class CodeModal {
         code = IaCGenerator.generateTerraform(nodes, connections);
         filename = 'main.tf';
         break;
+      case 'helm':
+        code = IaCGenerator.generateHelmChart(nodes, connections);
+        filename = 'values.yaml';
+        break;
+      case 'cloudformation':
+        code = IaCGenerator.generateCloudFormation(nodes, connections);
+        filename = 'cloudformation.yaml';
+        break;
       case 'docker':
         code = IaCGenerator.generateDockerCompose(nodes, connections);
         filename = 'docker-compose.yml';
         break;
-      case 'kubernetes':
-        code = IaCGenerator.generateKubernetes(nodes, connections);
-        filename = 'k8s-manifests.yaml';
-        break;
       case 'typescript':
         code = IaCGenerator.generateTypeScript(nodes, connections);
         filename = 'architecture.ts';
+        break;
+      default:
+        code = IaCGenerator.generateTerraform(nodes, connections);
+        filename = 'main.tf';
         break;
     }
 
