@@ -65,21 +65,47 @@ OmniFlow Studio implements the complete W3C Web Machine Learning Community Group
 
 ---
 
-## 5. Testing Instructions for Judges
+## 5. Testing & Access Guide for Judges
 
-### Option A: Google Chrome 149+ with WebMCP Flag
-1. Open Google Chrome and navigate to `chrome://flags/#enable-webmcp-testing`.
-2. Enable the flag and restart Chrome.
-3. Open the live URL or `http://localhost:3000`.
-4. Open Chrome DevTools (`F12`) to inspect tools or verify via console: `document.modelContext.listTools()`.
+> **Zero Restrictions & Free Access**: OmniFlow Studio is entirely open, public, and requires NO login credentials, credit card, or paywall. It runs seamlessly on any standard desktop or mobile web browser.
 
-### Option B: ChatGPT In-App Browser
-1. Open the deployed application URL within ChatGPT's in-app browser.
-2. Ask ChatGPT: *"Use the WebMCP tools on this page to build an AI RAG pipeline, test traffic under 8k RPS, and generate Terraform manifests."*
+### Verification Methods for Judges
 
-### Option C: Universal Built-in Co-Pilot & WebMCP HUD
-1. Click **Agent Co-Pilot** in the top right to test multi-step tool calling flows in any browser.
-2. Click **WebMCP HUD** to inspect schemas and execute individual tools manually.
+#### Method 1: Direct Live Web App (Instant in any Browser)
+1. Open the provided live deployment URL (or `http://localhost:3000` locally).
+2. The initial **Enterprise E-Commerce Microservices Blueprint** loads immediately on the visual canvas.
+3. Click the **WebMCP HUD** button in the top right to open the DevTools Inspector and view all 16 registered WebMCP tools, schemas, and live execution telemetry.
+4. Click **Agent Co-Pilot** and click any of the prompt chips (e.g. `🚀 Build AI RAG Pipeline` or `🛡️ Security Audit & Fix`) to watch the multi-step agent flow execute in real time.
+
+#### Method 2: Google Chrome 149+ with WebMCP Testing Flag
+1. Open Chrome and go to `chrome://flags/#enable-webmcp-testing`.
+2. Select **Enabled** and restart Chrome.
+3. Open the live URL.
+4. Open Chrome DevTools (`F12` or `Ctrl+Shift+I`) → Console:
+   ```javascript
+   // List all exposed tools discovered by Chrome
+   const tools = await document.modelContext.listTools();
+   console.log(tools);
+
+   // Programmatically execute a WebMCP tool
+   await document.modelContext.executeTool('simulate_traffic', { rps: 10000 });
+   ```
+
+#### Method 3: ChatGPT In-App Browser / ChatGPT Sites
+1. Open the live site URL inside ChatGPT's in-app browser (on desktop or mobile).
+2. ChatGPT discovers the registered `document.modelContext` tools automatically.
+3. Prompt ChatGPT:
+   > *"Build a high-frequency FinTech payment hub with Kafka, Vault HSM, and PostgreSQL, stress-test it under 10k RPS, and generate production Terraform manifests."*
+4. ChatGPT will invoke the in-browser tools to construct and simulate the architecture directly in the active browser tab.
+
+#### Method 4: Local Setup from Source
+```bash
+git clone https://github.com/your-username/omniflow-studio-webmcp.git
+cd omniflow-studio-webmcp
+npm install
+npm run dev
+# App is live on http://localhost:3000
+```
 
 ---
 
