@@ -9,6 +9,7 @@ import { AgentCopilot } from './components/agent-copilot.js';
 import { CodeModal } from './components/code-modal.js';
 import { AuditPanel } from './components/audit-panel.js';
 import { NodeInspector } from './components/node-inspector.js';
+import { SwarmConsensus } from './components/swarm-consensus.js';
 import { DeclarativeFormsManager } from './components/declarative-forms.js';
 import { ARCHITECTURE_TEMPLATES } from './canvas/templates.js';
 import { CostEngine } from './canvas/cost-engine.js';
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvasEl = document.getElementById('architecture-canvas');
   const canvas = new CanvasEngine(canvasEl);
 
-  // 2. Register WebMCP Tools on document.modelContext
+  // 2. Register 24 WebMCP Tools on document.modelContext
   registerAllWebMCPTools(canvas);
 
   // 3. Initialize UI Components & Drawers
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const codeModal = new CodeModal(canvas);
   const auditPanel = new AuditPanel(canvas, agent);
   const nodeInspector = new NodeInspector(canvas);
+  const swarmConsensus = new SwarmConsensus(canvas, agent);
   const declarativeForms = new DeclarativeFormsManager(canvas);
 
   // 4. Initialize Top Bar Controls
@@ -73,11 +75,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Auto Layout Button
-  const autoLayoutBtn = document.getElementById('btn-layout-auto');
-  if (autoLayoutBtn) {
-    autoLayoutBtn.addEventListener('click', () => {
-      canvas.applyAutoLayout('hierarchical');
+  // Chaos Lab Dropdown Menu
+  const chaosBtn = document.getElementById('btn-chaos-menu-toggle');
+  const chaosDropdown = document.getElementById('chaos-dropdown');
+
+  if (chaosBtn && chaosDropdown) {
+    chaosBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      chaosDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+      chaosDropdown.classList.add('hidden');
+    });
+
+    document.getElementById('btn-chaos-ddos')?.addEventListener('click', () => {
+      webmcp.executeTool('inject_ddos_attack', { rps: 50000 });
+      chaosDropdown.classList.add('hidden');
+    });
+
+    document.getElementById('btn-chaos-kill')?.addEventListener('click', () => {
+      webmcp.executeTool('kill_random_node', {});
+      chaosDropdown.classList.add('hidden');
+    });
+
+    document.getElementById('btn-chaos-gpu-oom')?.addEventListener('click', () => {
+      webmcp.executeTool('simulate_gpu_oom', {});
+      chaosDropdown.classList.add('hidden');
+    });
+
+    document.getElementById('btn-chaos-heal')?.addEventListener('click', () => {
+      webmcp.executeTool('auto_heal_cluster', {});
+      chaosDropdown.classList.add('hidden');
     });
   }
 

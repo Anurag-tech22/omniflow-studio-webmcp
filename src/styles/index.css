@@ -131,7 +131,7 @@ html, body {
 .nav-left, .nav-center, .nav-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .brand-badge {
@@ -361,6 +361,17 @@ html, body {
   box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
 }
 
+.btn-purple {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: #ffffff;
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.btn-purple:hover {
+  background: linear-gradient(135deg, #6d28d9, #9333ea);
+  box-shadow: var(--glow-purple);
+}
+
 .btn-glow {
   box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
 }
@@ -383,16 +394,6 @@ html, body {
 
 .btn-emerald:hover {
   background: rgba(16, 185, 129, 0.25);
-}
-
-.btn-icon {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: var(--radius-sm);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .btn-icon-sm {
@@ -786,7 +787,7 @@ html, body {
 .canvas-empty-state p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
 .empty-quick-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
-/* Node Inspector Drawer (Apple/Linear style) */
+/* Node Inspector Drawer */
 .node-inspector-drawer {
   position: absolute;
   top: 16px;
@@ -1055,6 +1056,54 @@ html, body {
 #agent-user-prompt:focus { border-color: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan-dim); }
 .input-actions { display: flex; align-items: center; justify-content: space-between; }
 .hint-text { font-size: 0.68rem; color: var(--text-muted); }
+
+/* Swarm Consensus Debate Visualizer */
+.swarm-debate-body {
+  padding: 16px 20px;
+  max-height: 480px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #05070a;
+}
+
+.debate-agent-card {
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: debate-pop var(--transition-fast) forwards;
+}
+
+@keyframes debate-pop {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.debate-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.debate-action-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.debate-body {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
 
 /* WebMCP DevTools HUD */
 .hud-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); background: rgba(0, 0, 0, 0.2); }

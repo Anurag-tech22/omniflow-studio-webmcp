@@ -1,18 +1,24 @@
 # WebMCP Challenge — Official Submission Document
 
-## Project Name
-**OmniFlow Studio — Human-Agent Collaborative Visual Systems & Cloud Architecture Studio**
-
-## Tagline
-Co-create, stress-simulate, audit, and synthesize production cloud architectures collaboratively with AI agents via the open WebMCP standard.
+## 1. Project Title
+**OmniFlow Studio — Human-Agent Collaborative Visual Systems Studio (WebMCP)**
 
 ---
 
-## 1. Why is this use case a strong fit for WebMCP?
+## 2. Short Tagline / Elevator Pitch
+A world-class visual cloud architecture and distributed systems studio where humans and AI agent swarms co-create, simulate, chaos-test, audit, and synthesize production infrastructure in real-time through the open WebMCP standard.
 
-Distributed cloud architectures, microservice design, and AI inference pipelines are inherently spatial, interactive, and stateful.
+---
 
-Traditional backend APIs and remote MCP servers cannot observe the active browser tab's viewport, live canvas selections, temporary layout nodes, or real-time simulation particle flows. At the same time, relying on vision-based screenshot parsing or simulated mouse clicks produces slow, fragile, and error-prone agent interactions.
+## 3. What problem does your project solve?
+Designing, benchmarking, and maintaining modern cloud architectures (e.g. multi-tier microservices, NVIDIA GPU superclusters, and autonomous AI swarms) is notoriously difficult. Engineers struggle with silent security vulnerabilities (SPOFs, unauthenticated ingress), catastrophic cloud bill overruns, and fragile manual IaC authoring.
+
+Traditional AI coding assistants are "blind and trapped in text boxes"—they cannot perceive visual graph relationships, lack real-time access to the canvas DOM, and resort to clumsy mouse coordinate simulations.
+
+**OmniFlow Studio solves this by turning the web browser into a shared neural canvas**:
+1. It exposes **24 enterprise WebMCP tools** directly onto `document.modelContext`.
+2. Humans design and tune nodes via spatial manipulation and an interactive **Node Inspector**.
+3. Specialized AI agent swarms (Architect, SecOps, FinOps, Chaos Daemon) debate via a **Swarm Consensus Protocol**, stress-test with 50k RPS traffic floods, auto-remediate vulnerabilities, and compile production **Terraform, Kubernetes Helm, and CloudFormation** configurations.
 
 **WebMCP bridges this gap perfectly**:
 - It allows the webpage itself to expose structured, strongly typed tools (`create_node`, `connect_nodes`, `batch_build_architecture`, `simulate_traffic`, `run_security_audit`, `generate_infrastructure_code`) directly on `document.modelContext`.
