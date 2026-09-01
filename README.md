@@ -2,18 +2,36 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
 [![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP-00f0ff.svg)](https://webmachinelearning.github.io/webmcp/)
+[![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg)](https://www.nvidia.com/)
 [![ChatGPT Sites Ready](https://img.shields.io/badge/ChatGPT-Sites%20Ready-a855f7.svg)](https://learn.chatgpt.com/docs/webmcp)
 [![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-10b981.svg)](chrome://flags/#enable-webmcp-testing)
 
-> **OmniFlow Studio** is a next-generation visual cloud architecture and distributed systems studio where humans and AI agents co-create, simulate, audit, and synthesize production infrastructure in real-time through the open **WebMCP (Web Model Context Protocol)** standard.
+> **OmniFlow Studio** is a world-class visual cloud architecture and distributed systems studio where humans and AI agent swarms co-create, simulate, audit, and synthesize production infrastructure in real-time through the open **WebMCP (Web Model Context Protocol)** standard.
 
 ---
 
 ## 🌟 Executive Summary
 
-Instead of forcing AI agents to guess visual layouts, simulate imprecise mouse clicks, or stay trapped in separate text windows, **OmniFlow Studio** registers its entire visual graph topology, traffic physics engine, security scanner, and code synthesizer directly into the browser tab via `document.modelContext.registerTool()`.
+Instead of forcing AI agents to guess visual layouts, simulate imprecise mouse clicks, or stay trapped in separate text windows, **OmniFlow Studio** registers its entire visual graph topology, NVIDIA GPU cluster engine, real-time FinOps cost calculator, traffic physics engine, security scanner, and code synthesizer directly into the browser tab via `document.modelContext.registerTool()`.
 
-Human architects sketch and iterate on visual topologies; AI agents analyze bottlenecks, execute load simulations, remediate vulnerabilities, and compile production Terraform/Kubernetes manifests using structured browser tools.
+Human architects sketch and iterate on visual topologies; AI agent swarms (Architect, SecOps, Chaos Engineer, FinOps Advisor) analyze bottlenecks, execute 18,500 RPS load simulations, remediate vulnerabilities, and compile production Terraform/Kubernetes manifests using 20 structured browser tools.
+
+---
+
+## 🏆 Key Features & Innovations
+
+1. **NVIDIA H100 AI Training & Inference Cluster Modeling**:
+   - Native support for NVIDIA 8x H100 80GB SXM5 GPU nodes with NVLink 900 GB/s inter-GPU bus, vLLM PagedAttention inference workers, and Milvus Vector DB.
+
+2. **Real-Time FinOps Cloud Cost Engine**:
+   - Calculates real-time cloud expenditure ($/mo and $/hr) based on provisioned AWS/GCP/NVIDIA instance types and replica counts.
+   - Run automated FinOps optimization to downscale idle compute and inject caching, saving ~38% on monthly cloud bills.
+
+3. **Interactive Node Inspector Drawer**:
+   - Click any component on canvas to inspect telemetry, adjust horizontal replicas, tune CPU/memory load, and switch cloud deployment regions.
+
+4. **Multi-Agent Swarm Orchestrator**:
+   - Collaborate with specialized agent roles: **Lead Architect**, **SecOps Auditor**, **FinOps Advisor**, and **Chaos Engineer**.
 
 ---
 

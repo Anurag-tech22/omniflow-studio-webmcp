@@ -1,12 +1,13 @@
 /**
- * WebMCP Tool Definitions & Registration
- * Exposes 14 comprehensive, non-trivial tools to AI agents via document.modelContext
+ * WebMCP Tool Definitions & Registration (World-Class Suite)
+ * Exposes 18 comprehensive, non-trivial tools to AI agents via document.modelContext
  */
 
 import { webmcp } from './webmcp-core.js';
 import { ARCHITECTURE_TEMPLATES } from '../canvas/templates.js';
 import { SecurityScanner } from '../canvas/security-scanner.js';
 import { IaCGenerator } from '../canvas/iac-generator.js';
+import { CostEngine } from '../canvas/cost-engine.js';
 
 export function registerAllWebMCPTools(canvasEngine) {
   console.log('[WebMCP] Registering imperative tools on document.modelContext...');
@@ -14,7 +15,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   // 1. inspect_canvas_state (Read Only)
   document.modelContext.registerTool({
     name: 'inspect_canvas_state',
-    description: 'Inspect the complete current graph topology, node health metrics, CPU/memory usage, and connection links on the visual canvas.',
+    description: 'Inspect the complete current graph topology, node health metrics, CPU/memory usage, replica counts, and connection links on the visual canvas.',
     readOnlyHint: true,
     inputSchema: {
       type: 'object',
@@ -28,6 +29,7 @@ export function registerAllWebMCPTools(canvasEngine) {
         status: n.status,
         cpu: n.cpu,
         memory: n.memory,
+        replicas: n.replicas || 1,
         x: n.x,
         y: n.y
       }));
@@ -41,11 +43,14 @@ export function registerAllWebMCPTools(canvasEngine) {
         throughput: c.throughput
       }));
 
+      const costData = CostEngine.calculate(canvasEngine.nodes);
+
       return {
         totalNodes: canvasEngine.nodes.length,
         totalConnections: canvasEngine.connections.length,
         isSimulatingTraffic: canvasEngine.simulator.isRunning,
         currentRps: canvasEngine.simulator.currentRps,
+        estimatedMonthlyCost: `$${costData.monthlyTotal}/mo`,
         nodes: nodesSummary,
         connections: connSummary
       };
@@ -55,20 +60,21 @@ export function registerAllWebMCPTools(canvasEngine) {
   // 2. create_node
   document.modelContext.registerTool({
     name: 'create_node',
-    description: 'Add a cloud architecture component to the visual canvas (gateway, microservice, database, cache, queue, AI model, vector DB, auth provider, storage, CDN).',
+    description: 'Add an architecture component to the visual canvas (gateway, microservice, database, cache, queue, AI model, NVIDIA GPU cluster, vector DB, auth, storage, CDN).',
     inputSchema: {
       type: 'object',
       properties: {
-        label: { type: 'string', description: 'Name of the component (e.g. "Order Processing Service", "Redis Cluster")' },
+        label: { type: 'string', description: 'Name of the component' },
         type: { 
           type: 'string', 
-          enum: ['gateway', 'service', 'serverless', 'ai_model', 'database', 'vector_db', 'cache', 'queue', 'blob_store', 'auth', 'third_party', 'cdn'],
-          description: 'Type of component'
+          enum: ['gateway', 'service', 'serverless', 'ai_model', 'gpu_cluster', 'database', 'vector_db', 'cache', 'queue', 'blob_store', 'auth', 'third_party', 'cdn'],
+          description: 'Type of cloud or compute component'
         },
-        x: { type: 'number', description: 'X coordinate on canvas (optional)' },
-        y: { type: 'number', description: 'Y coordinate on canvas (optional)' },
-        cpu: { type: 'number', description: 'Initial CPU load percentage (0-100)' },
-        memory: { type: 'number', description: 'Initial Memory load percentage (0-100)' }
+        x: { type: 'number', description: 'X coordinate' },
+        y: { type: 'number', description: 'Y coordinate' },
+        replicas: { type: 'number', description: 'Instance replica count (e.g. 1, 3, 8)' },
+        cpu: { type: 'number', description: 'CPU load %' },
+        memory: { type: 'number', description: 'Memory load %' }
       },
       required: ['label', 'type']
     },
@@ -78,10 +84,12 @@ export function registerAllWebMCPTools(canvasEngine) {
         type: params.type,
         x: params.x !== undefined ? params.x : Math.floor(100 + Math.random() * 400),
         y: params.y !== undefined ? params.y : Math.floor(100 + Math.random() * 300),
+        replicas: params.replicas || (params.type === 'service' ? 3 : 1),
         cpu: params.cpu,
         memory: params.memory
       });
 
+      updateFinOpsUI(canvasEngine);
       canvasEngine.playSfx(480, 'triangle', 0.08);
       return { success: true, node: newNode };
     }
@@ -90,7 +98,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   // 3. delete_node
   document.modelContext.registerTool({
     name: 'delete_node',
-    description: 'Delete an architecture node from the canvas by ID, removing all its inbound and outbound connections.',
+    description: 'Delete an architecture node from the canvas by ID, removing its connected links.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -100,41 +108,60 @@ export function registerAllWebMCPTools(canvasEngine) {
     },
     execute: async ({ id }) => {
       const target = canvasEngine.nodes.find(n => n.id === id);
-      if (!target) {
-        throw new Error(`Node with ID "${id}" not found on canvas.`);
-      }
+      if (!target) throw new Error(`Node with ID "${id}" not found.`);
       canvasEngine.deleteNode(id);
+      updateFinOpsUI(canvasEngine);
       canvasEngine.playSfx(220, 'sawtooth', 0.08);
       return { success: true, deletedNodeId: id, label: target.label };
     }
   });
 
-  // 4. connect_nodes
+  // 4. scale_node_replicas
+  document.modelContext.registerTool({
+    name: 'scale_node_replicas',
+    description: 'Scale the horizontal replica count for a specific microservice, container, or GPU node.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string', description: 'Target node ID' },
+        replicas: { type: 'number', description: 'Target replica count (e.g. 2, 5, 10)' }
+      },
+      required: ['id', 'replicas']
+    },
+    execute: async ({ id, replicas }) => {
+      const node = canvasEngine.nodes.find(n => n.id === id);
+      if (!node) throw new Error(`Node "${id}" not found.`);
+      node.replicas = Math.max(1, Math.min(20, replicas));
+      updateFinOpsUI(canvasEngine);
+      canvasEngine.playSfx(550, 'sine', 0.08);
+      return { success: true, node: node.label, newReplicas: node.replicas };
+    }
+  });
+
+  // 5. connect_nodes
   document.modelContext.registerTool({
     name: 'connect_nodes',
-    description: 'Connect two architecture components with a directional link, specifying protocol (e.g. gRPC, Kafka, REST, Redis TCP, PostgreSQL) and latency.',
+    description: 'Connect two architecture components with a directional link, specifying protocol (gRPC, NVLink, Kafka, Redis TCP, PostgreSQL, TLS 1.3).',
     inputSchema: {
       type: 'object',
       properties: {
         from: { type: 'string', description: 'Source node ID' },
         to: { type: 'string', description: 'Target node ID' },
-        protocol: { type: 'string', description: 'Communication protocol (e.g. "gRPC", "HTTPS", "Kafka Pub", "Redis TCP", "PostgreSQL")' },
-        latency: { type: 'string', description: 'Expected latency (e.g. "3ms", "15ms")' },
-        throughput: { type: 'string', description: 'Expected throughput (e.g. "5.0k req/s")' }
+        protocol: { type: 'string', description: 'Protocol name' },
+        latency: { type: 'string', description: 'Latency' },
+        throughput: { type: 'string', description: 'Throughput' }
       },
       required: ['from', 'to']
     },
     execute: async (params) => {
       const fromNode = canvasEngine.nodes.find(n => n.id === params.from);
       const toNode = canvasEngine.nodes.find(n => n.id === params.to);
-      if (!fromNode || !toNode) {
-        throw new Error(`Source or Target node not found (${params.from} → ${params.to}).`);
-      }
+      if (!fromNode || !toNode) throw new Error(`Source or Target node not found.`);
 
       const conn = canvasEngine.connectNodes(params.from, params.to, {
         protocol: params.protocol || 'gRPC',
-        latency: params.latency || '5ms',
-        throughput: params.throughput || '2.5k req/s'
+        latency: params.latency || '4ms',
+        throughput: params.throughput || '3.5k req/s'
       });
 
       canvasEngine.playSfx(550, 'sine', 0.08);
@@ -142,15 +169,15 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
-  // 5. disconnect_nodes
+  // 6. disconnect_nodes
   document.modelContext.registerTool({
     name: 'disconnect_nodes',
     description: 'Remove a connection link between two nodes.',
     inputSchema: {
       type: 'object',
       properties: {
-        from: { type: 'string', description: 'Source node ID' },
-        to: { type: 'string', description: 'Target node ID' }
+        from: { type: 'string' },
+        to: { type: 'string' }
       },
       required: ['from', 'to']
     },
@@ -160,42 +187,16 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
-  // 6. batch_build_architecture
+  // 7. batch_build_architecture
   document.modelContext.registerTool({
     name: 'batch_build_architecture',
-    description: 'Atomically assemble a complete multi-tier cloud topology on the canvas with multiple nodes and connections in one transaction.',
+    description: 'Atomically assemble a complete multi-tier system topology on the canvas in one transaction.',
     inputSchema: {
       type: 'object',
       properties: {
-        nodes: {
-          type: 'array',
-          description: 'List of node objects with id, label, type, and optional x, y coordinates',
-          items: {
-            type: 'object',
-            properties: {
-              id: { type: 'string' },
-              label: { type: 'string' },
-              type: { type: 'string' },
-              x: { type: 'number' },
-              y: { type: 'number' }
-            },
-            required: ['id', 'label', 'type']
-          }
-        },
-        connections: {
-          type: 'array',
-          description: 'List of connection objects with from, to, and protocol',
-          items: {
-            type: 'object',
-            properties: {
-              from: { type: 'string' },
-              to: { type: 'string' },
-              protocol: { type: 'string' }
-            },
-            required: ['from', 'to']
-          }
-        },
-        autoLayout: { type: 'boolean', description: 'Whether to auto-align nodes hierarchically' }
+        nodes: { type: 'array' },
+        connections: { type: 'array' },
+        autoLayout: { type: 'boolean' }
       },
       required: ['nodes', 'connections']
     },
@@ -204,6 +205,7 @@ export function registerAllWebMCPTools(canvasEngine) {
       if (params.autoLayout !== false) {
         canvasEngine.applyAutoLayout('hierarchical');
       }
+      updateFinOpsUI(canvasEngine);
       return {
         success: true,
         builtNodesCount: params.nodes.length,
@@ -212,33 +214,82 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
-  // 7. simulate_traffic
+  // 8. estimate_cloud_costs (Read Only)
+  document.modelContext.registerTool({
+    name: 'estimate_cloud_costs',
+    description: 'Calculate detailed FinOps cloud infrastructure cost breakdown ($/mo and $/hr) based on provisioned nodes and replica counts.',
+    readOnlyHint: true,
+    inputSchema: {
+      type: 'object',
+      properties: {}
+    },
+    execute: async () => {
+      const stats = CostEngine.calculate(canvasEngine.nodes);
+      return stats;
+    }
+  });
+
+  // 9. optimize_cloud_costs
+  document.modelContext.registerTool({
+    name: 'optimize_cloud_costs',
+    description: 'Run automated FinOps cost optimization: downscales over-provisioned idle services, suggests spot instances, and injects caching to reduce database compute bills.',
+    inputSchema: {
+      type: 'object',
+      properties: {}
+    },
+    execute: async () => {
+      const before = CostEngine.calculate(canvasEngine.nodes);
+      const optimizations = [];
+
+      canvasEngine.nodes.forEach(n => {
+        if (n.type === 'service' && n.replicas > 2) {
+          n.replicas = 2;
+          optimizations.push(`Auto-scaled "${n.label}" to 2 replicas based on average traffic.`);
+        }
+      });
+
+      // If no cache, add Redis
+      const hasCache = canvasEngine.nodes.some(n => n.type === 'cache');
+      if (!hasCache) {
+        const cache = canvasEngine.addNode({ label: 'ElastiCache Redis', type: 'cache', x: 450, y: 100 });
+        optimizations.push('Provisioned Redis cache to offload 85% of expensive SQL queries.');
+      }
+
+      const after = CostEngine.calculate(canvasEngine.nodes);
+      updateFinOpsUI(canvasEngine);
+      canvasEngine.applyAutoLayout('hierarchical');
+
+      return {
+        success: true,
+        previousMonthlyCost: `$${before.monthlyTotal}/mo`,
+        newMonthlyCost: `$${after.monthlyTotal}/mo`,
+        monthlySavings: `$${before.monthlyTotal - after.monthlyTotal}/mo`,
+        optimizations
+      };
+    }
+  });
+
+  // 10. simulate_traffic
   document.modelContext.registerTool({
     name: 'simulate_traffic',
     description: 'Run real-time traffic stress simulation on the canvas with animated packet flow, tracking requests/sec and load fluctuations.',
     inputSchema: {
       type: 'object',
       properties: {
-        rps: { type: 'number', description: 'Simulated traffic rate in requests per second (e.g. 5000, 15000)' }
+        rps: { type: 'number', description: 'Requests per second (e.g. 5000, 15000)' }
       }
     },
     execute: async (params) => {
       const rps = params.rps || 8500;
       canvasEngine.simulator.start(rps);
-      
       const simBtn = document.getElementById('simulate-btn-text');
       if (simBtn) simBtn.textContent = 'Stop Simulation';
-
       canvasEngine.playSfx(750, 'sine', 0.15);
-      return {
-        status: 'running',
-        targetRps: rps,
-        activePackets: true
-      };
+      return { status: 'running', targetRps: rps, activePackets: true };
     }
   });
 
-  // 8. stop_simulation
+  // 11. stop_simulation
   document.modelContext.registerTool({
     name: 'stop_simulation',
     description: 'Halt active traffic simulation.',
@@ -254,10 +305,10 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
-  // 9. run_security_audit (Read Only)
+  // 12. run_security_audit (Read Only)
   document.modelContext.registerTool({
     name: 'run_security_audit',
-    description: 'Run a deep security, compliance, and Single Point of Failure (SPOF) audit on the active architecture.',
+    description: 'Run deep security, SOC2/OWASP compliance, and Single Point of Failure (SPOF) audit on the active architecture.',
     readOnlyHint: true,
     inputSchema: {
       type: 'object',
@@ -265,69 +316,47 @@ export function registerAllWebMCPTools(canvasEngine) {
     },
     execute: async () => {
       const report = SecurityScanner.scan(canvasEngine.nodes, canvasEngine.connections);
-
-      // Update UI score
       const healthEl = document.getElementById('stat-health-score');
       if (healthEl) {
         healthEl.textContent = `${report.score}%`;
         healthEl.className = `stat-value ${report.score < 70 ? 'text-red' : (report.score < 90 ? 'text-amber' : 'text-emerald')}`;
       }
-
-      // Update badge
-      const badge = document.getElementById('audit-badge-count');
-      if (badge) {
-        if (report.criticalCount + report.warningCount > 0) {
-          badge.textContent = report.criticalCount + report.warningCount;
-          badge.classList.remove('hidden');
-        } else {
-          badge.classList.add('hidden');
-        }
-      }
-
       return report;
     }
   });
 
-  // 10. optimize_architecture
+  // 13. optimize_architecture
   document.modelContext.registerTool({
     name: 'optimize_architecture',
-    description: 'Optimize canvas topology for latency, cost, security, or high-availability (e.g. inject Redis caching, rate limiting, and message buffering).',
+    description: 'Optimize canvas topology for latency, cost, security, or high-availability.',
     inputSchema: {
       type: 'object',
       properties: {
-        goal: { 
-          type: 'string', 
-          enum: ['latency', 'cost', 'high_availability', 'security'],
-          description: 'Optimization target goal'
-        }
+        goal: { type: 'string', enum: ['latency', 'cost', 'high_availability', 'security'] }
       },
       required: ['goal']
     },
     execute: async ({ goal }) => {
       const optimizationsApplied = [];
 
-      // Check if Redis cache is needed
       const hasCache = canvasEngine.nodes.some(n => n.type === 'cache');
       const dbs = canvasEngine.nodes.filter(n => n.type === 'database');
 
       if (!hasCache && dbs.length > 0) {
         const cacheNode = canvasEngine.addNode({
-          label: 'Redis High-Speed Cache',
+          label: 'Redis ElastiCache Cluster',
           type: 'cache',
           x: dbs[0].x - 180,
           y: dbs[0].y + 60
         });
 
-        // Find services connected to DB
         const dbConns = canvasEngine.connections.filter(c => c.to === dbs[0].id);
         dbConns.forEach(c => {
           canvasEngine.connectNodes(c.from, cacheNode.id, { protocol: 'Redis TCP', latency: '1ms' });
         });
-
         optimizationsApplied.push('Injected Redis Cache layer before database to reduce read latency by 90%.');
       }
 
-      // Check if Auth gateway is missing
       const hasAuth = canvasEngine.nodes.some(n => n.type === 'auth');
       const gateways = canvasEngine.nodes.filter(n => n.type === 'gateway');
       if (!hasAuth && gateways.length > 0) {
@@ -341,19 +370,14 @@ export function registerAllWebMCPTools(canvasEngine) {
         optimizationsApplied.push('Attached Auth0 IAM & Rate Limiter to API Gateway to protect ingress from DDoS/brute-force.');
       }
 
-      // Re-layout
       canvasEngine.applyAutoLayout('hierarchical');
+      updateFinOpsUI(canvasEngine);
 
-      return {
-        success: true,
-        goal,
-        optimizationsApplied,
-        newScore: 100
-      };
+      return { success: true, goal, optimizationsApplied, newScore: 100 };
     }
   });
 
-  // 11. generate_infrastructure_code (Read Only)
+  // 14. generate_infrastructure_code (Read Only)
   document.modelContext.registerTool({
     name: 'generate_infrastructure_code',
     description: 'Generate production-ready Infrastructure as Code (Terraform, Docker Compose, Kubernetes manifests, or TypeScript) from the current canvas.',
@@ -361,51 +385,32 @@ export function registerAllWebMCPTools(canvasEngine) {
     inputSchema: {
       type: 'object',
       properties: {
-        target: {
-          type: 'string',
-          enum: ['terraform', 'docker', 'kubernetes', 'typescript', 'all'],
-          description: 'Target format'
-        }
+        target: { type: 'string', enum: ['terraform', 'docker', 'kubernetes', 'typescript', 'all'] }
       },
       required: ['target']
     },
     execute: async ({ target }) => {
       const nodes = canvasEngine.nodes;
       const connections = canvasEngine.connections;
-
       const result = {};
-      if (target === 'terraform' || target === 'all') {
-        result.terraform = IaCGenerator.generateTerraform(nodes, connections);
-      }
-      if (target === 'docker' || target === 'all') {
-        result.docker = IaCGenerator.generateDockerCompose(nodes, connections);
-      }
-      if (target === 'kubernetes' || target === 'all') {
-        result.kubernetes = IaCGenerator.generateKubernetes(nodes, connections);
-      }
-      if (target === 'typescript' || target === 'all') {
-        result.typescript = IaCGenerator.generateTypeScript(nodes, connections);
-      }
 
-      return {
-        target,
-        files: result
-      };
+      if (target === 'terraform' || target === 'all') result.terraform = IaCGenerator.generateTerraform(nodes, connections);
+      if (target === 'docker' || target === 'all') result.docker = IaCGenerator.generateDockerCompose(nodes, connections);
+      if (target === 'kubernetes' || target === 'all') result.kubernetes = IaCGenerator.generateKubernetes(nodes, connections);
+      if (target === 'typescript' || target === 'all') result.typescript = IaCGenerator.generateTypeScript(nodes, connections);
+
+      return { target, files: result };
     }
   });
 
-  // 12. apply_layout_preset
+  // 15. apply_layout_preset
   document.modelContext.registerTool({
     name: 'apply_layout_preset',
     description: 'Automatically organize and align canvas nodes with clean spacing.',
     inputSchema: {
       type: 'object',
       properties: {
-        layout: {
-          type: 'string',
-          enum: ['hierarchical', 'circular', 'grid'],
-          description: 'Layout algorithm to use'
-        }
+        layout: { type: 'string', enum: ['hierarchical', 'circular', 'grid'] }
       }
     },
     execute: async ({ layout }) => {
@@ -414,28 +419,27 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
-  // 13. load_architecture_template
+  // 16. load_architecture_template
   document.modelContext.registerTool({
     name: 'load_architecture_template',
-    description: 'Load a curated architectural blueprint onto the canvas (ecommerce, rag-pipeline, fintech, streaming).',
+    description: 'Load an architectural blueprint onto the canvas (nvidia-gpu-ai, agent-swarm, ecommerce, fintech).',
     inputSchema: {
       type: 'object',
       properties: {
         templateId: {
           type: 'string',
-          enum: ['ecommerce', 'rag-pipeline', 'fintech', 'streaming'],
-          description: 'Template identifier'
+          enum: ['nvidia-gpu-ai', 'agent-swarm', 'ecommerce', 'fintech'],
+          description: 'Blueprint ID'
         }
       },
       required: ['templateId']
     },
     execute: async ({ templateId }) => {
       const tpl = ARCHITECTURE_TEMPLATES[templateId];
-      if (!tpl) {
-        throw new Error(`Template "${templateId}" not found. Available: ecommerce, rag-pipeline, fintech, streaming`);
-      }
+      if (!tpl) throw new Error(`Template "${templateId}" not found.`);
 
       canvasEngine.loadTopology(tpl.nodes, tpl.connections);
+      updateFinOpsUI(canvasEngine);
       return {
         success: true,
         templateId,
@@ -446,7 +450,21 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
-  // 14. clear_canvas
+  // 17. export_canvas_image
+  document.modelContext.registerTool({
+    name: 'export_canvas_image',
+    description: 'Export and download a high-resolution PNG image of the current architecture canvas.',
+    inputSchema: {
+      type: 'object',
+      properties: {}
+    },
+    execute: async () => {
+      canvasEngine.exportAsPng();
+      return { success: true, status: 'downloaded' };
+    }
+  });
+
+  // 18. clear_canvas
   document.modelContext.registerTool({
     name: 'clear_canvas',
     description: 'Reset and clear the entire visual canvas.',
@@ -456,9 +474,16 @@ export function registerAllWebMCPTools(canvasEngine) {
     },
     execute: async () => {
       canvasEngine.clearCanvas();
+      updateFinOpsUI(canvasEngine);
       return { success: true, message: 'Canvas cleared.' };
     }
   });
+
+  function updateFinOpsUI(engine) {
+    const stats = CostEngine.calculate(engine.nodes);
+    const costEl = document.getElementById('stat-cloud-cost');
+    if (costEl) costEl.textContent = `$${stats.monthlyTotal}/mo`;
+  }
 
   console.log(`[WebMCP] Successfully registered ${webmcp.listTools().length} tools on document.modelContext.`);
 }

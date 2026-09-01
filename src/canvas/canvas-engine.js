@@ -1,6 +1,6 @@
 /**
- * High-Performance Interactive Architecture Canvas Engine
- * 60 FPS HTML5 Canvas with Pan/Zoom, Drag & Drop, Physics, and Particle Visuals.
+ * High-Performance Interactive Architecture Canvas Engine (World-Class Edition)
+ * Apple/Linear/OpenAI Glassmorphism with Live Sparkline Telemetry & GPU Clusters.
  */
 
 import { TrafficSimulator } from './traffic-simulator.js';
@@ -20,6 +20,10 @@ export class CanvasEngine {
     this.dragOffset = { x: 0, y: 0 };
     this.panStart = { x: 0, y: 0 };
 
+    // Node Sparkline history
+    this.sparklineHistory = new Map(); // nodeId -> array of last 10 cpu values
+    this.frameCounter = 0;
+
     // Viewport Transform
     this.transform = {
       x: 60,
@@ -30,7 +34,6 @@ export class CanvasEngine {
     };
 
     // Connection Drag State
-    this.connectingFromNode = null;
     this.mouseWorldPos = { x: 0, y: 0 };
 
     // Traffic Simulator
@@ -40,20 +43,24 @@ export class CanvasEngine {
     this.soundEnabled = true;
     this.audioCtx = null;
 
+    // Node Selection Callback
+    this.onNodeSelectedCallback = null;
+
     // Node Type Configuration
     this.typeConfig = {
-      gateway: { label: 'API Gateway', color: '#00f0ff', icon: '🌐', bg: '#082f49' },
-      service: { label: 'Microservice', color: '#a855f7', icon: '⚙️', bg: '#3b0764' },
-      serverless: { label: 'Serverless Func', color: '#f59e0b', icon: '⚡', bg: '#451a03' },
-      ai_model: { label: 'LLM / AI Model', color: '#ec4899', icon: '🧠', bg: '#500724' },
-      database: { label: 'PostgreSQL DB', color: '#3b82f6', icon: '🗄️', bg: '#172554' },
-      vector_db: { label: 'Vector DB', color: '#6366f1', icon: '📐', bg: '#1e1b4b' },
-      cache: { label: 'Redis Cache', color: '#ef4444', icon: '⚡', bg: '#450a0a' },
-      queue: { label: 'Kafka Queue', color: '#f59e0b', icon: '📬', bg: '#451a03' },
-      blob_store: { label: 'Object S3', color: '#14b8a6', icon: '📦', bg: '#042f2e' },
-      auth: { label: 'Auth0 / IAM', color: '#10b981', icon: '🛡️', bg: '#022c22' },
-      third_party: { label: 'Stripe Webhook', color: '#a855f7', icon: '💳', bg: '#3b0764' },
-      cdn: { label: 'Cloudflare CDN', color: '#00f0ff', icon: '🌍', bg: '#082f49' }
+      gateway: { label: 'API Gateway', color: '#00f0ff', icon: '🌐', bg: '#082f49', badge: 'Ingress' },
+      service: { label: 'Microservice', color: '#a855f7', icon: '⚙️', bg: '#3b0764', badge: 'ECS Fargate' },
+      serverless: { label: 'Serverless Func', color: '#f59e0b', icon: '⚡', bg: '#451a03', badge: 'Workers' },
+      ai_model: { label: 'Claude / GPT-4o', color: '#ec4899', icon: '🧠', bg: '#500724', badge: 'Inference' },
+      gpu_cluster: { label: 'NVIDIA H100 8x', color: '#76b900', icon: '🟢', bg: '#143004', badge: 'SXM5 Tensor' },
+      database: { label: 'Aurora PostgreSQL', color: '#3b82f6', icon: '🗄️', bg: '#172554', badge: 'Multi-AZ DB' },
+      vector_db: { label: 'Milvus / Pinecone', color: '#6366f1', icon: '📐', bg: '#1e1b4b', badge: 'Vector ANN' },
+      cache: { label: 'Redis ElastiCache', color: '#ef4444', icon: '⚡', bg: '#450a0a', badge: 'Cluster' },
+      queue: { label: 'Kafka / MSK Bus', color: '#f59e0b', icon: '📬', bg: '#451a03', badge: 'Streaming' },
+      blob_store: { label: 'Amazon S3 Bucket', color: '#14b8a6', icon: '📦', bg: '#042f2e', badge: 'Storage' },
+      auth: { label: 'Auth0 / Okta IAM', color: '#10b981', icon: '🛡️', bg: '#022c22', badge: 'Security' },
+      third_party: { label: 'Stripe Webhook', color: '#a855f7', icon: '💳', bg: '#3b0764', badge: 'External' },
+      cdn: { label: 'Cloudflare CDN', color: '#00f0ff', icon: '🌍', bg: '#082f49', badge: 'Edge WAF' }
     };
 
     this.initEvents();
@@ -86,24 +93,26 @@ export class CanvasEngine {
         const screenY = e.clientY - rect.top;
         const worldPos = this.screenToWorld(screenX, screenY);
 
-        this.addNode({
+        const node = this.addNode({
           label: this.typeConfig[nodeType]?.label || 'New Service',
           type: nodeType,
-          x: Math.round(worldPos.x - 90),
-          y: Math.round(worldPos.y - 35)
+          x: Math.round(worldPos.x - 100),
+          y: Math.round(worldPos.y - 40)
         });
+        this.selectNode(node);
         this.playSfx(440, 'sine', 0.08);
       }
     });
 
-    // Keyboard controls (Delete, Space+Pan)
+    // Keyboard controls (Delete, Escape)
     window.addEventListener('keydown', (e) => {
       if ((e.key === 'Delete' || e.key === 'Backspace') && this.selectedNode) {
-        // Don't delete if user is typing in an input
         if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
         this.deleteNode(this.selectedNode.id);
-        this.selectedNode = null;
+        this.selectNode(null);
         this.playSfx(220, 'sawtooth', 0.1);
+      } else if (e.key === 'Escape') {
+        this.selectNode(null);
       }
     });
   }
@@ -137,9 +146,9 @@ export class CanvasEngine {
       const node = this.nodes[i];
       if (
         wx >= node.x &&
-        wx <= node.x + (node.width || 180) &&
+        wx <= node.x + (node.width || 210) &&
         wy >= node.y &&
-        wy <= node.y + (node.height || 70)
+        wy <= node.y + (node.height || 82)
       ) {
         return node;
       }
@@ -153,7 +162,6 @@ export class CanvasEngine {
     const sy = e.clientY - rect.top;
     const worldPos = this.screenToWorld(sx, sy);
 
-    // Right click or Space + Click -> Pan
     if (e.button === 1 || e.button === 2 || e.shiftKey) {
       this.isPanning = true;
       this.panStart = { x: sx - this.transform.x, y: sy - this.transform.y };
@@ -162,7 +170,7 @@ export class CanvasEngine {
 
     const clickedNode = this.findNodeAt(worldPos.x, worldPos.y);
     if (clickedNode) {
-      this.selectedNode = clickedNode;
+      this.selectNode(clickedNode);
       this.draggingNode = clickedNode;
       this.dragOffset = {
         x: worldPos.x - clickedNode.x,
@@ -170,11 +178,18 @@ export class CanvasEngine {
       };
       this.playSfx(580, 'triangle', 0.04);
     } else {
-      this.selectedNode = null;
+      this.selectNode(null);
       this.isPanning = true;
       this.panStart = { x: sx - this.transform.x, y: sy - this.transform.y };
     }
     this.updateStats();
+  }
+
+  selectNode(node) {
+    this.selectedNode = node;
+    if (this.onNodeSelectedCallback) {
+      this.onNodeSelectedCallback(node);
+    }
   }
 
   onMouseMove(e) {
@@ -215,7 +230,6 @@ export class CanvasEngine {
     let newScale = e.deltaY < 0 ? oldScale * zoomFactor : oldScale / zoomFactor;
     newScale = Math.max(this.transform.minScale, Math.min(this.transform.maxScale, newScale));
 
-    // Zoom centered on cursor
     this.transform.x = mouseX - (mouseX - this.transform.x) * (newScale / oldScale);
     this.transform.y = mouseY - (mouseY - this.transform.y) * (newScale / oldScale);
     this.transform.scale = newScale;
@@ -234,16 +248,17 @@ export class CanvasEngine {
       type: data.type || 'service',
       x: data.x || 100,
       y: data.y || 100,
-      width: 190,
-      height: 72,
+      width: 210,
+      height: 82,
       status: data.status || 'healthy',
       cpu: data.cpu || Math.floor(20 + Math.random() * 35),
       memory: data.memory || Math.floor(30 + Math.random() * 40),
-      hasWarning: false,
+      replicas: data.replicas || (data.type === 'service' ? 3 : (data.type === 'gateway' ? 2 : 1)),
       metadata: data.metadata || {}
     };
 
     this.nodes.push(newNode);
+    this.sparklineHistory.set(newNode.id, [newNode.cpu, newNode.cpu, newNode.cpu]);
     this.updateStats();
     this.checkEmptyState();
     return newNode;
@@ -252,6 +267,7 @@ export class CanvasEngine {
   deleteNode(id) {
     this.nodes = this.nodes.filter(n => n.id !== id);
     this.connections = this.connections.filter(c => c.from !== id && c.to !== id);
+    this.sparklineHistory.delete(id);
     this.updateStats();
     this.checkEmptyState();
   }
@@ -266,7 +282,7 @@ export class CanvasEngine {
       from: fromId,
       to: toId,
       protocol: options.protocol || 'gRPC',
-      latency: options.latency || `${Math.floor(2 + Math.random() * 15)}ms`,
+      latency: options.latency || `${Math.floor(2 + Math.random() * 12)}ms`,
       throughput: options.throughput || `${(Math.random() * 8 + 1).toFixed(1)}k req/s`
     };
 
@@ -282,11 +298,15 @@ export class CanvasEngine {
 
   loadTopology(nodes, connections) {
     this.nodes = nodes.map(n => ({
-      width: 190,
-      height: 72,
+      width: 210,
+      height: 82,
+      replicas: n.replicas || 1,
       ...n
     }));
     this.connections = [...connections];
+    this.nodes.forEach(n => {
+      this.sparklineHistory.set(n.id, [n.cpu, n.cpu, n.cpu]);
+    });
     this.autoFitView();
     this.updateStats();
     this.checkEmptyState();
@@ -296,7 +316,7 @@ export class CanvasEngine {
   clearCanvas() {
     this.nodes = [];
     this.connections = [];
-    this.selectedNode = null;
+    this.selectNode(null);
     this.simulator.stop();
     this.updateStats();
     this.checkEmptyState();
@@ -318,11 +338,11 @@ export class CanvasEngine {
       maxY = Math.max(maxY, n.y + n.height);
     });
 
-    const graphWidth = maxX - minX + 120;
-    const graphHeight = maxY - minY + 120;
+    const graphWidth = maxX - minX + 160;
+    const graphHeight = maxY - minY + 160;
     const scaleX = this.logicalWidth / graphWidth;
     const scaleY = this.logicalHeight / graphHeight;
-    const scale = Math.min(1.1, Math.max(0.6, Math.min(scaleX, scaleY)));
+    const scale = Math.min(1.05, Math.max(0.55, Math.min(scaleX, scaleY)));
 
     this.transform.scale = scale;
     this.transform.x = (this.logicalWidth - (maxX + minX) * scale) / 2;
@@ -335,7 +355,6 @@ export class CanvasEngine {
   applyAutoLayout(type = 'hierarchical') {
     if (this.nodes.length === 0) return;
 
-    // Hierarchical layout based on node types
     const orderRank = {
       cdn: 0,
       gateway: 1,
@@ -345,13 +364,13 @@ export class CanvasEngine {
       ai_model: 2.5,
       cache: 3,
       queue: 3,
+      gpu_cluster: 3,
       vector_db: 3.5,
       database: 4,
       blob_store: 4,
       third_party: 4
     };
 
-    // Group nodes by tier
     const tiers = {};
     this.nodes.forEach(n => {
       const rank = orderRank[n.type] ?? 2;
@@ -361,11 +380,11 @@ export class CanvasEngine {
 
     const sortedRanks = Object.keys(tiers).sort((a, b) => Number(a) - Number(b));
     let startX = 80;
-    const colSpacing = 240;
+    const colSpacing = 260;
 
     sortedRanks.forEach(rank => {
       const colNodes = tiers[rank];
-      const rowSpacing = 110;
+      const rowSpacing = 120;
       const totalHeight = colNodes.length * rowSpacing;
       let startY = Math.max(60, (this.logicalHeight - totalHeight) / 2);
 
@@ -379,6 +398,18 @@ export class CanvasEngine {
 
     this.autoFitView();
     this.playSfx(660, 'sine', 0.1);
+  }
+
+  exportAsPng() {
+    this.selectNode(null);
+    this.draw();
+    const dataUrl = this.canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = `omniflow-architecture-${Date.now()}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   checkEmptyState() {
@@ -420,9 +451,7 @@ export class CanvasEngine {
       gain.connect(this.audioCtx.destination);
       osc.start();
       osc.stop(this.audioCtx.currentTime + duration);
-    } catch (e) {
-      // Audio context might be restricted before user interaction
-    }
+    } catch (e) {}
   }
 
   // --- Render Loop ---
@@ -433,6 +462,16 @@ export class CanvasEngine {
     const loop = (currentTime) => {
       const deltaTime = currentTime - lastTime;
       lastTime = currentTime;
+      this.frameCounter++;
+
+      if (this.frameCounter % 20 === 0) {
+        this.nodes.forEach(n => {
+          let hist = this.sparklineHistory.get(n.id) || [];
+          hist.push(n.cpu || 30);
+          if (hist.length > 12) hist.shift();
+          this.sparklineHistory.set(n.id, hist);
+        });
+      }
 
       this.simulator.update(deltaTime);
       this.draw();
@@ -447,23 +486,16 @@ export class CanvasEngine {
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.logicalWidth, this.logicalHeight);
 
-    // Draw Grid
     this.drawGrid();
 
     ctx.save();
-    // Apply Pan and Zoom
     ctx.translate(this.transform.x, this.transform.y);
     ctx.scale(this.transform.scale, this.transform.scale);
 
     const nodeMap = new Map(this.nodes.map(n => [n.id, n]));
 
-    // Draw Connections
     this.drawConnections(ctx, nodeMap);
-
-    // Draw Traffic Particles
     this.simulator.render(ctx, nodeMap);
-
-    // Draw Nodes
     this.nodes.forEach(node => this.drawNode(ctx, node));
 
     ctx.restore();
@@ -477,7 +509,7 @@ export class CanvasEngine {
     const offsetY = this.transform.y % gridSize;
 
     ctx.save();
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
     ctx.lineWidth = 1;
 
     ctx.beginPath();
@@ -504,37 +536,37 @@ export class CanvasEngine {
       const x2 = toNode.x;
       const y2 = toNode.y + toNode.height / 2;
 
-      // Draw Curved Bezier Line
-      const dx = Math.max(40, (x2 - x1) * 0.45);
+      const dx = Math.max(45, (x2 - x1) * 0.45);
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.bezierCurveTo(x1 + dx, y1, x2 - dx, y2, x2, y2);
 
-      // Line Style
+      const isNvlink = conn.protocol.includes('NVLink');
       const isGrpc = conn.protocol.includes('gRPC');
       const isKafka = conn.protocol.includes('Kafka');
-      ctx.strokeStyle = isGrpc ? 'rgba(0, 240, 255, 0.45)' : (isKafka ? 'rgba(245, 158, 11, 0.45)' : 'rgba(168, 85, 247, 0.45)');
-      ctx.lineWidth = 2;
+      
+      ctx.strokeStyle = isNvlink ? 'rgba(118, 185, 0, 0.65)' : (isGrpc ? 'rgba(0, 240, 255, 0.5)' : (isKafka ? 'rgba(245, 158, 11, 0.5)' : 'rgba(168, 85, 247, 0.5)'));
+      ctx.lineWidth = isNvlink ? 2.5 : 2;
       ctx.stroke();
 
-      // Draw Protocol Badge in Center
+      // Protocol Badge in Center
       const midX = (x1 + x2) / 2;
       const midY = (y1 + y2) / 2;
 
       ctx.save();
-      ctx.font = '9px "JetBrains Mono", monospace';
+      ctx.font = '600 9px "JetBrains Mono", monospace';
       const textWidth = ctx.measureText(conn.protocol).width;
-      const badgeW = textWidth + 10;
-      const badgeH = 16;
+      const badgeW = textWidth + 12;
+      const badgeH = 18;
 
-      ctx.fillStyle = 'rgba(13, 17, 26, 0.85)';
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.fillStyle = 'rgba(10, 14, 23, 0.92)';
+      ctx.strokeStyle = isNvlink ? 'rgba(118, 185, 0, 0.35)' : 'rgba(255, 255, 255, 0.15)';
       ctx.lineWidth = 1;
       this.roundRect(ctx, midX - badgeW / 2, midY - badgeH / 2, badgeW, badgeH, 4);
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = '#9ca3af';
+      ctx.fillStyle = isNvlink ? '#76b900' : '#a1a1aa';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(conn.protocol, midX, midY);
@@ -549,83 +581,108 @@ export class CanvasEngine {
 
     ctx.save();
 
-    // Glow effect if selected or warning
+    // Glow effect
     if (node.status === 'warning') {
-      ctx.shadowColor = 'rgba(239, 68, 68, 0.6)';
-      ctx.shadowBlur = 16;
+      ctx.shadowColor = 'rgba(239, 68, 68, 0.7)';
+      ctx.shadowBlur = 18;
     } else if (isSelected) {
-      ctx.shadowColor = 'rgba(0, 240, 255, 0.5)';
-      ctx.shadowBlur = 14;
+      ctx.shadowColor = cfg.color;
+      ctx.shadowBlur = 16;
     } else if (isHovered) {
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.2)';
-      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.25)';
+      ctx.shadowBlur = 10;
     }
 
-    // Node Background Box
-    ctx.fillStyle = 'rgba(16, 22, 34, 0.9)';
-    ctx.strokeStyle = node.status === 'warning' ? '#ef4444' : (isSelected ? '#00f0ff' : (isHovered ? 'rgba(255,255,255,0.3)' : 'rgba(255, 255, 255, 0.1)'));
+    // Node Box Gradient Background (Apple/Linear glass style)
+    const grad = ctx.createLinearGradient(node.x, node.y, node.x, node.y + node.height);
+    grad.addColorStop(0, 'rgba(22, 28, 44, 0.95)');
+    grad.addColorStop(1, 'rgba(12, 16, 26, 0.98)');
+    ctx.fillStyle = grad;
+
+    ctx.strokeStyle = node.status === 'warning' ? '#ef4444' : (isSelected ? cfg.color : (isHovered ? 'rgba(255,255,255,0.35)' : 'rgba(255, 255, 255, 0.12)'));
     ctx.lineWidth = isSelected ? 2 : 1;
-    this.roundRect(ctx, node.x, node.y, node.width, node.height, 8);
+    this.roundRect(ctx, node.x, node.y, node.width, node.height, 10);
     ctx.fill();
     ctx.stroke();
 
-    // Type Color Indicator Stripe
+    // Type Left Accent Line
     ctx.fillStyle = cfg.color;
     ctx.beginPath();
-    ctx.roundRect(node.x, node.y, 4, node.height, [8, 0, 0, 8]);
+    ctx.roundRect(node.x, node.y, 4, node.height, [10, 0, 0, 10]);
     ctx.fill();
 
     // Icon Circle
     ctx.fillStyle = cfg.bg;
     ctx.beginPath();
-    ctx.arc(node.x + 24, node.y + 24, 14, 0, Math.PI * 2);
+    ctx.arc(node.x + 26, node.y + 26, 15, 0, Math.PI * 2);
     ctx.fill();
+
+    ctx.strokeStyle = cfg.color;
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
     // Icon Emoji
     ctx.font = '13px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(cfg.icon, node.x + 24, node.y + 24);
+    ctx.fillText(cfg.icon, node.x + 26, node.y + 26);
 
     // Label
-    ctx.font = '600 11.5px "Inter", sans-serif';
-    ctx.fillStyle = '#f3f4f6';
+    ctx.font = '600 12px "Inter", -apple-system, sans-serif';
+    ctx.fillStyle = '#f8fafc';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    const labelText = node.label.length > 20 ? `${node.label.substring(0, 18)}...` : node.label;
-    ctx.fillText(labelText, node.x + 46, node.y + 14);
+    const labelText = node.label.length > 19 ? `${node.label.substring(0, 17)}...` : node.label;
+    ctx.fillText(labelText, node.x + 50, node.y + 14);
 
-    // Type Subtitle
-    ctx.font = '9.5px "Inter", sans-serif';
-    ctx.fillStyle = '#9ca3af';
-    ctx.fillText(cfg.label, node.x + 46, node.y + 30);
-
-    // Mini CPU & Memory telemetry bar
-    const barX = node.x + 46;
-    const barY = node.y + 48;
-    const barW = 120;
-    const barH = 5;
-
-    // CPU Bar background
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-    this.roundRect(ctx, barX, barY, barW, barH, 2);
+    // Pill Badge (e.g. "ECS Fargate", "SXM5 Tensor")
+    ctx.font = '600 8.5px "JetBrains Mono", monospace';
+    const badgeText = cfg.badge;
+    const badgeWidth = ctx.measureText(badgeText).width + 8;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+    this.roundRect(ctx, node.x + 50, node.y + 32, badgeWidth, 14, 3);
     ctx.fill();
 
-    // CPU Fill
-    const cpuFillW = Math.max(4, (node.cpu / 100) * barW);
-    ctx.fillStyle = node.cpu > 80 ? '#ef4444' : (node.cpu > 50 ? '#f59e0b' : '#10b981');
-    this.roundRect(ctx, barX, barY, cpuFillW, barH, 2);
-    ctx.fill();
+    ctx.fillStyle = cfg.color;
+    ctx.fillText(badgeText, node.x + 54, node.y + 34);
 
-    // Small Text Metrics
+    // Replicas Chip (e.g. "3x")
+    if (node.replicas > 1) {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      this.roundRect(ctx, node.x + 50 + badgeWidth + 4, node.y + 32, 22, 14, 3);
+      ctx.fill();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillText(`${node.replicas}x`, node.x + 50 + badgeWidth + 7, node.y + 34);
+    }
+
+    // Mini Live Sparkline Waveform
+    const hist = this.sparklineHistory.get(node.id) || [node.cpu];
+    const sparkX = node.x + 50;
+    const sparkY = node.y + 66;
+    const sparkW = 85;
+    const sparkH = 10;
+
+    ctx.beginPath();
+    ctx.strokeStyle = node.cpu > 80 ? '#ef4444' : (node.cpu > 50 ? '#f59e0b' : '#10b981');
+    ctx.lineWidth = 1.2;
+
+    hist.forEach((val, i) => {
+      const ptX = sparkX + (i / Math.max(1, hist.length - 1)) * sparkW;
+      const ptY = sparkY - (val / 100) * sparkH;
+      if (i === 0) ctx.moveTo(ptX, ptY);
+      else ctx.lineTo(ptX, ptY);
+    });
+    ctx.stroke();
+
+    // CPU & Memory Labels
     ctx.font = '8px "JetBrains Mono", monospace';
-    ctx.fillStyle = '#6b7280';
-    ctx.fillText(`CPU: ${node.cpu}%`, node.x + 46, node.y + 56);
-    ctx.fillText(`MEM: ${node.memory}%`, node.x + 105, node.y + 56);
+    ctx.fillStyle = '#64748b';
+    ctx.fillText(`CPU ${node.cpu}%`, node.x + 145, node.y + 56);
+    ctx.fillText(`MEM ${node.memory}%`, node.x + 145, node.y + 68);
 
     // Status Dot (Top Right)
     ctx.beginPath();
-    ctx.arc(node.x + node.width - 12, node.y + 14, 4, 0, Math.PI * 2);
+    ctx.arc(node.x + node.width - 14, node.y + 16, 4.5, 0, Math.PI * 2);
     ctx.fillStyle = node.status === 'warning' ? '#ef4444' : '#10b981';
     ctx.fill();
 

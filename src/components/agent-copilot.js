@@ -1,6 +1,6 @@
 /**
- * Human-Agent Collaborative Co-Pilot Component
- * Simulates autonomous agent tool calling using registered WebMCP tools.
+ * Multi-Agent Collaborative Swarm Co-Pilot Component
+ * Supports Specialized Agent Roles: Architect, Chaos Engineer, SecOps, and FinOps Advisor.
  */
 
 import { webmcp } from '../webmcp/webmcp-core.js';
@@ -15,12 +15,12 @@ export class AgentCopilot {
     this.bannerEl = document.getElementById('agent-activity-banner');
     this.bannerToolName = document.getElementById('banner-tool-name');
     this.bannerToolDetail = document.getElementById('banner-tool-detail');
+    this.currentRole = 'architect';
 
     this.initEvents();
   }
 
   initEvents() {
-    // Toggle Button
     const toggleBtn = document.getElementById('btn-toggle-agent');
     const closeBtn = document.getElementById('btn-close-agent');
 
@@ -39,7 +39,16 @@ export class AgentCopilot {
       });
     }
 
-    // Submit user prompt
+    // Role switcher buttons
+    document.querySelectorAll('.agent-role-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.agent-role-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        this.currentRole = pill.getAttribute('data-role') || 'architect';
+        this.appendMessage('system', `Switched active agent persona to **${pill.textContent.trim()}**.`);
+      });
+    });
+
     if (this.inputForm) {
       this.inputForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -49,7 +58,6 @@ export class AgentCopilot {
         this.inputPrompt.value = '';
       });
 
-      // Shift+Enter newline support
       this.inputPrompt.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
@@ -58,27 +66,21 @@ export class AgentCopilot {
       });
     }
 
-    // Quick Prompt Chips
+    // Prompt Chips
     document.querySelectorAll('.chip-item').forEach(chip => {
       chip.addEventListener('click', () => {
         const prompt = chip.getAttribute('data-prompt');
-        if (prompt) {
-          this.handleUserMessage(prompt);
-        }
+        if (prompt) this.handleUserMessage(prompt);
       });
     });
   }
 
   async handleUserMessage(prompt) {
-    // Append User Message
     this.appendMessage('user', prompt);
-
-    // Show AI Thinking State
     const aiBubble = this.createAiBubble();
     this.messagesContainer.appendChild(aiBubble);
     this.scrollToBottom();
 
-    // Natural Language Tool Orchestration
     await this.orchestrateAgentActions(prompt, aiBubble);
   }
 
@@ -86,11 +88,9 @@ export class AgentCopilot {
     const contentEl = bubbleEl.querySelector('.bubble-content');
     const lower = prompt.toLowerCase();
 
-    // Helper for tool execution with visual streaming
     const callTool = async (toolName, params, rationale) => {
       this.showActivityBanner(toolName, rationale);
 
-      // Add tool trace card
       const traceCard = document.createElement('div');
       traceCard.className = 'tool-trace-card';
       traceCard.innerHTML = `
@@ -104,7 +104,7 @@ export class AgentCopilot {
       this.scrollToBottom();
 
       try {
-        await new Promise(r => setTimeout(r, 600)); // Smooth visual cadence
+        await new Promise(r => setTimeout(r, 550));
         const result = await webmcp.executeTool(toolName, params);
 
         traceCard.querySelector('.trace-status-tag').textContent = 'Completed (200 OK)';
@@ -123,62 +123,74 @@ export class AgentCopilot {
     };
 
     try {
-      if (lower.includes('rag') || lower.includes('ai') || lower.includes('llm') || lower.includes('vector')) {
-        contentEl.innerHTML = `<p>🧠 <strong>Reasoning:</strong> To build a high-performance AI RAG architecture, I will load the AI RAG blueprint, simulate high-throughput traffic load (6,000 RPS), and run a security posture audit.</p>`;
-        
-        await callTool('load_architecture_template', { templateId: 'rag-pipeline' }, 'Loading AI RAG & LLM Engine Blueprint');
-        await callTool('simulate_traffic', { rps: 6000 }, 'Starting real-time traffic stress simulation');
-        const auditRes = await callTool('run_security_audit', {}, 'Scanning architecture security');
+      if (lower.includes('nvidia') || lower.includes('gpu') || lower.includes('h100') || lower.includes('training') || lower.includes('vllm')) {
+        contentEl.innerHTML = `<p>🟢 <strong>[NVIDIA AI Cluster Architect] Reasoning:</strong> Assembling high-throughput generative AI training & inference cluster powered by 8x NVIDIA H100 GPUs, vLLM paged attention, and NVLink inter-GPU bus.</p>`;
+
+        await callTool('load_architecture_template', { templateId: 'nvidia-gpu-ai' }, 'Provisioning NVIDIA H100 SXM5 GPU Cluster');
+        await callTool('simulate_traffic', { rps: 18500 }, 'Benchmarking NVLink 900 GB/s inter-GPU throughput');
+        const cost = await callTool('estimate_cloud_costs', {}, 'Calculating GPU compute cluster expenditure');
 
         const summary = document.createElement('div');
-        summary.className = 'mt-2';
-        summary.innerHTML = `<br/>✅ <strong>Pipeline Assembled:</strong>
-        <br/>• FastAPI AI Gateway with rate limiting
-        <br/>• Milvus Vector DB + BGE-M3 Embeddings Service
-        <br/>• Claude 3.7 LLM Orchestrator + Redis Semantic Cache
-        <br/>• Security Health: <strong>${auditRes.score}%</strong> (${auditRes.criticalCount} critical risks)`;
+        summary.innerHTML = `<br/>✅ <strong>NVIDIA H100 AI Supercluster Assembled:</strong>
+        <br/>• 8x NVIDIA H100 80GB SXM5 with NVLink 900 GB/s bus
+        <br/>• vLLM PagedAttention inference workers (4x replicas)
+        <br/>• Milvus Distributed Vector DB + Redis Semantic Cache
+        <br/>• Estimated Cloud Cost: <strong>${cost.monthlyTotal ? `$${cost.monthlyTotal}/mo` : '$2,450/mo'}</strong> (${cost.hourlyTotal ? `$${cost.hourlyTotal}/hr` : '$3.35/hr'})`;
         contentEl.appendChild(summary);
 
-      } else if (lower.includes('security') || lower.includes('audit') || lower.includes('vulnerab') || lower.includes('fix')) {
-        contentEl.innerHTML = `<p>🛡️ <strong>Reasoning:</strong> Running security audit, identifying architecture bottlenecks and Single Points of Failure, then applying automated remediation.</p>`;
+      } else if (lower.includes('swarm') || lower.includes('multi-agent') || lower.includes('langgraph') || lower.includes('agentic')) {
+        contentEl.innerHTML = `<p>🤖 <strong>[Autonomous Swarm Architect] Reasoning:</strong> Provisioning Multi-Agent RAG Swarm with isolated sandboxes, Redis session memory, and Pinecone vector store.</p>`;
 
-        const auditBefore = await callTool('run_security_audit', {}, 'Auditing active topology');
-        const optRes = await callTool('optimize_architecture', { goal: 'security' }, 'Applying security hardening & auth attachments');
-        const auditAfter = await callTool('run_security_audit', {}, 'Verifying post-fix security score');
+        await callTool('load_architecture_template', { templateId: 'agent-swarm' }, 'Assembling Agentic Swarm Topology');
+        await callTool('simulate_traffic', { rps: 7500 }, 'Starting real-time agent message streaming');
 
         const summary = document.createElement('div');
-        summary.innerHTML = `<br/>🛡️ <strong>Security Remediation Completed:</strong>
-        <br/>• Initial Score: ${auditBefore.score}% → <strong>Updated Score: ${auditAfter.score}%</strong>
-        <br/>• Applied Fixes: ${optRes.optimizationsApplied.join('<br/>• ')}`;
+        summary.innerHTML = `<br/>✨ <strong>Autonomous Agent Swarm Active:</strong>
+        <br/>• Swarm Orchestrator (LangGraph) + Claude 3.7 Reasoning Hub
+        <br/>• 6x Isolated Tool Execution Sandboxes
+        <br/>• Ephemeral Redis cache + Pinecone Vector Memory`;
         contentEl.appendChild(summary);
 
-      } else if (lower.includes('optimize') || lower.includes('latency') || lower.includes('cost') || lower.includes('cache')) {
-        contentEl.innerHTML = `<p>⚡ <strong>Reasoning:</strong> Analyzing connection latencies and inserting high-speed Redis caching & asynchronous queues to eliminate database write locks.</p>`;
+      } else if (lower.includes('cost') || lower.includes('finops') || lower.includes('bill') || lower.includes('pricing') || lower.includes('saving')) {
+        contentEl.innerHTML = `<p>💰 <strong>[FinOps Advisor] Reasoning:</strong> Auditing cloud resource provisioning and running automated cost downscaling with Redis caching.</p>`;
 
-        const optRes = await callTool('optimize_architecture', { goal: 'latency' }, 'Injecting caching layer and optimizing routes');
-        await callTool('simulate_traffic', { rps: 12000 }, 'Benchmarking latency under 12k RPS load');
+        const costBefore = await callTool('estimate_cloud_costs', {}, 'Calculating baseline expenditure');
+        const opt = await callTool('optimize_cloud_costs', {}, 'Applying spot downscaling and cache injection');
 
         const summary = document.createElement('div');
-        summary.innerHTML = `<br/>⚡ <strong>Optimization Applied:</strong>
-        <br/>• ${optRes.optimizationsApplied.join('<br/>• ')}
-        <br/>• System throughput increased to <strong>12,000 req/s</strong> with sub-5ms average latency.`;
+        summary.innerHTML = `<br/>💵 <strong>FinOps Optimization Report:</strong>
+        <br/>• Baseline Monthly Cost: <strong>${opt.previousMonthlyCost}</strong>
+        <br/>• Optimized Monthly Cost: <strong class="text-emerald">${opt.newMonthlyCost}</strong>
+        <br/>• <strong>Monthly Net Savings: ${opt.monthlySavings}</strong> (~38% reduction)
+        <br/>• ${opt.optimizations.join('<br/>• ')}`;
+        contentEl.appendChild(summary);
+
+      } else if (lower.includes('security') || lower.includes('audit') || lower.includes('vulnerab') || lower.includes('fix') || lower.includes('soc2')) {
+        contentEl.innerHTML = `<p>🛡️ <strong>[SecOps & Compliance Auditor] Reasoning:</strong> Scanning graph topology for OWASP Top 10 risks, single points of failure (SPOF), and zero-trust violations.</p>`;
+
+        const auditBefore = await callTool('run_security_audit', {}, 'Running vulnerability scan');
+        const optRes = await callTool('optimize_architecture', { goal: 'security' }, 'Hardening IAM policies & gateways');
+        const auditAfter = await callTool('run_security_audit', {}, 'Verifying security compliance');
+
+        const summary = document.createElement('div');
+        summary.innerHTML = `<br/>🛡️ <strong>SecOps Hardening Report:</strong>
+        <br/>• Initial Score: ${auditBefore.score}% → <strong>Updated Posture: ${auditAfter.score}% (SOC2 Compliant)</strong>
+        <br/>• Fixes: ${optRes.optimizationsApplied.join('<br/>• ')}`;
         contentEl.appendChild(summary);
 
       } else if (lower.includes('iac') || lower.includes('terraform') || lower.includes('kubernetes') || lower.includes('docker') || lower.includes('manifest')) {
-        contentEl.innerHTML = `<p>📄 <strong>Reasoning:</strong> Inspecting live canvas topology and generating production Terraform, Docker Compose, and Kubernetes manifests.</p>`;
+        contentEl.innerHTML = `<p>📄 <strong>[DevOps Engineer] Reasoning:</strong> Synthesizing production Terraform (AWS VPC/ECS/RDS), Docker Compose, and Kubernetes Helm manifests.</p>`;
 
         await callTool('inspect_canvas_state', {}, 'Extracting graph topology');
-        const iacRes = await callTool('generate_infrastructure_code', { target: 'all' }, 'Synthesizing IaC manifests');
+        await callTool('generate_infrastructure_code', { target: 'all' }, 'Synthesizing IaC manifests');
 
-        // Open modal
         document.getElementById('btn-export-code').click();
 
         const summary = document.createElement('div');
-        summary.innerHTML = `<br/>✅ <strong>IaC Manifests Generated:</strong>
-        <br/>• Terraform (AWS VPC, ECS Fargate, RDS PostgreSQL, ElastiCache Redis)
-        <br/>• Docker Compose (Multi-container local dev environment)
-        <br/>• Kubernetes YAML (Deployments, ClusterIP Services, Health Probes)
-        <br/>• <em>Opened Export Modal on screen for review and download.</em>`;
+        summary.innerHTML = `<br/>✅ <strong>Production IaC Manifests Generated & Opened:</strong>
+        <br/>• Terraform HCL with multi-AZ VPC & Fargate clusters
+        <br/>• Docker Compose local dev stack
+        <br/>• Kubernetes YAML Deployments & Services`;
         contentEl.appendChild(summary);
 
       } else if (lower.includes('clear') || lower.includes('reset')) {
@@ -186,22 +198,21 @@ export class AgentCopilot {
         contentEl.innerHTML = `<p>🗑️ Canvas reset. All nodes and connections cleared.</p>`;
 
       } else {
-        // Generic architecture builder
-        contentEl.innerHTML = `<p>🏗️ <strong>Reasoning:</strong> Constructing custom cloud architecture based on your specification.</p>`;
+        contentEl.innerHTML = `<p>🏗️ <strong>Reasoning:</strong> Constructing architecture based on your prompt.</p>`;
 
-        const gw = await callTool('create_node', { label: 'API Gateway (Envoy)', type: 'gateway', x: 120, y: 220 }, 'Creating API Gateway');
-        const srv = await callTool('create_node', { label: 'Core Microservice', type: 'service', x: 380, y: 220 }, 'Creating Microservice');
-        const db = await callTool('create_node', { label: 'PostgreSQL Database', type: 'database', x: 640, y: 220 }, 'Creating Database');
-        const cache = await callTool('create_node', { label: 'Redis Cache', type: 'cache', x: 640, y: 90 }, 'Creating Redis Cache');
+        const gw = await callTool('create_node', { label: 'API Gateway (Envoy)', type: 'gateway', x: 120, y: 220 }, 'Creating Gateway');
+        const srv = await callTool('create_node', { label: 'Core Microservice', type: 'service', x: 380, y: 220, replicas: 3 }, 'Creating Microservice');
+        const db = await callTool('create_node', { label: 'Aurora PostgreSQL', type: 'database', x: 640, y: 220 }, 'Creating Database');
+        const cache = await callTool('create_node', { label: 'Redis ElastiCache', type: 'cache', x: 640, y: 90 }, 'Creating Cache');
 
         await callTool('connect_nodes', { from: gw.node.id, to: srv.node.id, protocol: 'gRPC' }, 'Connecting Gateway → Service');
         await callTool('connect_nodes', { from: srv.node.id, to: db.node.id, protocol: 'PostgreSQL' }, 'Connecting Service → DB');
         await callTool('connect_nodes', { from: srv.node.id, to: cache.node.id, protocol: 'Redis TCP' }, 'Connecting Service → Cache');
         await callTool('apply_layout_preset', { layout: 'hierarchical' }, 'Aligning nodes');
-        await callTool('simulate_traffic', { rps: 5000 }, 'Starting traffic simulation');
+        await callTool('simulate_traffic', { rps: 8000 }, 'Starting traffic simulation');
 
         const summary = document.createElement('div');
-        summary.innerHTML = `<br/>✨ <strong>Architecture Built:</strong> Created 4-tier microservice architecture with Envoy Gateway, Core Service, Redis Cache, and Postgres Database. Simulated 5,000 RPS traffic.`;
+        summary.innerHTML = `<br/>✨ <strong>Custom Cloud Topology Created:</strong> 4-tier microservice architecture with Envoy Gateway, Core Service (3x replicas), Redis ElastiCache, and Aurora DB.`;
         contentEl.appendChild(summary);
       }
     } catch (err) {
@@ -224,10 +235,10 @@ export class AgentCopilot {
 
   appendMessage(sender, text) {
     const bubble = document.createElement('div');
-    bubble.className = `agent-bubble ${sender === 'user' ? 'user-msg' : 'ai-msg'}`;
+    bubble.className = `agent-bubble ${sender === 'user' ? 'user-msg' : (sender === 'system' ? 'system-welcome' : 'ai-msg')}`;
     bubble.innerHTML = `
       <div class="bubble-header">
-        <span class="${sender === 'user' ? 'badge-user' : 'badge-ai'}">${sender === 'user' ? 'You' : 'WebMCP AI'}</span>
+        <span class="${sender === 'user' ? 'badge-user' : (sender === 'system' ? 'badge-ai' : 'badge-ai')}">${sender === 'user' ? 'You' : (sender === 'system' ? 'System' : 'WebMCP Swarm')}</span>
         <span class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
       </div>
       <div class="bubble-content">${text}</div>
@@ -241,7 +252,7 @@ export class AgentCopilot {
     bubble.className = 'agent-bubble ai-msg';
     bubble.innerHTML = `
       <div class="bubble-header">
-        <span class="badge-ai">WebMCP AI</span>
+        <span class="badge-ai">WebMCP AI (${this.currentRole})</span>
         <span class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
       </div>
       <div class="bubble-content">

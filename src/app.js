@@ -1,5 +1,5 @@
 /**
- * OmniFlow Studio — Main Application Entry & WebMCP Bootstrapper
+ * OmniFlow Studio — Main Application Entry & WebMCP Bootstrapper (World-Class Suite)
  */
 
 import { CanvasEngine } from './canvas/canvas-engine.js';
@@ -8,12 +8,14 @@ import { HudInspector } from './components/hud-inspector.js';
 import { AgentCopilot } from './components/agent-copilot.js';
 import { CodeModal } from './components/code-modal.js';
 import { AuditPanel } from './components/audit-panel.js';
+import { NodeInspector } from './components/node-inspector.js';
 import { DeclarativeFormsManager } from './components/declarative-forms.js';
 import { ARCHITECTURE_TEMPLATES } from './canvas/templates.js';
+import { CostEngine } from './canvas/cost-engine.js';
 import { webmcp } from './webmcp/webmcp-core.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[OmniFlow Studio] Initializing WebMCP-powered collaborative workspace...');
+  console.log('[OmniFlow Studio] Bootstrapping world-class WebMCP collaborative workspace...');
 
   // 1. Initialize Interactive Canvas Engine
   const canvasEl = document.getElementById('architecture-canvas');
@@ -22,11 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Register WebMCP Tools on document.modelContext
   registerAllWebMCPTools(canvas);
 
-  // 3. Initialize Components
+  // 3. Initialize UI Components & Drawers
   const hud = new HudInspector(canvas);
   const agent = new AgentCopilot(canvas);
   const codeModal = new CodeModal(canvas);
   const auditPanel = new AuditPanel(canvas, agent);
+  const nodeInspector = new NodeInspector(canvas);
   const declarativeForms = new DeclarativeFormsManager(canvas);
 
   // 4. Initialize Top Bar Controls
@@ -53,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tpl) {
           canvas.loadTopology(tpl.nodes, tpl.connections);
           templatesDropdown.classList.add('hidden');
-          // Dispatch security scan update
+          updateGlobalFinOps();
           SecurityScannerUpdate();
         }
       });
@@ -64,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       clearBtn.addEventListener('click', () => {
         canvas.clearCanvas();
         templatesDropdown.classList.add('hidden');
+        updateGlobalFinOps();
         SecurityScannerUpdate();
       });
     }
@@ -77,6 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // PNG Export Button
+  const exportPngBtn = document.getElementById('btn-export-png');
+  if (exportPngBtn) {
+    exportPngBtn.addEventListener('click', () => {
+      canvas.exportAsPng();
+    });
+  }
+
   // Traffic Simulation Toggle
   const simToggleBtn = document.getElementById('btn-simulate-toggle');
   const simBtnText = document.getElementById('simulate-btn-text');
@@ -86,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.simulator.stop();
         if (simBtnText) simBtnText.textContent = 'Simulate Traffic';
       } else {
-        canvas.simulator.start(8500);
+        canvas.simulator.start(12500);
         if (simBtnText) simBtnText.textContent = 'Stop Simulation';
       }
     });
@@ -146,17 +158,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Helper function to update security badge
+  function updateGlobalFinOps() {
+    const stats = CostEngine.calculate(canvas.nodes);
+    const costEl = document.getElementById('stat-cloud-cost');
+    if (costEl) costEl.textContent = `$${stats.monthlyTotal}/mo`;
+  }
+
   function SecurityScannerUpdate() {
     webmcp.executeTool('run_security_audit', {}).catch(() => {});
   }
 
-  // 5. Initial Boot: Load Enterprise E-Commerce Blueprint for rich instant demo
-  const initialTpl = ARCHITECTURE_TEMPLATES.ecommerce;
+  // 5. Initial Boot: Load NVIDIA H100 GPU AI Training Cluster for a jaw-dropping initial render!
+  const initialTpl = ARCHITECTURE_TEMPLATES['nvidia-gpu-ai'];
   if (initialTpl) {
     canvas.loadTopology(initialTpl.nodes, initialTpl.connections);
+    updateGlobalFinOps();
     SecurityScannerUpdate();
   }
 
-  console.log('[OmniFlow Studio] Ready for human-agent collaboration!');
+  console.log('[OmniFlow Studio] Ready for world-class human-agent co-creation!');
 });
