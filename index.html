@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OmniFlow Studio — World-Class Human-Agent Collaborative Visual Systems Studio (WebMCP)</title>
+  <title>OmniFlow Studio — World-Class Human-Agent Visual Systems Studio (WebMCP)</title>
   <meta name="description" content="Next-generation visual cloud architecture and distributed systems studio, powered by the open WebMCP standard, NVIDIA H100 modeling, and autonomous multi-agent swarm consensus." />
   <meta name="keywords" content="WebMCP, Model Context Protocol, AI Agents, Cloud Architecture, Distributed Systems, Terraform, Kubernetes, Helm, NVIDIA GPU, FinOps, Chaos Engineering" />
   
@@ -24,8 +24,9 @@
   <!-- Root Container -->
   <div id="app" class="app-container">
     
-    <!-- Top Navigation & Header Bar -->
+    <!-- Top Navigation & Header Bar (Apple/Linear Luxury Design) -->
     <header class="top-nav glass-panel">
+      <!-- Left: Logo & Consolidated FinOps Stats -->
       <div class="nav-left">
         <div class="brand-badge">
           <div class="brand-logo-glow">
@@ -38,55 +39,40 @@
           <div class="brand-text">
             <span class="brand-title">OmniFlow <span class="brand-gradient">Studio</span></span>
             <span class="webmcp-pill" id="webmcp-status-pill">
-              <span class="pulse-dot"></span> WebMCP Enabled
+              <span class="pulse-dot"></span> WebMCP
             </span>
           </div>
         </div>
 
-        <!-- Project Status / Stats -->
+        <!-- Sleek Single-Line Stats Pill -->
         <div class="top-stats-strip">
-          <div class="stat-item" title="Active Nodes on Canvas">
-            <span class="stat-label">Nodes:</span>
-            <span class="stat-value" id="stat-node-count">0</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item" title="Active Connections">
-            <span class="stat-label">Links:</span>
-            <span class="stat-value" id="stat-link-count">0</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item" title="Simulated Throughput">
-            <span class="stat-label">Traffic:</span>
-            <span class="stat-value text-cyan" id="stat-traffic-rps">0 req/s</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item" title="Estimated Cloud Cost (FinOps Engine)">
-            <span class="stat-label">FinOps:</span>
-            <span class="stat-value text-amber" id="stat-cloud-cost">$0/mo</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item" title="Security Health Score">
-            <span class="stat-label">Health:</span>
-            <span class="stat-value text-emerald" id="stat-health-score">100%</span>
-          </div>
+          <span class="stat-item"><span class="stat-label">Nodes:</span> <strong class="stat-value" id="stat-node-count">0</strong></span>
+          <span class="stat-bullet">•</span>
+          <span class="stat-item"><span class="stat-label">Links:</span> <strong class="stat-value" id="stat-link-count">0</strong></span>
+          <span class="stat-bullet">•</span>
+          <span class="stat-item"><span class="stat-label">Traffic:</span> <strong class="stat-value text-cyan" id="stat-traffic-rps">0 req/s</strong></span>
+          <span class="stat-bullet">•</span>
+          <span class="stat-item"><span class="stat-label">FinOps:</span> <strong class="stat-value text-amber" id="stat-cloud-cost">$0/mo</strong></span>
+          <span class="stat-bullet">•</span>
+          <span class="stat-item"><span class="stat-label">Health:</span> <strong class="stat-value text-emerald" id="stat-health-score">100%</strong></span>
         </div>
       </div>
 
+      <!-- Center: Action Center (Blueprints, Swarm Consensus, Chaos, Simulation) -->
       <div class="nav-center">
-        <!-- Quick Action Templates & Layouts -->
+        <!-- Blueprints Menu -->
         <div class="template-selector-group">
           <button class="btn btn-glass btn-sm dropdown-trigger" id="templates-btn">
-            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5z" />
-              <path d="M14 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5z" />
-              <path d="M4 15a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4z" />
-              <path d="M14 15a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-4z" />
+            <svg class="icon-sm text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
             </svg>
             <span>Blueprints</span>
             <svg class="chevron-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </button>
 
-          <!-- Dropdown Menu -->
           <div class="dropdown-menu glass-card hidden" id="templates-dropdown">
             <div class="dropdown-header">Enterprise Topologies</div>
             <button class="dropdown-item" data-template="nvidia-gpu-ai">
@@ -128,91 +114,95 @@
           </div>
         </div>
 
-        <div class="btn-group">
-          <!-- Swarm Consensus Button -->
-          <button class="btn btn-purple btn-sm btn-glow" id="btn-run-swarm-consensus" title="Initiate Live 4-Agent Debate & Consensus Protocol">
-            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span>Swarm Consensus</span>
-          </button>
+        <!-- Hero Swarm Consensus Button -->
+        <button class="btn btn-purple btn-sm btn-glow" id="btn-run-swarm-consensus" title="Initiate Live 4-Agent Debate & Consensus Protocol">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Swarm Consensus</span>
+        </button>
 
-          <!-- Chaos Injection Menu Trigger -->
-          <div class="template-selector-group">
-            <button class="btn btn-glass btn-sm" id="btn-chaos-menu-toggle" title="Chaos Engineering & Fault Injection">
-              <svg class="icon-sm text-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              <span>Chaos Lab</span>
+        <!-- Chaos Lab Menu -->
+        <div class="template-selector-group">
+          <button class="btn btn-glass btn-sm" id="btn-chaos-menu-toggle" title="Chaos Engineering & Fault Injection">
+            <svg class="icon-sm text-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Chaos Lab</span>
+            <svg class="chevron-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="dropdown-menu glass-card hidden" id="chaos-dropdown">
+            <div class="dropdown-header">Fault Injections</div>
+            <button class="dropdown-item" id="btn-chaos-ddos">
+              <div class="item-icon bg-red">⚡</div>
+              <div class="item-info">
+                <div class="item-title">DDoS Flood (50k RPS)</div>
+                <div class="item-desc">Overwhelm ingress gateway</div>
+              </div>
             </button>
-            <div class="dropdown-menu glass-card hidden" id="chaos-dropdown">
-              <div class="dropdown-header">Fault Injections</div>
-              <button class="dropdown-item" id="btn-chaos-ddos">
-                <div class="item-icon bg-red">⚡</div>
-                <div class="item-info">
-                  <div class="item-title">DDoS Flood (50k RPS)</div>
-                  <div class="item-desc">Overwhelm ingress gateway</div>
-                </div>
-              </button>
-              <button class="dropdown-item" id="btn-chaos-kill">
-                <div class="item-icon bg-amber">💀</div>
-                <div class="item-info">
-                  <div class="item-title">Chaos Monkey (Kill Node)</div>
-                  <div class="item-desc">Test Kafka failover & buffering</div>
-                </div>
-              </button>
-              <button class="dropdown-item" id="btn-chaos-gpu-oom">
-                <div class="item-icon bg-emerald" style="color:#76b900;">🟢</div>
-                <div class="item-info">
-                  <div class="item-title">GPU Out-Of-Memory (OOM)</div>
-                  <div class="item-desc">Test tensor memory recovery</div>
-                </div>
-              </button>
-              <div class="dropdown-divider"></div>
-              <button class="dropdown-item text-emerald" id="btn-chaos-heal">
-                <div class="item-icon bg-emerald">💚</div>
-                <div class="item-info">
-                  <div class="item-title">Auto-Heal Cluster</div>
-                  <div class="item-desc">Recover nodes & defragment memory</div>
-                </div>
-              </button>
-            </div>
+            <button class="dropdown-item" id="btn-chaos-kill">
+              <div class="item-icon bg-amber">💀</div>
+              <div class="item-info">
+                <div class="item-title">Chaos Monkey (Kill Node)</div>
+                <div class="item-desc">Test Kafka failover & buffering</div>
+              </div>
+            </button>
+            <button class="dropdown-item" id="btn-chaos-gpu-oom">
+              <div class="item-icon bg-emerald" style="color:#76b900;">🟢</div>
+              <div class="item-info">
+                <div class="item-title">GPU Out-Of-Memory (OOM)</div>
+                <div class="item-desc">Test tensor memory recovery</div>
+              </div>
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-emerald" id="btn-chaos-heal">
+              <div class="item-icon bg-emerald">💚</div>
+              <div class="item-info">
+                <div class="item-title">Auto-Heal Cluster</div>
+                <div class="item-desc">Recover nodes & defragment memory</div>
+              </div>
+            </button>
           </div>
-
-          <button class="btn btn-glass btn-sm" id="btn-simulate-toggle" title="Run Live Traffic Stress Simulation">
-            <svg class="icon-sm icon-pulse text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <span id="simulate-btn-text">Simulate Traffic</span>
-          </button>
-          <button class="btn btn-glass btn-sm" id="btn-security-audit" title="Scan Architecture Security & SPOF Vulnerabilities">
-            <svg class="icon-sm text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Audit</span>
-            <span class="badge-count hidden" id="audit-badge-count">0</span>
-          </button>
         </div>
+
+        <!-- Simulation & Audit -->
+        <button class="btn btn-glass btn-sm" id="btn-simulate-toggle" title="Run Live Traffic Stress Simulation">
+          <svg class="icon-sm icon-pulse text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span id="simulate-btn-text">Simulate</span>
+        </button>
+
+        <button class="btn btn-glass btn-sm" id="btn-security-audit" title="Scan Architecture Security & SPOF Vulnerabilities">
+          <svg class="icon-sm text-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Audit</span>
+          <span class="badge-count hidden" id="audit-badge-count">0</span>
+        </button>
       </div>
 
+      <!-- Right: Export, DevTools HUD & Agent Swarm Trigger -->
       <div class="nav-right">
-        <!-- Export Code & Image -->
+        <!-- PNG Export -->
         <button class="btn btn-glass btn-sm" id="btn-export-png" title="Download High-Resolution PNG Architecture Diagram">
           <svg class="icon-sm text-cyan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           <span>PNG</span>
         </button>
 
+        <!-- IaC Export -->
         <button class="btn btn-glass btn-sm" id="btn-export-code" title="Generate Terraform, Helm, CloudFormation & Kubernetes IaC">
           <svg class="icon-sm text-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          <span>Export IaC</span>
+          <span>IaC</span>
         </button>
 
-        <div class="stat-divider"></div>
-
+        <!-- WebMCP DevTools HUD -->
         <button class="btn btn-glass btn-sm" id="btn-toggle-hud" title="WebMCP DevTools & Schema Inspector">
           <svg class="icon-sm text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0 1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          <span>WebMCP HUD</span>
+          <span>HUD</span>
           <span class="hud-tool-count-badge" id="hud-tools-count">24</span>
         </button>
 
+        <!-- Main Hero Agent Swarm Flyout Toggle -->
         <button class="btn btn-primary btn-sm btn-glow" id="btn-toggle-agent" title="Open Human-Agent Collaborative Swarm">
           <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           <span>Agent Swarm</span>
         </button>
 
-        <button class="btn btn-icon btn-ghost" id="btn-toggle-sound" title="Toggle Synthesizer Sound Effects">
+        <!-- Synthesizer Audio FX -->
+        <button class="btn btn-icon-sm btn-ghost" id="btn-toggle-sound" title="Toggle Synthesizer Sound Effects">
           <svg class="icon-sm" id="sound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.08"/></svg>
         </button>
       </div>
@@ -278,7 +268,7 @@
             </div>
           </div>
 
-          <!-- Data & Persistence -->
+          <!-- Data & Streaming -->
           <div class="palette-category">
             <div class="category-title">Data & Streaming</div>
             <div class="palette-items-grid">
@@ -301,7 +291,7 @@
             </div>
           </div>
 
-          <!-- Declarative WebMCP Forms Demo Area -->
+          <!-- Declarative WebMCP Forms Area -->
           <div class="palette-category declarative-section">
             <div class="category-title">
               <span>Declarative WebMCP Forms</span>
@@ -564,7 +554,7 @@
       <aside class="hud-flyout-panel glass-panel hidden" id="webmcp-hud-panel">
         <div class="panel-header">
           <div class="panel-header-title">
-            <svg class="icon-sm text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <svg class="icon-sm text-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0 1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <div>
               <div class="title-bold">WebMCP DevTools Inspector</div>
               <div class="title-sub"><code>document.modelContext</code> Tool Registry</div>

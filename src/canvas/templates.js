@@ -9,15 +9,15 @@ export const ARCHITECTURE_TEMPLATES = {
     name: 'NVIDIA H100 GPU AI Training & LLM Cluster',
     description: 'Enterprise generative AI cluster featuring 8x NVIDIA H100 SXM5 GPUs, vLLM distributed inference, Ray orchestrator, and semantic caching.',
     nodes: [
-      { id: 'gw-ai', label: 'Cloudflare AI Gateway', type: 'cdn', x: 60, y: 220, status: 'healthy', cpu: 18, memory: 32, replicas: 2 },
-      { id: 'ingress-ai', label: 'FastAPI High-Speed Ingress', type: 'gateway', x: 260, y: 220, status: 'healthy', cpu: 38, memory: 46, replicas: 3 },
-      { id: 'auth-ai', label: 'OAuth2 / mTLS Tokenizer', type: 'auth', x: 260, y: 70, status: 'healthy', cpu: 12, memory: 20, replicas: 2 },
-      { id: 'cache-sem', label: 'Redis Semantic Cache (GPTCache)', type: 'cache', x: 480, y: 70, status: 'healthy', cpu: 25, memory: 55, replicas: 2 },
-      { id: 'ray-orch', label: 'Ray Cluster Head Node', type: 'service', x: 480, y: 220, status: 'healthy', cpu: 52, memory: 65, replicas: 1 },
-      { id: 'vllm-node', label: 'vLLM PagedAttention Workers', type: 'service', x: 720, y: 120, status: 'healthy', cpu: 78, memory: 85, replicas: 4 },
-      { id: 'gpu-h100', label: 'NVIDIA 8x H100 80GB SXM5 Cluster', type: 'gpu_cluster', x: 720, y: 290, status: 'healthy', cpu: 92, memory: 94, replicas: 2 },
-      { id: 'vdb-1', label: 'Milvus Distributed Vector DB', type: 'vector_db', x: 960, y: 120, status: 'healthy', cpu: 45, memory: 72, replicas: 3 },
-      { id: 's3-ckpt', label: 'AWS S3 Checkpoint / LoRA Storage', type: 'blob_store', x: 960, y: 290, status: 'healthy', cpu: 15, memory: 22, replicas: 1 }
+      { id: 'gw-ai', label: 'Cloudflare AI Gateway', type: 'cdn', x: 60, y: 250, status: 'healthy', cpu: 18, memory: 32, replicas: 2 },
+      { id: 'ingress-ai', label: 'FastAPI High-Speed Ingress', type: 'gateway', x: 280, y: 250, status: 'healthy', cpu: 38, memory: 46, replicas: 3 },
+      { id: 'auth-ai', label: 'OAuth2 / mTLS Tokenizer', type: 'auth', x: 280, y: 90, status: 'healthy', cpu: 12, memory: 20, replicas: 2 },
+      { id: 'cache-sem', label: 'Redis Semantic Cache (GPTCache)', type: 'cache', x: 520, y: 90, status: 'healthy', cpu: 25, memory: 55, replicas: 2 },
+      { id: 'ray-orch', label: 'Ray Cluster Head Node', type: 'service', x: 520, y: 250, status: 'healthy', cpu: 52, memory: 65, replicas: 1 },
+      { id: 'vllm-node', label: 'vLLM PagedAttention Workers', type: 'service', x: 780, y: 140, status: 'healthy', cpu: 78, memory: 85, replicas: 4 },
+      { id: 'gpu-h100', label: 'NVIDIA 8x H100 80GB SXM5 Cluster', type: 'gpu_cluster', x: 780, y: 340, status: 'healthy', cpu: 92, memory: 94, replicas: 2 },
+      { id: 'vdb-1', label: 'Milvus Distributed Vector DB', type: 'vector_db', x: 1040, y: 140, status: 'healthy', cpu: 45, memory: 72, replicas: 3 },
+      { id: 's3-ckpt', label: 'AWS S3 Checkpoint / LoRA Storage', type: 'blob_store', x: 1040, y: 340, status: 'healthy', cpu: 15, memory: 22, replicas: 1 }
     ],
     connections: [
       { id: 'a1', from: 'gw-ai', to: 'ingress-ai', protocol: 'HTTP/3 Quic', latency: '4ms', throughput: '18.5k req/s' },
@@ -36,13 +36,13 @@ export const ARCHITECTURE_TEMPLATES = {
     name: 'Autonomous Multi-Agent RAG Swarm',
     description: 'Collaborative agentic swarm architecture with memory persistence, tool sandbox runner, and LLM reasoning mesh.',
     nodes: [
-      { id: 'edge-gw', label: 'Agent WebMCP Ingress Gateway', type: 'gateway', x: 80, y: 220, status: 'healthy', cpu: 28, memory: 35, replicas: 2 },
-      { id: 'swarm-lead', label: 'Swarm Orchestrator (LangGraph)', type: 'service', x: 300, y: 220, status: 'healthy', cpu: 65, memory: 72, replicas: 2 },
-      { id: 'llm-reasoner', label: 'Claude 3.7 / GPT-4o Reasoning Hub', type: 'ai_model', x: 540, y: 120, status: 'healthy', cpu: 85, memory: 90, replicas: 4 },
-      { id: 'tool-sandbox', label: 'Isolated Code Execution Sandbox', type: 'serverless', x: 540, y: 310, status: 'healthy', cpu: 40, memory: 60, replicas: 6 },
-      { id: 'agent-mem', label: 'Redis Ephemeral Session Cache', type: 'cache', x: 780, y: 120, status: 'healthy', cpu: 30, memory: 50, replicas: 2 },
-      { id: 'vector-mem', label: 'Pinecone Long-Term Vector Memory', type: 'vector_db', x: 780, y: 310, status: 'healthy', cpu: 42, memory: 68, replicas: 2 },
-      { id: 'audit-db', label: 'PostgreSQL Agent Trajectory DB', type: 'database', x: 980, y: 220, status: 'healthy', cpu: 35, memory: 48, replicas: 2 }
+      { id: 'edge-gw', label: 'Agent WebMCP Ingress Gateway', type: 'gateway', x: 80, y: 250, status: 'healthy', cpu: 28, memory: 35, replicas: 2 },
+      { id: 'swarm-lead', label: 'Swarm Orchestrator (LangGraph)', type: 'service', x: 320, y: 250, status: 'healthy', cpu: 65, memory: 72, replicas: 2 },
+      { id: 'llm-reasoner', label: 'Claude 3.7 / GPT-4o Reasoning Hub', type: 'ai_model', x: 580, y: 130, status: 'healthy', cpu: 85, memory: 90, replicas: 4 },
+      { id: 'tool-sandbox', label: 'Isolated Code Execution Sandbox', type: 'serverless', x: 580, y: 350, status: 'healthy', cpu: 40, memory: 60, replicas: 6 },
+      { id: 'agent-mem', label: 'Redis Ephemeral Session Cache', type: 'cache', x: 840, y: 130, status: 'healthy', cpu: 30, memory: 50, replicas: 2 },
+      { id: 'vector-mem', label: 'Pinecone Long-Term Vector Memory', type: 'vector_db', x: 840, y: 350, status: 'healthy', cpu: 42, memory: 68, replicas: 2 },
+      { id: 'audit-db', label: 'PostgreSQL Agent Trajectory DB', type: 'database', x: 1060, y: 250, status: 'healthy', cpu: 35, memory: 48, replicas: 2 }
     ],
     connections: [
       { id: 's1', from: 'edge-gw', to: 'swarm-lead', protocol: 'WebSockets', latency: '2ms', throughput: '4.8k msg/s' },
@@ -59,15 +59,15 @@ export const ARCHITECTURE_TEMPLATES = {
     name: 'Enterprise Cloud Microservices',
     description: 'High-availability global e-commerce with multi-region CDN, Kafka queuing, and Stripe payment processing.',
     nodes: [
-      { id: 'cdn-1', label: 'Cloudflare Global Edge CDN', type: 'cdn', x: 80, y: 220, status: 'healthy', cpu: 14, memory: 28, replicas: 3 },
-      { id: 'gw-1', label: 'Kong Enterprise Gateway', type: 'gateway', x: 260, y: 220, status: 'healthy', cpu: 32, memory: 45, replicas: 3 },
-      { id: 'auth-1', label: 'Auth0 / Okta IAM', type: 'auth', x: 260, y: 70, status: 'healthy', cpu: 18, memory: 22, replicas: 2 },
-      { id: 'srv-order', label: 'Order Processing Service', type: 'service', x: 480, y: 150, status: 'healthy', cpu: 48, memory: 62, replicas: 4 },
-      { id: 'srv-catalog', label: 'Catalog Service', type: 'service', x: 480, y: 310, status: 'healthy', cpu: 28, memory: 52, replicas: 3 },
-      { id: 'cache-1', label: 'Redis ElastiCache Cluster', type: 'cache', x: 700, y: 310, status: 'healthy', cpu: 42, memory: 78, replicas: 3 },
-      { id: 'queue-1', label: 'Amazon MSK (Kafka) Bus', type: 'queue', x: 700, y: 150, status: 'healthy', cpu: 38, memory: 55, replicas: 3 },
-      { id: 'db-pg', label: 'Aurora PostgreSQL Multi-AZ', type: 'database', x: 920, y: 150, status: 'healthy', cpu: 52, memory: 68, replicas: 2 },
-      { id: 'pay-1', label: 'Stripe Payment Gateway', type: 'third_party', x: 920, y: 280, status: 'healthy', cpu: 15, memory: 20, replicas: 1 }
+      { id: 'cdn-1', label: 'Cloudflare Global Edge CDN', type: 'cdn', x: 80, y: 250, status: 'healthy', cpu: 14, memory: 28, replicas: 3 },
+      { id: 'gw-1', label: 'Kong Enterprise Gateway', type: 'gateway', x: 280, y: 250, status: 'healthy', cpu: 32, memory: 45, replicas: 3 },
+      { id: 'auth-1', label: 'Auth0 / Okta IAM', type: 'auth', x: 280, y: 90, status: 'healthy', cpu: 18, memory: 22, replicas: 2 },
+      { id: 'srv-order', label: 'Order Processing Service', type: 'service', x: 520, y: 160, status: 'healthy', cpu: 48, memory: 62, replicas: 4 },
+      { id: 'srv-catalog', label: 'Catalog Service', type: 'service', x: 520, y: 340, status: 'healthy', cpu: 28, memory: 52, replicas: 3 },
+      { id: 'cache-1', label: 'Redis ElastiCache Cluster', type: 'cache', x: 760, y: 340, status: 'healthy', cpu: 42, memory: 78, replicas: 3 },
+      { id: 'queue-1', label: 'Amazon MSK (Kafka) Bus', type: 'queue', x: 760, y: 160, status: 'healthy', cpu: 38, memory: 55, replicas: 3 },
+      { id: 'db-pg', label: 'Aurora PostgreSQL Multi-AZ', type: 'database', x: 1000, y: 160, status: 'healthy', cpu: 52, memory: 68, replicas: 2 },
+      { id: 'pay-1', label: 'Stripe Payment Gateway', type: 'third_party', x: 1000, y: 320, status: 'healthy', cpu: 15, memory: 20, replicas: 1 }
     ],
     connections: [
       { id: 'c1', from: 'cdn-1', to: 'gw-1', protocol: 'HTTPS / TLS 1.3', latency: '12ms', throughput: '12.4k req/s' },
@@ -86,13 +86,13 @@ export const ARCHITECTURE_TEMPLATES = {
     name: 'FinTech Zero-Trust Payment Hub',
     description: 'Mission-critical financial infrastructure with HSM encryption, double-entry ledger, and real-time fraud ML detection.',
     nodes: [
-      { id: 'cdn-fin', label: 'Cloudflare DDoS Shield & WAF', type: 'cdn', x: 80, y: 220, status: 'healthy', cpu: 18, memory: 30, replicas: 2 },
-      { id: 'gw-fin', label: 'mTLS Banking Gateway', type: 'gateway', x: 260, y: 220, status: 'healthy', cpu: 44, memory: 52, replicas: 3 },
-      { id: 'srv-fraud', label: 'Real-Time Fraud ML Model', type: 'ai_model', x: 480, y: 110, status: 'healthy', cpu: 82, memory: 88, replicas: 4 },
-      { id: 'srv-trans', label: 'Transaction Router Core', type: 'service', x: 480, y: 280, status: 'healthy', cpu: 65, memory: 70, replicas: 4 },
-      { id: 'queue-fin', label: 'Kafka Distributed Log', type: 'queue', x: 700, y: 280, status: 'healthy', cpu: 45, memory: 60, replicas: 3 },
-      { id: 'auth-vault', label: 'HashiCorp Vault HSM', type: 'auth', x: 700, y: 110, status: 'healthy', cpu: 25, memory: 35, replicas: 2 },
-      { id: 'db-ledger', label: 'Immutable SQL Ledger DB', type: 'database', x: 920, y: 280, status: 'healthy', cpu: 58, memory: 75, replicas: 2 }
+      { id: 'cdn-fin', label: 'Cloudflare DDoS Shield & WAF', type: 'cdn', x: 80, y: 250, status: 'healthy', cpu: 18, memory: 30, replicas: 2 },
+      { id: 'gw-fin', label: 'mTLS Banking Gateway', type: 'gateway', x: 280, y: 250, status: 'healthy', cpu: 44, memory: 52, replicas: 3 },
+      { id: 'srv-fraud', label: 'Real-Time Fraud ML Model', type: 'ai_model', x: 520, y: 120, status: 'healthy', cpu: 82, memory: 88, replicas: 4 },
+      { id: 'srv-trans', label: 'Transaction Router Core', type: 'service', x: 520, y: 320, status: 'healthy', cpu: 65, memory: 70, replicas: 4 },
+      { id: 'queue-fin', label: 'Kafka Distributed Log', type: 'queue', x: 760, y: 320, status: 'healthy', cpu: 45, memory: 60, replicas: 3 },
+      { id: 'auth-vault', label: 'HashiCorp Vault HSM', type: 'auth', x: 760, y: 120, status: 'healthy', cpu: 25, memory: 35, replicas: 2 },
+      { id: 'db-ledger', label: 'Immutable SQL Ledger DB', type: 'database', x: 1000, y: 320, status: 'healthy', cpu: 58, memory: 75, replicas: 2 }
     ],
     connections: [
       { id: 'f1', from: 'cdn-fin', to: 'gw-fin', protocol: 'TLS 1.3 mTLS', latency: '15ms', throughput: '5.2k req/s' },
