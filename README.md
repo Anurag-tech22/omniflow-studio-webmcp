@@ -147,25 +147,24 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🚢 Deployment Guide
+## 🚢 Deployment Guide (Powered by Render)
 
-OmniFlow Studio is fully client-side and zero-dependency at runtime, making it deployable in seconds to any provider:
+OmniFlow Studio is fully client-side and zero-dependency at runtime, pre-configured for **1-click deployment on Render**:
 
-### Vercel
-```bash
-npx vercel --prod
-```
+### Deploy on Render (Recommended)
+1. Push your repository to GitHub / GitLab.
+2. Go to your [Render Dashboard](https://dashboard.render.com/).
+3. Click **New +** → **Blueprint** (or **Static Site**).
+4. Connect your repository. Render automatically reads [`render.yaml`](./render.yaml) and deploys your site!
 
-### Netlify
-```bash
-npx netlify deploy --prod --dir=dist
-```
+#### Manual Static Site Settings on Render:
+- **Build Command**: `npm install && npm run build`
+- **Publish Directory**: `dist`
+- **Rewrite Rules**: `/*` → `/index.html`
 
-### Cloudflare Pages
-```bash
-npm run build
-npx wrangler pages deploy dist --project-name=omniflow-studio
-```
+### Alternative Providers
+- **Netlify**: `npm run build && npx netlify deploy --prod --dir=dist`
+- **Cloudflare Pages**: `npm run build && npx wrangler pages deploy dist --project-name=omniflow-studio`
 
 ---
 

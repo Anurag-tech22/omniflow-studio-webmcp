@@ -120,7 +120,7 @@ npm run dev
 ### 🚀 Criterion 2: Execution & Product Coherence (Score Target: 10/10)
 - **Complete, Polished Experience**: Not a barebones PoC. Features a dark-glassmorphic design system with 60 FPS HTML5 canvas physics, responsive zoom/pan controls, audio feedback via the Web Audio API, and dynamic layout algorithms.
 - **Live Real-Time Simulation**: Real particle physics engine animating traffic packets, dynamic requests per second (RPS) meters, and simulated CPU/memory telemetry spikes.
-- **Zero-Friction Zero-Error Build**: Pure client-side modular architecture with 0 console errors, instant bundling with Vite, and 1-click deployment configurations for Vercel, Netlify, and Cloudflare Pages.
+- **Zero-Friction Zero-Error Build**: Pure client-side modular architecture with 0 console errors, instant bundling with Vite, and 1-click deployment on **Render** (via `render.yaml`), Netlify, and Cloudflare Pages.
 
 ### 🌍 Criterion 3: Potential Impact (Score Target: 10/10)
 - **Solves a Massive Real-World Problem**: Cloud architecture and distributed systems engineering are notoriously complex, prone to misconfigurations, single points of failure (SPOF), and cloud security vulnerabilities.
