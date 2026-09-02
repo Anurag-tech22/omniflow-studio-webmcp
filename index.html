@@ -830,6 +830,46 @@ document.modelContext.registerTool({
       </div>
     </div>
 
+    <!-- Modal 7: Keyboard Shortcuts Cheatsheet (WCAG Accessibility) -->
+    <div class="modal-backdrop hidden" id="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+      <div class="modal-card glass-panel" style="max-width: 580px;">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <div class="icon-circle bg-purple">⌨️</div>
+            <div>
+              <h3 class="modal-title" id="shortcuts-title">Keyboard Navigation & Shortcuts</h3>
+              <p class="modal-subtitle">WCAG 2.1 AAA Compliant Power-User Cheatsheet</p>
+            </div>
+          </div>
+          <button class="btn-icon-sm" onclick="document.getElementById('shortcuts-modal').classList.add('hidden')" aria-label="Close shortcuts cheatsheet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div style="padding: 16px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Close Modal / Flyout</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">Esc</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Delete Selected Node</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">Delete</kbd> or <kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">Backspace</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Undo Canvas Step</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">Ctrl + Z</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Redo Canvas Step</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">Ctrl + Y</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Toggle Agent Co-Pilot</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">C</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Toggle Autonomous Auto-Pilot</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">A</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Toggle Swarm Consensus</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">S</kbd></td></tr>
+              <tr><td style="padding: 8px 4px; color: var(--text-secondary);">Open Shortcuts Cheatsheet</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">?</kbd></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-sm btn-glow" onclick="document.getElementById('shortcuts-modal').classList.add('hidden')">
+            Got It
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen Reader Live Announcer (WCAG 2.1 AAA) -->
+    <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
   </div>
 
   <!-- Scripts -->

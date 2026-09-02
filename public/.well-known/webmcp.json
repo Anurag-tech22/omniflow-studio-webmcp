@@ -6,7 +6,7 @@
   "specification": "W3C Web Model Context Protocol Draft 2026",
   "homepage": "https://github.com/Anurag-tech22/omniflow-studio-webmcp",
   "capabilities": {
-    "imperativeTools": 26,
+    "imperativeTools": 28,
     "declarativeFormTools": 2,
     "autonomousAutoPilot": true,
     "multiAgentSwarm": true,
@@ -34,6 +34,8 @@
     { "name": "optimize_architecture", "mode": "mutating", "description": "Applies automated refactoring for cost, latency, security, or high-availability" },
     { "name": "generate_infrastructure_code", "mode": "readOnly", "description": "Compiles Terraform, Kubernetes Helm, AWS CloudFormation, and Docker manifests" },
     { "name": "generate_architecture_manifesto", "mode": "readOnly", "description": "Compiles an executive Markdown manifesto with live Mermaid diagrams" },
+    { "name": "export_architecture_json", "mode": "readOnly", "description": "Exports and downloads the active visual architecture as a standardized JSON blueprint" },
+    { "name": "import_architecture_json", "mode": "mutating", "description": "Imports and loads a custom architecture JSON definition onto the canvas" },
     { "name": "apply_layout_preset", "mode": "mutating", "description": "Auto-arranges nodes using balanced hierarchical spacing" },
     { "name": "load_architecture_template", "mode": "mutating", "description": "Loads enterprise blueprints (NVIDIA H100 AI Supercluster, Agent Swarm, E-Commerce, FinTech)" },
     { "name": "export_canvas_image", "mode": "readOnly", "description": "Downloads high-resolution PNG architecture diagram" },

@@ -541,6 +541,44 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
+  // 27. export_architecture_json
+  document.modelContext.registerTool({
+    name: 'export_architecture_json',
+    description: 'Export and download the complete active visual architecture as a standardized JSON blueprint.',
+    readOnlyHint: true,
+    inputSchema: { type: 'object', properties: {} },
+    execute: async () => {
+      canvasEngine.exportAsJson();
+      return {
+        success: true,
+        nodesCount: canvasEngine.nodes.length,
+        connectionsCount: canvasEngine.connections.length,
+        status: 'downloaded'
+      };
+    }
+  });
+
+  // 28. import_architecture_json
+  document.modelContext.registerTool({
+    name: 'import_architecture_json',
+    description: 'Import and render a custom architecture JSON definition onto the canvas, replacing or updating the active graph.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        architectureJson: {
+          type: 'string',
+          description: 'Valid JSON string containing nodes and connections arrays.'
+        }
+      },
+      required: ['architectureJson']
+    },
+    execute: async ({ architectureJson }) => {
+      const result = canvasEngine.importFromJson(architectureJson);
+      updateFinOpsUI(canvasEngine);
+      return result;
+    }
+  });
+
   function updateFinOpsUI(engine) {
     const rps = engine.simulator.isRunning ? engine.simulator.trafficRps : 0;
     const stats = CostEngine.calculate(engine.nodes, rps);

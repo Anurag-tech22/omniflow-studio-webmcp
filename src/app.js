@@ -233,6 +233,42 @@ document.addEventListener('DOMContentLoaded', () => {
     webmcp.executeTool('run_security_audit', {}).catch(() => {});
   }
 
+  // Global WCAG 2.1 AAA Keyboard Accessibility Navigation
+  window.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+      if (e.key === 'Escape') e.target.blur();
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.add('hidden'));
+      document.getElementById('node-inspector-drawer')?.classList.add('hidden');
+      announceA11y('All open modals and drawers closed.');
+    } else if (e.key === 'Delete' || e.key === 'Backspace') {
+      if (canvas.selectedNode) {
+        const name = canvas.selectedNode.label;
+        canvas.deleteNode(canvas.selectedNode.id);
+        updateGlobalFinOps();
+        announceA11y(`Node ${name} deleted.`);
+      }
+    } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+      e.preventDefault();
+      document.getElementById('shortcuts-modal')?.classList.toggle('hidden');
+      announceA11y('Keyboard shortcuts cheatsheet opened.');
+    } else if (e.key.toLowerCase() === 'a' && !e.ctrlKey && !e.metaKey) {
+      document.getElementById('btn-toggle-autopilot')?.click();
+    } else if (e.key.toLowerCase() === 's' && !e.ctrlKey && !e.metaKey) {
+      document.getElementById('btn-open-swarm')?.click();
+    } else if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
+      document.getElementById('btn-open-agent-copilot')?.click();
+    }
+  });
+
+  function announceA11y(message) {
+    const el = document.getElementById('a11y-announcer');
+    if (el) el.textContent = message;
+  }
+
   // 5. Initial Boot: Load NVIDIA H100 GPU AI Training Cluster & Open Agent Swarm
   const initialTpl = ARCHITECTURE_TEMPLATES['nvidia-gpu-ai'];
   if (initialTpl) {

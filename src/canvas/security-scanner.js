@@ -4,6 +4,10 @@
  */
 
 export class SecurityScanner {
+  static audit(nodes, connections) {
+    return this.scan(nodes, connections);
+  }
+
   static scan(nodes, connections) {
     const findings = [];
     let score = 100;

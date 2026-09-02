@@ -505,6 +505,34 @@ export class CanvasEngine {
     document.body.removeChild(a);
   }
 
+  exportAsJson() {
+    const payload = JSON.stringify({
+      version: '1.0.0',
+      exportedAt: new Date().toISOString(),
+      nodes: this.nodes,
+      connections: this.connections
+    }, null, 2);
+    const blob = new Blob([payload], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `omniflow-architecture-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  importFromJson(jsonStr) {
+    const data = typeof jsonStr === 'string' ? JSON.parse(jsonStr) : jsonStr;
+    if (!data || !Array.isArray(data.nodes)) {
+      throw new Error('Invalid architecture JSON format: expected nodes array.');
+    }
+    this.loadTopology(data.nodes, data.connections || []);
+    this.autoFitView();
+    return { success: true, nodesLoaded: data.nodes.length, linksLoaded: (data.connections || []).length };
+  }
+
   checkEmptyState() {
     const emptyEl = document.getElementById('canvas-empty-state');
     if (emptyEl) {

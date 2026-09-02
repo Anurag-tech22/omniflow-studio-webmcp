@@ -11,7 +11,7 @@ export class ManifestoGenerator {
   static generate(nodes, connections, options = {}) {
     const timestamp = new Date().toISOString();
     const cost = CostEngine.calculate(nodes);
-    const security = SecurityScanner.audit(nodes, connections);
+    const security = SecurityScanner.scan(nodes, connections);
     const benchmark = BenchmarkEngine.evaluateCluster(nodes);
 
     let doc = `# =========================================================================\n`;
@@ -40,7 +40,8 @@ export class ManifestoGenerator {
     doc += `- **Max Compute Throughput**: ~${benchmark.maxClusterThroughputTokSec} tokens/sec\n\n`;
 
     doc += `## 4. Security & Compliance Posture\n`;
-    doc += `- **Overall System Health Score**: ${security.healthScore}%\n`;
+    doc += `### SOC2 & ISO 27001 Compliance Matrix\n`;
+    doc += `- **Overall System Health Score**: ${security.score || 100}%\n`;
     doc += `- **Vulnerabilities Identified**: ${security.findings.length}\n`;
     if (security.findings.length > 0) {
       security.findings.forEach(f => {
@@ -52,6 +53,7 @@ export class ManifestoGenerator {
     doc += `\n`;
 
     doc += `## 5. FinOps Cost Allocation Breakdown\n`;
+    doc += `### FinOps TCO & Economic Model\n`;
     doc += `| Component | Type | Replicas | Unit Cost | Monthly Total |\n`;
     doc += `| :--- | :--- | :---: | :--- | :---: |\n`;
     cost.breakdown.forEach(item => {

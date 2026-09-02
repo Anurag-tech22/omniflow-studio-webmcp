@@ -282,15 +282,22 @@ export class AgentCopilot {
   appendMessage(sender, text) {
     const bubble = document.createElement('div');
     bubble.className = `agent-bubble ${sender === 'user' ? 'user-msg' : (sender === 'system' ? 'system-welcome' : 'ai-msg')}`;
+    const sanitizedText = sender === 'user' ? this.escapeHtml(text) : text;
     bubble.innerHTML = `
       <div class="bubble-header">
         <span class="${sender === 'user' ? 'badge-user' : (sender === 'system' ? 'badge-ai' : 'badge-ai')}">${sender === 'user' ? 'You' : (sender === 'system' ? 'System' : 'WebMCP Swarm')}</span>
         <span class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
       </div>
-      <div class="bubble-content">${text}</div>
+      <div class="bubble-content">${sanitizedText}</div>
     `;
     this.messagesContainer.appendChild(bubble);
     this.scrollToBottom();
+  }
+
+  escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
   }
 
   createAiBubble() {
