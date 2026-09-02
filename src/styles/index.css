@@ -654,23 +654,51 @@ html, body {
   border: 1px solid var(--border-subtle);
 }
 
-.form-row { display: flex; gap: 5px; }
+.form-row { display: flex; gap: 5px; align-items: center; }
 
+/* Universal Input & Form Controls */
 .input-sm {
   width: 100%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-subtle);
+  background-color: #0d121f !important;
+  border: 1px solid var(--border-medium) !important;
   border-radius: var(--radius-sm);
-  padding: 4px 6px;
-  font-size: 0.7rem;
-  color: var(--text-primary);
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  color: #f8fafc !important;
   outline: none;
   font-family: var(--font-body);
+  transition: all var(--transition-fast);
 }
 
 .input-sm:focus {
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 6px var(--accent-cyan-dim);
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
+}
+
+/* Custom Select & Option Dark Theme (Zero White-on-White Glitches) */
+select, select.input-sm {
+  background-color: #0d121f !important;
+  color: #f8fafc !important;
+  padding-right: 24px !important;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f0ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 8px center !important;
+  background-size: 11px !important;
+}
+
+select option, option {
+  background-color: #080c14 !important;
+  color: #f8fafc !important;
+  padding: 8px 10px;
+}
+
+select option:checked, select option:hover, select option:focus {
+  background-color: #1e293b !important;
+  color: #00f0ff !important;
 }
 
 /* Canvas Viewport */
