@@ -45,10 +45,18 @@ export class TrafficSimulator {
         });
       }
 
-      // Update top status bar
+      // Update top status bar: RPS & p99 Latency SLA
       const rpsEl = document.getElementById('stat-traffic-rps');
       if (rpsEl) {
         rpsEl.textContent = `${(this.currentRps / 1000).toFixed(1)}k req/s`;
+      }
+
+      const p99El = document.getElementById('stat-latency-p99');
+      if (p99El) {
+        let p99 = Math.round(8 + (this.currentRps / 1000) * 1.8 + Math.random() * 3);
+        if (this.currentRps > 30000) p99 = Math.round(75 + Math.random() * 35);
+        p99El.textContent = `${p99}ms`;
+        p99El.className = `stat-value ${p99 > 50 ? 'text-red' : (p99 > 25 ? 'text-amber' : 'text-purple')}`;
       }
     }, 500);
   }
@@ -64,6 +72,11 @@ export class TrafficSimulator {
 
     const rpsEl = document.getElementById('stat-traffic-rps');
     if (rpsEl) rpsEl.textContent = '0 req/s';
+    const p99El = document.getElementById('stat-latency-p99');
+    if (p99El) {
+      p99El.textContent = '8ms';
+      p99El.className = 'stat-value text-purple';
+    }
 
     // Reset nodes to healthy
     this.canvas.nodes.forEach(n => {

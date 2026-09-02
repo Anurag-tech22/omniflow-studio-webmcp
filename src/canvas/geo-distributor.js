@@ -43,7 +43,7 @@ export class GeoDistributor {
       status: 'healthy',
       trafficShare: '6%',
       compliance: 'LGPD / Tier III Certified',
-      edgePoPs: 32
+      edgePoPs: 34
     }
   ];
 

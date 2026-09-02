@@ -197,6 +197,52 @@ export class AgentCopilot {
         await callTool('clear_canvas', {}, 'Clearing canvas');
         contentEl.innerHTML = `<p>🗑️ Canvas reset. All nodes and connections cleared.</p>`;
 
+      } else if (lower.includes('benchmark') || lower.includes('ttft') || lower.includes('deepseek') || lower.includes('claude 3.7')) {
+        contentEl.innerHTML = `<p>🧠 <strong>[AI Hardware Benchmark Lab] Reasoning:</strong> Evaluating inference throughput, KV-cache VRAM, and TTFT latency across frontier models.</p>`;
+        await callTool('benchmark_ai_models', {}, 'Evaluating cluster token throughput and VRAM footprint');
+        document.getElementById('btn-open-benchmark')?.click();
+        const summary = document.createElement('div');
+        summary.innerHTML = `<br/>📊 <strong>Frontier Benchmark Modal Opened:</strong> Comparing Claude 3.7 Sonnet, GPT-4o, Gemini 2.0 Flash, and DeepSeek-R1.`;
+        contentEl.appendChild(summary);
+
+      } else if (lower.includes('geo') || lower.includes('edge') || lower.includes('pop') || lower.includes('anycast') || lower.includes('region')) {
+        contentEl.innerHTML = `<p>🌍 <strong>[Global Edge Network] Reasoning:</strong> Simulating Anycast routing across North America, Europe, Tokyo, and São Paulo.</p>`;
+        await callTool('simulate_global_geo_distribution', {}, 'Evaluating edge cache hit rates and regional SLAs');
+        document.getElementById('btn-open-geo')?.click();
+        const summary = document.createElement('div');
+        summary.innerHTML = `<br/>🌍 <strong>Multi-Region Edge SLA Modal Opened:</strong> Real-time Anycast latency and GDPR/SOC2 compliance verified.`;
+        contentEl.appendChild(summary);
+
+      } else if (lower.startsWith('add') || lower.startsWith('create') || lower.includes('insert') || lower.includes('spawn')) {
+        let detectedType = 'service';
+        if (lower.includes('cache') || lower.includes('redis')) detectedType = 'cache';
+        else if (lower.includes('db') || lower.includes('database') || lower.includes('postgres') || lower.includes('aurora')) detectedType = 'database';
+        else if (lower.includes('gpu') || lower.includes('h100') || lower.includes('nvidia')) detectedType = 'gpu_cluster';
+        else if (lower.includes('gateway') || lower.includes('ingress') || lower.includes('proxy')) detectedType = 'gateway';
+        else if (lower.includes('vector') || lower.includes('milvus') || lower.includes('pinecone')) detectedType = 'vector_db';
+        else if (lower.includes('queue') || lower.includes('kafka')) detectedType = 'queue';
+        else if (lower.includes('auth') || lower.includes('okta')) detectedType = 'auth';
+
+        // Extract custom name if available
+        let customLabel = prompt.replace(/add|create|insert|spawn|new|a|an/gi, '').trim();
+        if (!customLabel || customLabel.length < 2) customLabel = `${detectedType.toUpperCase()} Service`;
+        if (customLabel.length > 26) customLabel = customLabel.substring(0, 26);
+
+        contentEl.innerHTML = `<p>🏗️ <strong>[Architect] Reasoning:</strong> Dynamically adding custom node <strong>${customLabel}</strong> (${detectedType}) to active topology.</p>`;
+        const spawnX = 200 + (this.canvas.nodes.length * 40) % 600;
+        const spawnY = 140 + (this.canvas.nodes.length * 30) % 250;
+        const created = await callTool('create_node', { label: customLabel, type: detectedType, x: spawnX, y: spawnY }, `Spawning ${customLabel}`);
+        
+        // Connect to an existing node if available
+        if (this.canvas.nodes.length > 1) {
+          const prevNode = this.canvas.nodes[this.canvas.nodes.length - 2];
+          await callTool('connect_nodes', { from: prevNode.id, to: created.node.id, protocol: 'gRPC Internal' }, `Wiring ${prevNode.label} → ${customLabel}`);
+        }
+
+        const summary = document.createElement('div');
+        summary.innerHTML = `<br/>✨ <strong>Dynamic Node Added:</strong> "${customLabel}" (${detectedType}) created and wired to graph topology.`;
+        contentEl.appendChild(summary);
+
       } else {
         contentEl.innerHTML = `<p>🏗️ <strong>Reasoning:</strong> Constructing architecture based on your prompt.</p>`;
 

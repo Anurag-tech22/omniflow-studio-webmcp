@@ -42,7 +42,7 @@ export class BenchmarkModal {
     const cluster = BenchmarkEngine.evaluateCluster(this.canvas.nodes);
 
     let html = `
-      <div class="benchmark-header-grid">
+      <div class="benchmark-header-grid" style="grid-template-columns: 1fr 1fr 1fr 1.2fr;">
         <div class="bench-stat-card">
           <div class="bench-num text-emerald">${cluster.totalGpus} GPUs</div>
           <div class="bench-label">Cluster H100 Modules</div>
@@ -54,6 +54,10 @@ export class BenchmarkModal {
         <div class="bench-stat-card">
           <div class="bench-num text-purple">${cluster.maxClusterThroughputTokSec} tok/s</div>
           <div class="bench-label">Max Token Throughput</div>
+        </div>
+        <div class="bench-stat-card">
+          <div class="bench-num text-pink">${cluster.tensorParallelismDegree}</div>
+          <div class="bench-label">${cluster.nvlinkInterconnectSpeedup}</div>
         </div>
       </div>
 
