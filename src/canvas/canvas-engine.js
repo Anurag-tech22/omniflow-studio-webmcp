@@ -368,8 +368,8 @@ export class CanvasEngine {
       type: data.type || 'service',
       x: data.x || 100,
       y: data.y || 100,
-      width: 210,
-      height: 82,
+      width: 236,
+      height: 84,
       status: data.status || 'healthy',
       cpu: data.cpu || Math.floor(20 + Math.random() * 35),
       memory: data.memory || Math.floor(30 + Math.random() * 40),
@@ -419,8 +419,8 @@ export class CanvasEngine {
   loadTopology(nodes, connections) {
     this.pushHistory();
     this.nodes = nodes.map(n => ({
-      width: 210,
-      height: 82,
+      width: 236,
+      height: 84,
       replicas: n.replicas || 1,
       ...n
     }));
@@ -754,38 +754,39 @@ export class CanvasEngine {
     ctx.fillText(cfg.icon, node.x + 26, node.y + 26);
 
     // Label
-    ctx.font = '600 12px "Inter", -apple-system, sans-serif';
+    ctx.font = '600 11.5px "Inter", -apple-system, BlinkMacSystemFont, sans-serif';
     ctx.fillStyle = '#f8fafc';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    const labelText = node.label.length > 19 ? `${node.label.substring(0, 17)}...` : node.label;
-    ctx.fillText(labelText, node.x + 50, node.y + 14);
+    const maxLen = 28;
+    const labelText = node.label.length > maxLen ? `${node.label.substring(0, maxLen - 2)}...` : node.label;
+    ctx.fillText(labelText, node.x + 48, node.y + 13);
 
     // Pill Badge (e.g. "ECS Fargate", "SXM5 Tensor")
     ctx.font = '600 8.5px "JetBrains Mono", monospace';
     const badgeText = cfg.badge;
     const badgeWidth = ctx.measureText(badgeText).width + 8;
     ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
-    this.roundRect(ctx, node.x + 50, node.y + 32, badgeWidth, 14, 3);
+    this.roundRect(ctx, node.x + 48, node.y + 32, badgeWidth, 14, 3);
     ctx.fill();
 
     ctx.fillStyle = cfg.color;
-    ctx.fillText(badgeText, node.x + 54, node.y + 34);
+    ctx.fillText(badgeText, node.x + 52, node.y + 34);
 
     // Replicas Chip (e.g. "3x")
     if (node.replicas > 1) {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-      this.roundRect(ctx, node.x + 50 + badgeWidth + 4, node.y + 32, 22, 14, 3);
+      this.roundRect(ctx, node.x + 48 + badgeWidth + 4, node.y + 32, 22, 14, 3);
       ctx.fill();
       ctx.fillStyle = '#e2e8f0';
-      ctx.fillText(`${node.replicas}x`, node.x + 50 + badgeWidth + 7, node.y + 34);
+      ctx.fillText(`${node.replicas}x`, node.x + 48 + badgeWidth + 7, node.y + 34);
     }
 
     // Mini Live Sparkline Waveform
     const hist = this.sparklineHistory.get(node.id) || [node.cpu];
-    const sparkX = node.x + 50;
+    const sparkX = node.x + 48;
     const sparkY = node.y + 66;
-    const sparkW = 85;
+    const sparkW = 96;
     const sparkH = 10;
 
     ctx.beginPath();
@@ -803,12 +804,12 @@ export class CanvasEngine {
     // CPU & Memory Labels
     ctx.font = '8px "JetBrains Mono", monospace';
     ctx.fillStyle = '#64748b';
-    ctx.fillText(`CPU ${node.cpu}%`, node.x + 145, node.y + 56);
-    ctx.fillText(`MEM ${node.memory}%`, node.x + 145, node.y + 68);
+    ctx.fillText(`CPU ${node.cpu}%`, node.x + 158, node.y + 56);
+    ctx.fillText(`MEM ${node.memory}%`, node.x + 158, node.y + 68);
 
     // Status Dot (Top Right)
     ctx.beginPath();
-    ctx.arc(node.x + node.width - 14, node.y + 16, 4.5, 0, Math.PI * 2);
+    ctx.arc(node.x + node.width - 12, node.y + 16, 4.5, 0, Math.PI * 2);
     ctx.fillStyle = node.status === 'warning' ? '#ef4444' : '#10b981';
     ctx.fill();
 
