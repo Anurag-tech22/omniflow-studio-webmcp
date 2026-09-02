@@ -1,52 +1,54 @@
 /**
- * High-Performance Interactive Architecture Canvas Engine (World-Class Edition)
- * Apple/Linear/OpenAI Glassmorphism with Live Sparkline Telemetry & GPU Clusters.
+ * High-Performance Interactive HTML5 Vector Canvas Engine (Enterprise Edition)
+ * Supports 60 FPS spatial rendering, pan/zoom, interactive port-to-port visual wiring,
+ * multi-step Undo/Redo history stack, synthesizer audio feedback, and WebMCP telemetry.
  */
 
 import { TrafficSimulator } from './traffic-simulator.js';
 
 export class CanvasEngine {
-  constructor(canvasEl) {
-    this.canvas = canvasEl;
-    this.ctx = canvasEl.getContext('2d');
-
-    // Canvas State
+  constructor(canvasElement) {
+    this.canvas = canvasElement;
+    this.ctx = canvasElement.getContext('2d');
+    
+    // Core Graph State
     this.nodes = [];
     this.connections = [];
     this.selectedNode = null;
     this.hoveredNode = null;
-    this.draggingNode = null;
-    this.isPanning = false;
-    this.dragOffset = { x: 0, y: 0 };
-    this.panStart = { x: 0, y: 0 };
+    this.hoveredPort = null; // 'in' | 'out' | null
 
-    // Node Sparkline history
-    this.sparklineHistory = new Map(); // nodeId -> array of last 10 cpu values
-    this.frameCounter = 0;
+    // Undo / Redo History Stack
+    this.historyStack = [];
+    this.redoStack = [];
 
-    // Viewport Transform
+    // Interactive Port Drag-to-Connect Wiring
+    this.isConnecting = false;
+    this.connectingSourceNode = null;
+    this.connectingTargetPos = null;
+
+    // Viewport & Pan/Zoom Transform
     this.transform = {
-      x: 60,
-      y: 40,
+      x: 40,
+      y: 30,
       scale: 1.0,
-      minScale: 0.3,
+      minScale: 0.35,
       maxScale: 2.5
     };
-
-    // Connection Drag State
+    this.isPanning = false;
+    this.panStart = { x: 0, y: 0 };
+    this.draggingNode = null;
+    this.dragOffset = { x: 0, y: 0 };
     this.mouseWorldPos = { x: 0, y: 0 };
 
-    // Traffic Simulator
+    // Subsystems
     this.simulator = new TrafficSimulator(this);
-
-    // Audio SFX synthesis
     this.soundEnabled = true;
     this.audioCtx = null;
+    this.sparklineHistory = new Map();
+    this.frameCounter = 0;
 
-    // Node Selection Callback
-    this.onNodeSelectedCallback = null;
-
-    // Node Type Configuration
+    // Component Styles & Metadata
     this.typeConfig = {
       gateway: { label: 'API Gateway', color: '#00f0ff', icon: '🌐', bg: '#082f49', badge: 'Ingress' },
       service: { label: 'Microservice', color: '#a855f7', icon: '⚙️', bg: '#3b0764', badge: 'ECS Fargate' },
@@ -67,6 +69,59 @@ export class CanvasEngine {
     this.resize();
     this.startRenderLoop();
   }
+
+  // --- History & Undo/Redo ---
+
+  pushHistory() {
+    this.historyStack.push({
+      nodes: JSON.parse(JSON.stringify(this.nodes)),
+      connections: JSON.parse(JSON.stringify(this.connections))
+    });
+    if (this.historyStack.length > 30) this.historyStack.shift();
+    this.redoStack = [];
+    this.updateUndoRedoUI();
+  }
+
+  undo() {
+    if (this.historyStack.length === 0) return false;
+    this.redoStack.push({
+      nodes: JSON.parse(JSON.stringify(this.nodes)),
+      connections: JSON.parse(JSON.stringify(this.connections))
+    });
+    const prev = this.historyStack.pop();
+    this.nodes = prev.nodes;
+    this.connections = prev.connections;
+    this.selectNode(null);
+    this.updateStats();
+    this.updateUndoRedoUI();
+    this.playSfx(420, 'sine', 0.08);
+    return true;
+  }
+
+  redo() {
+    if (this.redoStack.length === 0) return false;
+    this.historyStack.push({
+      nodes: JSON.parse(JSON.stringify(this.nodes)),
+      connections: JSON.parse(JSON.stringify(this.connections))
+    });
+    const next = this.redoStack.pop();
+    this.nodes = next.nodes;
+    this.connections = next.connections;
+    this.selectNode(null);
+    this.updateStats();
+    this.updateUndoRedoUI();
+    this.playSfx(560, 'sine', 0.08);
+    return true;
+  }
+
+  updateUndoRedoUI() {
+    const undoBtn = document.getElementById('btn-canvas-undo');
+    const redoBtn = document.getElementById('btn-canvas-redo');
+    if (undoBtn) undoBtn.style.opacity = this.historyStack.length > 0 ? '1' : '0.4';
+    if (redoBtn) redoBtn.style.opacity = this.redoStack.length > 0 ? '1' : '0.4';
+  }
+
+  // --- Event Handling ---
 
   initEvents() {
     window.addEventListener('resize', () => this.resize());
@@ -93,26 +148,40 @@ export class CanvasEngine {
         const screenY = e.clientY - rect.top;
         const worldPos = this.screenToWorld(screenX, screenY);
 
+        this.pushHistory();
         const node = this.addNode({
           label: this.typeConfig[nodeType]?.label || 'New Service',
           type: nodeType,
-          x: Math.round(worldPos.x - 100),
-          y: Math.round(worldPos.y - 40)
+          x: Math.round(worldPos.x - 105),
+          y: Math.round(worldPos.y - 41)
         });
         this.selectNode(node);
         this.playSfx(440, 'sine', 0.08);
       }
     });
 
-    // Keyboard controls (Delete, Escape)
+    // Keyboard Shortcuts (Undo, Redo, Delete, Escape)
     window.addEventListener('keydown', (e) => {
-      if ((e.key === 'Delete' || e.key === 'Backspace') && this.selectedNode) {
-        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        this.undo();
+      } else if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'y' || (e.key.toLowerCase() === 'z' && e.shiftKey))) {
+        e.preventDefault();
+        this.redo();
+      } else if ((e.key === 'Delete' || e.key === 'Backspace') && this.selectedNode) {
+        this.pushHistory();
         this.deleteNode(this.selectedNode.id);
         this.selectNode(null);
         this.playSfx(220, 'sawtooth', 0.1);
       } else if (e.key === 'Escape') {
         this.selectNode(null);
+        if (this.isConnecting) {
+          this.isConnecting = false;
+          this.connectingSourceNode = null;
+          this.connectingTargetPos = null;
+        }
       }
     });
   }
@@ -156,6 +225,19 @@ export class CanvasEngine {
     return null;
   }
 
+  findOutputPortAt(wx, wy) {
+    for (let i = this.nodes.length - 1; i >= 0; i--) {
+      const node = this.nodes[i];
+      const portX = node.x + (node.width || 210);
+      const portY = node.y + (node.height || 82) / 2;
+      const dist = Math.hypot(wx - portX, wy - portY);
+      if (dist <= 16) {
+        return node;
+      }
+    }
+    return null;
+  }
+
   onMouseDown(e) {
     const rect = this.canvas.getBoundingClientRect();
     const sx = e.clientX - rect.left;
@@ -168,6 +250,17 @@ export class CanvasEngine {
       return;
     }
 
+    // 1. Check if user clicked on Output Port for Visual Wiring
+    const portNode = this.findOutputPortAt(worldPos.x, worldPos.y);
+    if (portNode) {
+      this.isConnecting = true;
+      this.connectingSourceNode = portNode;
+      this.connectingTargetPos = { x: worldPos.x, y: worldPos.y };
+      this.playSfx(720, 'sine', 0.05);
+      return;
+    }
+
+    // 2. Check if clicked on a Node for Dragging / Selection
     const clickedNode = this.findNodeAt(worldPos.x, worldPos.y);
     if (clickedNode) {
       this.selectNode(clickedNode);
@@ -198,6 +291,12 @@ export class CanvasEngine {
     const sy = e.clientY - rect.top;
     this.mouseWorldPos = this.screenToWorld(sx, sy);
 
+    if (this.isConnecting) {
+      this.connectingTargetPos = { x: this.mouseWorldPos.x, y: this.mouseWorldPos.y };
+      this.canvas.style.cursor = 'crosshair';
+      return;
+    }
+
     if (this.isPanning) {
       this.transform.x = sx - this.panStart.x;
       this.transform.y = sy - this.panStart.y;
@@ -210,11 +309,32 @@ export class CanvasEngine {
       return;
     }
 
+    const portNode = this.findOutputPortAt(this.mouseWorldPos.x, this.mouseWorldPos.y);
+    if (portNode) {
+      this.canvas.style.cursor = 'pointer';
+      this.hoveredPort = portNode.id;
+      return;
+    } else {
+      this.hoveredPort = null;
+    }
+
     this.hoveredNode = this.findNodeAt(this.mouseWorldPos.x, this.mouseWorldPos.y);
-    this.canvas.style.cursor = this.hoveredNode ? 'grab' : (this.isPanning ? 'grabbing' : 'crosshair');
+    this.canvas.style.cursor = this.hoveredNode ? 'grab' : (this.isPanning ? 'grabbing' : 'default');
   }
 
   onMouseUp() {
+    if (this.isConnecting && this.connectingSourceNode) {
+      const targetNode = this.findNodeAt(this.mouseWorldPos.x, this.mouseWorldPos.y);
+      if (targetNode && targetNode.id !== this.connectingSourceNode.id) {
+        this.pushHistory();
+        this.connectNodes(this.connectingSourceNode.id, targetNode.id);
+        this.playSfx(880, 'sine', 0.12);
+      }
+      this.isConnecting = false;
+      this.connectingSourceNode = null;
+      this.connectingTargetPos = null;
+    }
+
     this.isPanning = false;
     this.draggingNode = null;
   }
@@ -281,9 +401,9 @@ export class CanvasEngine {
       id: options.id || `c-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       from: fromId,
       to: toId,
-      protocol: options.protocol || 'gRPC',
-      latency: options.latency || `${Math.floor(2 + Math.random() * 12)}ms`,
-      throughput: options.throughput || `${(Math.random() * 8 + 1).toFixed(1)}k req/s`
+      protocol: options.protocol || 'gRPC Internal',
+      latency: options.latency || `${Math.floor(2 + Math.random() * 10)}ms`,
+      throughput: options.throughput || `${(Math.random() * 8 + 2).toFixed(1)}k req/s`
     };
 
     this.connections.push(conn);
@@ -297,6 +417,7 @@ export class CanvasEngine {
   }
 
   loadTopology(nodes, connections) {
+    this.pushHistory();
     this.nodes = nodes.map(n => ({
       width: 210,
       height: 82,
@@ -314,6 +435,7 @@ export class CanvasEngine {
   }
 
   clearCanvas() {
+    this.pushHistory();
     this.nodes = [];
     this.connections = [];
     this.selectNode(null);
@@ -342,7 +464,7 @@ export class CanvasEngine {
     const graphHeight = maxY - minY + 160;
     const scaleX = this.logicalWidth / graphWidth;
     const scaleY = this.logicalHeight / graphHeight;
-    const scale = Math.min(1.05, Math.max(0.55, Math.min(scaleX, scaleY)));
+    const scale = Math.min(1.0, Math.max(0.55, Math.min(scaleX, scaleY)));
 
     this.transform.scale = scale;
     this.transform.x = (this.logicalWidth - (maxX + minX) * scale) / 2;
@@ -352,52 +474,23 @@ export class CanvasEngine {
     if (indicator) indicator.textContent = `${Math.round(scale * 100)}%`;
   }
 
-  applyAutoLayout(type = 'hierarchical') {
-    if (this.nodes.length === 0) return;
+  zoomIn() {
+    this.transform.scale = Math.min(this.transform.maxScale, this.transform.scale * 1.2);
+    const indicator = document.getElementById('zoom-indicator');
+    if (indicator) indicator.textContent = `${Math.round(this.transform.scale * 100)}%`;
+  }
 
-    const orderRank = {
-      cdn: 0,
-      gateway: 1,
-      auth: 1.5,
-      service: 2,
-      serverless: 2,
-      ai_model: 2.5,
-      cache: 3,
-      queue: 3,
-      gpu_cluster: 3,
-      vector_db: 3.5,
-      database: 4,
-      blob_store: 4,
-      third_party: 4
+  zoomOut() {
+    this.transform.scale = Math.max(this.transform.minScale, this.transform.scale / 1.2);
+    const indicator = document.getElementById('zoom-indicator');
+    if (indicator) indicator.textContent = `${Math.round(this.transform.scale * 100)}%`;
+  }
+
+  exportState() {
+    return {
+      nodes: this.nodes.map(n => ({ ...n })),
+      connections: this.connections.map(c => ({ ...c }))
     };
-
-    const tiers = {};
-    this.nodes.forEach(n => {
-      const rank = orderRank[n.type] ?? 2;
-      if (!tiers[rank]) tiers[rank] = [];
-      tiers[rank].push(n);
-    });
-
-    const sortedRanks = Object.keys(tiers).sort((a, b) => Number(a) - Number(b));
-    let startX = 80;
-    const colSpacing = 260;
-
-    sortedRanks.forEach(rank => {
-      const colNodes = tiers[rank];
-      const rowSpacing = 120;
-      const totalHeight = colNodes.length * rowSpacing;
-      let startY = Math.max(60, (this.logicalHeight - totalHeight) / 2);
-
-      colNodes.forEach((node, idx) => {
-        node.x = startX;
-        node.y = startY + idx * rowSpacing;
-      });
-
-      startX += colSpacing;
-    });
-
-    this.autoFitView();
-    this.playSfx(660, 'sine', 0.1);
   }
 
   exportAsPng() {
@@ -498,6 +591,11 @@ export class CanvasEngine {
     this.simulator.render(ctx, nodeMap);
     this.nodes.forEach(node => this.drawNode(ctx, node));
 
+    // Interactive Dragging Wire (when dragging from a port)
+    if (this.isConnecting && this.connectingSourceNode && this.connectingTargetPos) {
+      this.drawActiveConnectionDrag(ctx, this.connectingSourceNode, this.connectingTargetPos);
+    }
+
     ctx.restore();
   }
 
@@ -574,9 +672,37 @@ export class CanvasEngine {
     });
   }
 
+  drawActiveConnectionDrag(ctx, fromNode, targetPos) {
+    const x1 = fromNode.x + fromNode.width;
+    const y1 = fromNode.y + fromNode.height / 2;
+    const x2 = targetPos.x;
+    const y2 = targetPos.y;
+
+    const dx = Math.max(40, (x2 - x1) * 0.45);
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.bezierCurveTo(x1 + dx, y1, x2 - dx, y2, x2, y2);
+
+    ctx.strokeStyle = '#00f0ff';
+    ctx.lineWidth = 2.5;
+    ctx.setLineDash([6, 4]);
+    ctx.shadowColor = 'rgba(0, 240, 255, 0.8)';
+    ctx.shadowBlur = 12;
+    ctx.stroke();
+
+    // Target Glowing Endpoint Ring
+    ctx.beginPath();
+    ctx.arc(x2, y2, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#00f0ff';
+    ctx.fill();
+    ctx.restore();
+  }
+
   drawNode(ctx, node) {
     const isSelected = this.selectedNode === node;
     const isHovered = this.hoveredNode === node;
+    const isPortHovered = this.hoveredPort === node.id;
     const cfg = this.typeConfig[node.type] || this.typeConfig.service;
 
     ctx.save();
@@ -685,6 +811,30 @@ export class CanvasEngine {
     ctx.arc(node.x + node.width - 14, node.y + 16, 4.5, 0, Math.PI * 2);
     ctx.fillStyle = node.status === 'warning' ? '#ef4444' : '#10b981';
     ctx.fill();
+
+    // --- Interactive Port Anchors ---
+    // Left Input Port Anchor
+    ctx.beginPath();
+    ctx.arc(node.x, node.y + node.height / 2, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#1e293b';
+    ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.fill();
+    ctx.stroke();
+
+    // Right Output Port Anchor (Interactive Wire Drag Target)
+    const outPortRadius = isPortHovered ? 7 : 5;
+    ctx.beginPath();
+    ctx.arc(node.x + node.width, node.y + node.height / 2, outPortRadius, 0, Math.PI * 2);
+    ctx.fillStyle = isPortHovered ? '#00f0ff' : '#0f172a';
+    ctx.strokeStyle = isPortHovered ? '#ffffff' : '#00f0ff';
+    ctx.lineWidth = isPortHovered ? 2 : 1.5;
+    if (isPortHovered) {
+      ctx.shadowColor = 'rgba(0, 240, 255, 0.8)';
+      ctx.shadowBlur = 8;
+    }
+    ctx.fill();
+    ctx.stroke();
 
     ctx.restore();
   }

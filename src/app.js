@@ -187,8 +187,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Canvas Undo & Redo Toolbar Controls
+  const undoBtn = document.getElementById('btn-canvas-undo');
+  const redoBtn = document.getElementById('btn-canvas-redo');
+
+  if (undoBtn) {
+    undoBtn.addEventListener('click', () => {
+      canvas.undo();
+      updateGlobalFinOps();
+    });
+  }
+
+  if (redoBtn) {
+    redoBtn.addEventListener('click', () => {
+      canvas.redo();
+      updateGlobalFinOps();
+    });
+  }
+
   function updateGlobalFinOps() {
-    const stats = CostEngine.calculate(canvas.nodes);
+    const trafficRps = canvas.simulator.isRunning ? canvas.simulator.trafficRps : 0;
+    const stats = CostEngine.calculate(canvas.nodes, trafficRps);
     const costEl = document.getElementById('stat-cloud-cost');
     if (costEl) costEl.textContent = `$${stats.monthlyTotal}/mo`;
   }
@@ -197,12 +216,18 @@ document.addEventListener('DOMContentLoaded', () => {
     webmcp.executeTool('run_security_audit', {}).catch(() => {});
   }
 
-  // 5. Initial Boot: Load NVIDIA H100 GPU AI Training Cluster for a jaw-dropping initial render!
+  // 5. Initial Boot: Load NVIDIA H100 GPU AI Training Cluster & Open Agent Swarm
   const initialTpl = ARCHITECTURE_TEMPLATES['nvidia-gpu-ai'];
   if (initialTpl) {
     canvas.loadTopology(initialTpl.nodes, initialTpl.connections);
     updateGlobalFinOps();
     SecurityScannerUpdate();
+  }
+
+  // Ensure Agent Swarm Co-Pilot is visible by default
+  const agentPanel = document.getElementById('agent-copilot-panel');
+  if (agentPanel) {
+    agentPanel.classList.remove('hidden');
   }
 
   console.log('[OmniFlow Studio] Ready for world-class human-agent co-creation!');
