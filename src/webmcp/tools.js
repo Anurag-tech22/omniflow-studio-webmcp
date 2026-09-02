@@ -9,9 +9,12 @@ import { SecurityScanner } from '../canvas/security-scanner.js';
 import { IaCGenerator } from '../canvas/iac-generator.js';
 import { CostEngine } from '../canvas/cost-engine.js';
 import { ChaosEngine } from '../canvas/chaos-engine.js';
+import { BenchmarkEngine } from '../canvas/benchmark-engine.js';
+import { GeoDistributor } from '../canvas/geo-distributor.js';
+import { ManifestoGenerator } from '../canvas/manifesto-generator.js';
 
 export function registerAllWebMCPTools(canvasEngine) {
-  console.log('[WebMCP] Registering 24 comprehensive tools on document.modelContext...');
+  console.log('[WebMCP] Registering 28 comprehensive enterprise tools on document.modelContext...');
 
   const chaos = new ChaosEngine(canvasEngine);
 
@@ -472,8 +475,70 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
+  // 23. toggle_autonomous_autopilot
+  document.modelContext.registerTool({
+    name: 'toggle_autonomous_autopilot',
+    description: 'Toggle the autonomous self-healing auto-pilot daemon. When enabled, the AI continuously monitors node load, mitigates DDoS floods, and auto-scales replicas in real-time.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        enabled: { type: 'boolean', description: 'Force state (true to enable, false to disable)' }
+      }
+    },
+    execute: async ({ enabled }) => {
+      const autoPilot = canvasEngine.autoPilot;
+      let state;
+      if (typeof enabled === 'boolean') {
+        if (enabled) autoPilot.start();
+        else autoPilot.stop();
+        state = enabled;
+      } else {
+        state = autoPilot.toggle();
+      }
+      return { success: true, autoPilotActive: state, message: state ? 'Auto-pilot engaged' : 'Auto-pilot disengaged' };
+    }
+  });
+
+  // 24. benchmark_ai_models (Read Only)
+  document.modelContext.registerTool({
+    name: 'benchmark_ai_models',
+    description: 'Benchmark and compare Claude 3.7, GPT-4o, Gemini 2.0 Flash, and DeepSeek-R1 inference throughput, TTFT latency, VRAM footprint, and cost trade-offs for the active cluster.',
+    readOnlyHint: true,
+    inputSchema: { type: 'object', properties: {} },
+    execute: async () => {
+      const data = BenchmarkEngine.evaluateCluster(canvasEngine.nodes);
+      return { success: true, clusterBenchmark: data };
+    }
+  });
+
+  // 25. simulate_global_geo_distribution (Read Only)
+  document.modelContext.registerTool({
+    name: 'simulate_global_geo_distribution',
+    description: 'Simulate and inspect multi-region Anycast global edge distribution across US, Europe, Tokyo, and São Paulo with PoP cache hit ratios and regional latency SLAs.',
+    readOnlyHint: true,
+    inputSchema: { type: 'object', properties: {} },
+    execute: async () => {
+      const rps = canvasEngine.simulator.isRunning ? canvasEngine.simulator.trafficRps : 16000;
+      const data = GeoDistributor.simulateGlobalRouting(canvasEngine.nodes, rps);
+      return { success: true, globalDistribution: data };
+    }
+  });
+
+  // 26. generate_architecture_manifesto (Read Only)
+  document.modelContext.registerTool({
+    name: 'generate_architecture_manifesto',
+    description: 'Generate a comprehensive SOC2/ISO-compliant Architecture Manifesto and executive Markdown report with Mermaid system graph diagrams.',
+    readOnlyHint: true,
+    inputSchema: { type: 'object', properties: {} },
+    execute: async () => {
+      const doc = ManifestoGenerator.generate(canvasEngine.nodes, canvasEngine.connections);
+      return { success: true, manifestoMarkdown: doc };
+    }
+  });
+
   function updateFinOpsUI(engine) {
-    const stats = CostEngine.calculate(engine.nodes);
+    const rps = engine.simulator.isRunning ? engine.simulator.trafficRps : 0;
+    const stats = CostEngine.calculate(engine.nodes, rps);
     const costEl = document.getElementById('stat-cloud-cost');
     if (costEl) costEl.textContent = `$${stats.monthlyTotal}/mo`;
   }

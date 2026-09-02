@@ -1,8 +1,9 @@
 # OmniFlow Studio — Human-Agent Collaborative Visual Cloud & Systems Studio (WebMCP)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
-[![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(24%20Tools)-00f0ff.svg)](https://webmachinelearning.github.io/webmcp/)
+[![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(28%20Tools)-00f0ff.svg)](https://webmachinelearning.github.io/webmcp/)
 [![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg)](https://www.nvidia.com/)
+[![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-10b981.svg)](./src/canvas/autopilot-engine.js)
 [![Render Deploy](https://img.shields.io/badge/Deploy-Render%20Blueprint-46e3b7.svg)](./render.yaml)
 [![ChatGPT Sites Ready](https://img.shields.io/badge/ChatGPT-Sites%20Ready-a855f7.svg)](https://learn.chatgpt.com/docs/webmcp)
 [![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-10b981.svg)](chrome://flags/#enable-webmcp-testing)
@@ -13,35 +14,45 @@
 
 ## 🌟 Executive Summary
 
-Instead of forcing AI agents to guess visual layouts, simulate imprecise mouse clicks, or stay trapped in separate text windows, **OmniFlow Studio** registers its entire visual graph topology, NVIDIA GPU cluster engine, real-time FinOps cost calculator, Chaos engineering fault injector, traffic physics engine, security scanner, and multi-cloud code synthesizer directly into the browser tab via `document.modelContext.registerTool()`.
+Instead of forcing AI agents to guess visual layouts, simulate imprecise mouse clicks, or stay trapped in separate text windows, **OmniFlow Studio** registers its entire visual graph topology, NVIDIA GPU cluster engine, real-time FinOps cost calculator, Autonomous Auto-Pilot self-healing loop, Chaos engineering fault injector, traffic physics engine, security scanner, and multi-cloud code synthesizer directly into the browser tab via `document.modelContext.registerTool()`.
 
-Human architects sketch and iterate on visual topologies; AI agent swarms (Architect, SecOps, Chaos Engineer, FinOps Advisor) analyze bottlenecks, debate in a live **Swarm Consensus Protocol**, execute 50,000 RPS DDoS traffic stress tests, remediate vulnerabilities, and compile production Terraform, Helm, and CloudFormation manifests using **24 structured browser tools**.
+Human architects sketch and iterate on visual topologies; AI agent swarms (Architect, SecOps, Chaos Engineer, FinOps Advisor) analyze bottlenecks, debate in a live **Swarm Consensus Protocol**, execute 50,000 RPS DDoS traffic stress tests, remediate vulnerabilities, and compile production Terraform, Helm, and CloudFormation manifests using **28 structured browser tools**.
 
 ---
 
 ## 🏆 Category-Defining Features & Innovations
 
-1. **Autonomous Multi-Agent Swarm Consensus Protocol**:
+1. **Autonomous Self-Healing Auto-Pilot Loop (`AutoPilotEngine`)**:
+   - Continuously monitors node load, latency spikes, and DDoS floods.
+   - Automatically auto-scales worker replicas, balances gateway throughput, and defragments GPU memory to ensure 99.999% cluster SLA 24/7.
+
+2. **Frontier AI Model & Inference Benchmark Lab (`BenchmarkEngine`)**:
+   - Compares **Claude 3.7 Sonnet**, **GPT-4o**, **Gemini 2.0 Flash**, and **DeepSeek-R1** on the active canvas topology.
+   - Evaluates TTFT latency, token throughput (tok/s), FP8/FP16 KV-cache VRAM footprint, and API pricing trade-offs.
+
+3. **Multi-Region Anycast Global Edge & Geo Latency SLA (`GeoDistributor`)**:
+   - Simulates global CDN edge replication across **US-East**, **Europe (Frankfurt)**, **Tokyo**, and **São Paulo**.
+   - Displays real-time Anycast DNS PoP status, cache hit rates (94%+), and regional compliance tags (GDPR, SOC2, HIPAA).
+
+4. **Autonomous Multi-Agent Swarm Consensus Protocol**:
    - Live debate and voting stream between 4 specialized AI agents:
      - 🧠 **Lead Architect** (`Claude 3.7 / GPT-4o`)
      - 🛡️ **SecOps Auditor** (`Google SAIF / OWASP`)
      - 💰 **FinOps Advisor** (`AWS / Vercel Pricing`)
      - ⚡ **Chaos Daemon** (`NVIDIA / Cloudflare`)
 
-2. **Chaos Engineering & Fault Injection Lab**:
+5. **Chaos Engineering & Fault Injection Lab**:
    - `inject_ddos_attack`: Simulates a 50,000 RPS flood against API Gateways.
    - `kill_random_node`: Chaos Monkey terminating backend microservices to test Kafka queue failover.
    - `simulate_gpu_oom`: Simulates GPU Out-Of-Memory on NVIDIA H100 clusters.
    - `auto_heal_cluster`: Recovers failed services, attaches Cloudflare WAF, and defragments GPU memory.
 
-3. **NVIDIA H100 AI Training & Inference Cluster Modeling**:
-   - Native support for NVIDIA 8x H100 80GB SXM5 GPU nodes with NVLink 900 GB/s inter-GPU bus, vLLM PagedAttention inference workers, and Milvus Vector DB.
+6. **Interactive Visual Port Wiring & 30-Step Undo/Redo Stack**:
+   - Direct click-and-drag from node Output Ports to connect wires visually with glowing live bezier curves.
+   - Full history snapshots with `Ctrl+Z` / `Ctrl+Y` and UI controls.
 
-4. **Real-Time FinOps Cloud Cost Engine**:
-   - Calculates real-time cloud expenditure ($/mo and $/hr) based on provisioned AWS/GCP/NVIDIA instance types and replica counts with automated 38% cost-saving optimization.
-
-5. **Multi-Cloud Infrastructure Synthesizer**:
-   - Compiles graph topologies into **Terraform (HCL)**, **Kubernetes Helm Charts (`values.yaml`)**, **AWS CloudFormation (YAML)**, **Docker Compose**, and **TypeScript Architecture Definitions**.
+7. **Multi-Cloud Infrastructure Synthesizer & Architecture Manifesto**:
+   - Compiles graph topologies into **Terraform (HCL)**, **Kubernetes Helm Charts (`values.yaml`)**, **AWS CloudFormation (YAML)**, **Docker Compose**, and an executive **Markdown/Mermaid Architecture Manifesto**.
 
 ---
 

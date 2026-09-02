@@ -13,6 +13,9 @@ import { SwarmConsensus } from './components/swarm-consensus.js';
 import { DeclarativeFormsManager } from './components/declarative-forms.js';
 import { ARCHITECTURE_TEMPLATES } from './canvas/templates.js';
 import { CostEngine } from './canvas/cost-engine.js';
+import { AutoPilotEngine } from './canvas/autopilot-engine.js';
+import { BenchmarkModal } from './components/benchmark-modal.js';
+import { GeoModal } from './components/geo-modal.js';
 import { webmcp } from './webmcp/webmcp-core.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,10 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvasEl = document.getElementById('architecture-canvas');
   const canvas = new CanvasEngine(canvasEl);
 
-  // 2. Register 24 WebMCP Tools on document.modelContext
+  // 2. Initialize Autonomous AutoPilot Engine
+  const autoPilot = new AutoPilotEngine(canvas);
+  canvas.autoPilot = autoPilot;
+
+  // 3. Register 28 Enterprise WebMCP Tools on document.modelContext
   registerAllWebMCPTools(canvas);
 
-  // 3. Initialize UI Components & Drawers
+  // 4. Initialize UI Components & Modals
   const hud = new HudInspector(canvas);
   const agent = new AgentCopilot(canvas);
   const codeModal = new CodeModal(canvas);
@@ -33,6 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const nodeInspector = new NodeInspector(canvas);
   const swarmConsensus = new SwarmConsensus(canvas, agent);
   const declarativeForms = new DeclarativeFormsManager(canvas);
+  const benchmarkModal = new BenchmarkModal(canvas);
+  const geoModal = new GeoModal(canvas);
+
+  // 5. Auto-Pilot Toggle Button Handler
+  const autoPilotBtn = document.getElementById('btn-autopilot-toggle');
+  if (autoPilotBtn) {
+    autoPilotBtn.addEventListener('click', () => {
+      autoPilot.toggle();
+    });
+  }
 
   // 4. Initialize Top Bar Controls
 
