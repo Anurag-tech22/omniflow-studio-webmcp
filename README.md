@@ -292,7 +292,7 @@ OmniFlow Studio includes a dedicated inference benchmark lab comparing top-tier 
 ### 1. Clone & Run Locally
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/omniflow-studio-webmcp.git
+git clone https://github.com/Anurag-tech22/omniflow-studio-webmcp.git
 cd omniflow-studio-webmcp
 
 # Install dependencies
