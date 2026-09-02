@@ -28,6 +28,7 @@ export class ChaosEngine {
 
     // Start massive particle traffic simulation
     this.canvas.simulator.start(targetRps);
+    this.canvas.updateStats();
     this.canvas.playSfx(180, 'sawtooth', 0.3);
 
     return {
@@ -54,6 +55,7 @@ export class ChaosEngine {
     target.label = `[FAILED] ${target.label}`;
 
     this.killedNodeBackup = target;
+    this.canvas.updateStats();
     this.canvas.playSfx(140, 'sawtooth', 0.25);
 
     return {
@@ -77,6 +79,7 @@ export class ChaosEngine {
       g.label = `[GPU OOM] ${g.label}`;
     });
 
+    this.canvas.updateStats();
     this.canvas.playSfx(200, 'square', 0.3);
 
     return {
@@ -106,6 +109,7 @@ export class ChaosEngine {
     });
 
     this.canvas.simulator.start(8500);
+    this.canvas.updateStats();
     this.canvas.playSfx(880, 'sine', 0.15);
 
     return {

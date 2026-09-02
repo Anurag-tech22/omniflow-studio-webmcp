@@ -521,6 +521,15 @@ export class CanvasEngine {
     const linkCountEl = document.getElementById('stat-link-count');
     if (nodeCountEl) nodeCountEl.textContent = this.nodes.length;
     if (linkCountEl) linkCountEl.textContent = this.connections.length;
+
+    // Live Real-Time Cluster Health SLA Computation
+    const healthyCount = this.nodes.filter(n => n.status !== 'warning').length;
+    const healthPercent = this.nodes.length > 0 ? Math.round((healthyCount / this.nodes.length) * 100) : 100;
+    const healthEl = document.getElementById('stat-health-score');
+    if (healthEl) {
+      healthEl.textContent = `${healthPercent}%`;
+      healthEl.className = `stat-value ${healthPercent < 70 ? 'text-red' : (healthPercent < 90 ? 'text-amber' : 'text-emerald')}`;
+    }
   }
 
   playSfx(freq = 440, type = 'sine', duration = 0.08) {

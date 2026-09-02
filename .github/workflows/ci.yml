@@ -1,0 +1,39 @@
+name: CI Build & WebMCP Verification
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Verify Production Vite Bundle
+        run: npm run build
+
+      - name: Validate WebMCP Standard Tool Registry
+        run: |
+          node -e "
+            const fs = require('fs');
+            const toolsContent = fs.readFileSync('./src/webmcp/tools.js', 'utf8');
+            const tools = [...toolsContent.matchAll(/name:\s*'([^']+)'/g)].map(m => m[1]);
+            console.log('Verified registered imperative tools (' + tools.length + '):', tools);
+            if (tools.length < 24) {
+              console.error('Error: Insufficient WebMCP tools registered');
+              process.exit(1);
+            }
+          "

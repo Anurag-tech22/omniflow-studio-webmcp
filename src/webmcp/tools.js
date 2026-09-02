@@ -102,6 +102,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   document.modelContext.registerTool({
     name: 'delete_node',
     description: 'Delete an architecture node from the canvas by ID, removing its connected links.',
+    destructiveHint: true,
     inputSchema: {
       type: 'object',
       properties: { id: { type: 'string' } },
@@ -254,6 +255,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   document.modelContext.registerTool({
     name: 'inject_ddos_attack',
     description: 'Chaos Engineering: Simulates a massive 50,000 RPS DDoS traffic flood on ingress gateways.',
+    destructiveHint: true,
     inputSchema: {
       type: 'object',
       properties: { rps: { type: 'number', description: 'Simulated attack traffic volume' } }
@@ -267,6 +269,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   document.modelContext.registerTool({
     name: 'kill_random_node',
     description: 'Chaos Engineering: Terminates a random backend microservice to test failover and Kafka message buffering.',
+    destructiveHint: true,
     inputSchema: { type: 'object', properties: {} },
     execute: async () => {
       return chaos.killRandomNode();
@@ -277,6 +280,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   document.modelContext.registerTool({
     name: 'simulate_gpu_oom',
     description: 'Chaos Engineering: Simulates GPU Out-Of-Memory on NVIDIA H100 clusters to test tensor parallelism recovery.',
+    destructiveHint: true,
     inputSchema: { type: 'object', properties: {} },
     execute: async () => {
       return chaos.simulateGpuOOM();
@@ -467,6 +471,7 @@ export function registerAllWebMCPTools(canvasEngine) {
   document.modelContext.registerTool({
     name: 'clear_canvas',
     description: 'Reset and clear the entire visual canvas.',
+    destructiveHint: true,
     inputSchema: { type: 'object', properties: {} },
     execute: async () => {
       canvasEngine.clearCanvas();
