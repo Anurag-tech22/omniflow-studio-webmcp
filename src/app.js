@@ -135,6 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // JSON Blueprint Export Button
+  const exportJsonBtn = document.getElementById('btn-export-json');
+  if (exportJsonBtn) {
+    exportJsonBtn.addEventListener('click', () => {
+      canvas.exportAsJson();
+      if (templateDropdown) templateDropdown.classList.add('hidden');
+      announceA11y('Exporting architecture blueprint as JSON file.');
+    });
+  }
+
   // Traffic Simulation Toggle
   const simToggleBtn = document.getElementById('btn-simulate-toggle');
   const simBtnText = document.getElementById('simulate-btn-text');

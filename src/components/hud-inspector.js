@@ -108,7 +108,7 @@ export class HudInspector {
       header.innerHTML = `
         <div class="tool-name-tag">${tool.name}</div>
         <div class="tool-badge-group">
-          ${tool.readOnlyHint ? '<span class="hint-pill">ReadOnly</span>' : '<span class="hint-pill" style="background:rgba(0,240,255,0.15);color:#00f0ff;border-color:rgba(0,240,255,0.3)">Mutating</span>'}
+          ${tool.readOnlyHint ? '<span class="hint-pill">ReadOnly</span>' : (tool.destructiveHint ? '<span class="hint-pill" style="background:rgba(239,68,68,0.15);color:#ef4444;border-color:rgba(239,68,68,0.3)">Destructive</span>' : '<span class="hint-pill" style="background:rgba(0,240,255,0.15);color:#00f0ff;border-color:rgba(0,240,255,0.3)">Mutating</span>')}
           ${tool.isDeclarative ? '<span class="badge-tag">Declarative Form</span>' : ''}
           <span style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-muted)">${tool.callCount || 0} calls</span>
           <svg class="chevron-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>

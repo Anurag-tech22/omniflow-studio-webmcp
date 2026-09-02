@@ -3,7 +3,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-10b981.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
-[![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(28%20Tools)-00f0ff.svg?style=for-the-badge&logo=w3c&logoColor=black)](https://webmachinelearning.github.io/webmcp/)
+[![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(30%20Tools)-00f0ff.svg?style=for-the-badge&logo=w3c&logoColor=black)](https://webmachinelearning.github.io/webmcp/)
 [![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg?style=for-the-badge&logo=nvidia&logoColor=white)](https://www.nvidia.com/)
 [![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-6366f1.svg?style=for-the-badge&logo=probot&logoColor=white)](./src/canvas/autopilot-engine.js)
 [![Render Deploy](https://img.shields.io/badge/Deploy-Render%20Blueprint-46e3b7.svg?style=for-the-badge&logo=render&logoColor=black)](./render.yaml)
@@ -13,7 +13,7 @@
   <strong>The open, bi-directional visual systems engineering studio where humans and AI agent swarms co-create, simulate, stress-test, and synthesize production cloud infrastructure in real-time through the W3C WebMCP standard.</strong>
 </p>
 
-[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 28 WebMCP Tools](#-complete-28-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Render](#-1-click-render-deployment)
+[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 30 WebMCP Tools](#-complete-30-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Render](#-1-click-render-deployment)
 
 </div>
 
@@ -222,40 +222,42 @@ flowchart TD
 
 ---
 
-## 🛠️ Complete 28-Tool WebMCP Registry
+## 🛠️ Complete 30-Tool WebMCP Registry
 
-OmniFlow Studio exposes 28 structured tools registered directly on `document.modelContext`:
+OmniFlow Studio exposes 30 structured tools registered directly on `document.modelContext`:
 
 | # | Tool Name | Mode | Safety Hint | Description |
 | :---: | :--- | :--- | :--- | :--- |
-| `1` | `inspect_canvas_state` | Imperative | `readOnlyHint: true` | Returns complete node graph, link matrix, FinOps cost, and cluster health. |
-| `2` | `inspect_node_details` | Imperative | `readOnlyHint: true` | Returns hardware specs, replica counts, CPU/memory history, and port statuses for a specific node. |
-| `3` | `inspect_connection_details` | Imperative | `readOnlyHint: true` | Inspects protocol, latency SLA, bandwidth throughput, and packet telemetry for a connection link. |
-| `4` | `estimate_cloud_costs` | Imperative | `readOnlyHint: true` | Calculates real-time cloud expenditure ($/mo, $/hr) with Spot instance discount analysis. |
-| `5` | `benchmark_ai_models` | Imperative | `readOnlyHint: true` | Benchmarks Claude 3.7, GPT-4o, Gemini 2.0 Flash, and DeepSeek-R1 inference metrics. |
-| `6` | `simulate_global_geo_distribution` | Imperative | `readOnlyHint: true` | Evaluates Anycast Edge PoPs, cache hit rates, and global latency SLAs across 4 continents. |
-| `7` | `create_node` | Imperative | Mutating | Instantiates an infrastructure component (GPU Cluster, Gateway, Database, Vector DB, Cache, Kafka, Auth). |
-| `8` | `update_node` | Imperative | Mutating | Updates node label, instance type, replica scaling, or hardware attributes. |
-| `9` | `delete_node` | Imperative | Mutating | Deletes a node and cleans up connected links. |
-| `10` | `connect_nodes` | Imperative | Mutating | Wires two nodes with protocol tagging (NVLink, gRPC, HTTPS, Redis TCP, Kafka, Postgres). |
-| `11` | `disconnect_nodes` | Imperative | Mutating | Removes a network connection between two nodes. |
-| `12` | `batch_build_architecture` | Imperative | Mutating | Atomically constructs an entire multi-tier enterprise architecture in a single transaction. |
-| `13` | `apply_layout_preset` | Imperative | Mutating | Auto-arranges nodes into balanced horizontal or tiered hierarchical layouts. |
-| `14` | `load_architecture_template` | Imperative | Mutating | Loads curated blueprints (`nvidia-gpu-ai`, `agent-swarm`, `ecommerce`, `fintech`). |
-| `15` | `clear_canvas` | Imperative | Mutating | Resets and clears the canvas to an empty state. |
-| `16` | `simulate_traffic` | Imperative | Mutating | Starts 60 FPS animated particle simulation with configurable RPS and bottleneck analysis. |
-| `17` | `stop_simulation` | Imperative | Mutating | Halts active traffic stress simulation. |
-| `18` | `inject_ddos_attack` | Imperative | Mutating | Injects 50,000 RPS flood against API Gateways to evaluate resilience. |
-| `19` | `kill_random_node` | Imperative | Mutating | Chaos Monkey terminating a random service to test queue failover and circuit breaking. |
-| `20` | `simulate_gpu_oom` | Imperative | Mutating | Simulates GPU Out-Of-Memory on NVIDIA H100 nodes to test tensor memory recovery. |
-| `21` | `auto_heal_cluster` | Imperative | Mutating | Restores failed nodes, defragments memory, and recovers 100% cluster health. |
-| `22` | `toggle_autonomous_autopilot` | Imperative | Mutating | Toggles 24/7 background self-healing auto-pilot loop. |
-| `23` | `run_security_audit` | Imperative | `readOnlyHint: true` | Scans topology for OWASP & cloud vulnerabilities (exposed DBs, missing WAF, SPOFs). |
-| `24` | `optimize_architecture` | Imperative | Mutating | Refactors topology for cost reduction, latency minimization, or high availability. |
-| `25` | `generate_infrastructure_code` | Imperative | `readOnlyHint: true` | Generates Terraform (HCL), Kubernetes Helm (`values.yaml`), AWS CloudFormation, and Docker Compose. |
-| `26` | `generate_architecture_manifesto` | Imperative | `readOnlyHint: true` | Compiles an executive Markdown manifesto with live Mermaid diagrams and SOC2 compliance matrices. |
-| `27` | `export_canvas_image` | Imperative | `readOnlyHint: true` | Downloads a high-resolution PNG diagram of the active canvas topology. |
-| `28` | `quick_add_component` | Declarative | HTML Form | Standard HTML `<form toolname="quick_add_component">` for declarative component creation. |
+| `1` | `inspect_canvas_state` | Imperative | `readOnlyHint: true` | Returns complete node graph, link matrix, FinOps cost, and cluster health SLA. |
+| `2` | `create_node` | Imperative | Mutating | Instantiates infrastructure components (NVIDIA H100, Gateway, DB, Cache, Kafka, Auth). |
+| `3` | `update_node` | Imperative | Mutating | Updates node label, instance type, replica scaling, or hardware attributes. |
+| `4` | `delete_node` | Imperative | `destructiveHint: true` | Deletes a node and cleans up connected links. |
+| `5` | `scale_node_replicas` | Imperative | Mutating | Scales horizontal replica count for containers or GPU clusters. |
+| `6` | `connect_nodes` | Imperative | Mutating | Wires two nodes with protocol tagging (NVLink, gRPC, HTTPS, Redis TCP, Kafka, Postgres). |
+| `7` | `disconnect_nodes` | Imperative | Mutating | Removes a network connection between two nodes. |
+| `8` | `batch_build_architecture` | Imperative | Mutating | Atomically constructs an entire multi-tier enterprise architecture in a single transaction. |
+| `9` | `estimate_cloud_costs` | Imperative | `readOnlyHint: true` | Calculates real-time cloud expenditure ($/mo, $/hr) with Spot instance discount analysis. |
+| `10` | `optimize_cloud_costs` | Imperative | Mutating | Runs automated FinOps downscaling and caching recommendations (-38% cost reduction). |
+| `11` | `inject_ddos_attack` | Imperative | `destructiveHint: true` | Chaos Engineering: Injects 50,000 RPS flood against API Gateways to evaluate resilience. |
+| `12` | `kill_random_node` | Imperative | `destructiveHint: true` | Chaos Monkey: Terminates a random service to test queue failover and circuit breaking. |
+| `13` | `simulate_gpu_oom` | Imperative | `destructiveHint: true` | Chaos Engineering: Simulates GPU Out-Of-Memory on NVIDIA H100 nodes to test tensor recovery. |
+| `14` | `auto_heal_cluster` | Imperative | Mutating | Restores failed nodes, defragments memory, and recovers 100% cluster health. |
+| `15` | `simulate_traffic` | Imperative | Mutating | Starts 60 FPS animated particle simulation with configurable RPS and bottleneck analysis. |
+| `16` | `stop_simulation` | Imperative | Mutating | Halts active traffic stress simulation. |
+| `17` | `run_security_audit` | Imperative | `readOnlyHint: true` | Scans topology for OWASP & cloud vulnerabilities (exposed DBs, missing WAF, SPOFs). |
+| `18` | `optimize_architecture` | Imperative | Mutating | Refactors topology for cost reduction, latency minimization, or high availability. |
+| `19` | `generate_infrastructure_code` | Imperative | `readOnlyHint: true` | Generates Terraform (HCL), Kubernetes Helm (`values.yaml`), AWS CloudFormation, and Docker Compose. |
+| `20` | `generate_architecture_manifesto` | Imperative | `readOnlyHint: true` | Compiles an executive Markdown manifesto with live Mermaid diagrams and SOC2 compliance matrices. |
+| `21` | `export_architecture_json` | Imperative | `readOnlyHint: true` | Exports and downloads the active visual architecture as a standardized JSON blueprint. |
+| `22` | `import_architecture_json` | Imperative | Mutating | Imports and renders custom architecture JSON definitions onto the canvas with auto-fit. |
+| `23` | `apply_layout_preset` | Imperative | Mutating | Auto-arranges nodes into balanced horizontal or tiered hierarchical layouts. |
+| `24` | `load_architecture_template` | Imperative | Mutating | Loads curated blueprints (`nvidia-gpu-ai`, `agent-swarm`, `ecommerce`, `fintech`). |
+| `25` | `export_canvas_image` | Imperative | `readOnlyHint: true` | Downloads a high-resolution PNG diagram of the active canvas topology. |
+| `26` | `clear_canvas` | Imperative | `destructiveHint: true` | Resets and clears the canvas to an empty state. |
+| `27` | `toggle_autonomous_autopilot` | Imperative | Mutating | Toggles 24/7 background self-healing auto-pilot loop. |
+| `28` | `benchmark_ai_models` | Imperative | `readOnlyHint: true` | Benchmarks Claude 3.7, GPT-4o, Gemini 2.0 Flash, and DeepSeek-R1 inference metrics. |
+| `29` | `simulate_global_geo_distribution` | Imperative | `readOnlyHint: true` | Evaluates Anycast Edge PoPs, cache hit rates, and global latency SLAs across 4 continents. |
+| `30` | `quick_add_component` | Declarative | HTML Form | Standard HTML `<form toolname="quick_add_component">` for declarative component creation. |
 
 ---
 

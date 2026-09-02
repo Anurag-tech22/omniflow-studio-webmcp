@@ -361,6 +361,7 @@ export class CanvasEngine {
   // --- Node & Link Operations ---
 
   addNode(data) {
+    this.pushHistory();
     const id = data.id || `node-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const newNode = {
       id,
@@ -385,6 +386,13 @@ export class CanvasEngine {
   }
 
   deleteNode(id) {
+    this.pushHistory();
+    if (this.selectedNode && this.selectedNode.id === id) {
+      this.selectedNode = null;
+    }
+    if (this.hoveredNode && this.hoveredNode.id === id) {
+      this.hoveredNode = null;
+    }
     this.nodes = this.nodes.filter(n => n.id !== id);
     this.connections = this.connections.filter(c => c.from !== id && c.to !== id);
     this.sparklineHistory.delete(id);
@@ -397,6 +405,7 @@ export class CanvasEngine {
     const existing = this.connections.find(c => c.from === fromId && c.to === toId);
     if (existing) return existing;
 
+    this.pushHistory();
     const conn = {
       id: options.id || `c-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       from: fromId,
@@ -412,6 +421,7 @@ export class CanvasEngine {
   }
 
   disconnectNodes(fromId, toId) {
+    this.pushHistory();
     this.connections = this.connections.filter(c => !(c.from === fromId && c.to === toId));
     this.updateStats();
   }
@@ -432,6 +442,52 @@ export class CanvasEngine {
     this.updateStats();
     this.checkEmptyState();
     this.playSfx(520, 'sine', 0.12);
+  }
+
+  pushHistory() {
+    const snapshot = JSON.stringify({
+      nodes: this.nodes.map(n => ({ ...n })),
+      connections: this.connections.map(c => ({ ...c }))
+    });
+    this.historyStack.push(snapshot);
+    if (this.historyStack.length > 30) {
+      this.historyStack.shift();
+    }
+    this.redoStack = [];
+  }
+
+  undo() {
+    if (this.historyStack.length === 0) return false;
+    const current = JSON.stringify({
+      nodes: this.nodes.map(n => ({ ...n })),
+      connections: this.connections.map(c => ({ ...c }))
+    });
+    this.redoStack.push(current);
+    const previous = JSON.parse(this.historyStack.pop());
+    this.nodes = previous.nodes || [];
+    this.connections = previous.connections || [];
+    this.selectNode(null);
+    this.updateStats();
+    this.checkEmptyState();
+    this.playSfx(400, 'sine', 0.08);
+    return true;
+  }
+
+  redo() {
+    if (this.redoStack.length === 0) return false;
+    const current = JSON.stringify({
+      nodes: this.nodes.map(n => ({ ...n })),
+      connections: this.connections.map(c => ({ ...c }))
+    });
+    this.historyStack.push(current);
+    const next = JSON.parse(this.redoStack.pop());
+    this.nodes = next.nodes || [];
+    this.connections = next.connections || [];
+    this.selectNode(null);
+    this.updateStats();
+    this.checkEmptyState();
+    this.playSfx(550, 'sine', 0.08);
+    return true;
   }
 
   clearCanvas() {
