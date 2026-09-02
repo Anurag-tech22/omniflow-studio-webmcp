@@ -1,130 +1,295 @@
-# OmniFlow Studio — Human-Agent Collaborative Visual Cloud & Systems Studio (WebMCP)
+# 🌌 OmniFlow Studio — Human-Agent Collaborative Visual Cloud & Systems Studio (WebMCP)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](./LICENSE)
-[![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(28%20Tools)-00f0ff.svg)](https://webmachinelearning.github.io/webmcp/)
-[![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg)](https://www.nvidia.com/)
-[![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-10b981.svg)](./src/canvas/autopilot-engine.js)
-[![Render Deploy](https://img.shields.io/badge/Deploy-Render%20Blueprint-46e3b7.svg)](./render.yaml)
-[![ChatGPT Sites Ready](https://img.shields.io/badge/ChatGPT-Sites%20Ready-a855f7.svg)](https://learn.chatgpt.com/docs/webmcp)
-[![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-10b981.svg)](chrome://flags/#enable-webmcp-testing)
+<div align="center">
 
-> **OmniFlow Studio** is a world-class visual cloud architecture and distributed systems studio where humans and AI agent swarms co-create, simulate, audit, and synthesize production infrastructure in real-time through the open **WebMCP (Web Model Context Protocol)** standard.
+[![License: MIT](https://img.shields.io/badge/License-MIT-10b981.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
+[![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(28%20Tools)-00f0ff.svg?style=for-the-badge&logo=w3c&logoColor=black)](https://webmachinelearning.github.io/webmcp/)
+[![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg?style=for-the-badge&logo=nvidia&logoColor=white)](https://www.nvidia.com/)
+[![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-6366f1.svg?style=for-the-badge&logo=probot&logoColor=white)](./src/canvas/autopilot-engine.js)
+[![Render Deploy](https://img.shields.io/badge/Deploy-Render%20Blueprint-46e3b7.svg?style=for-the-badge&logo=render&logoColor=black)](./render.yaml)
+[![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-f59e0b.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](chrome://flags/#enable-webmcp-testing)
+
+<p align="center">
+  <strong>The open, bi-directional visual systems engineering studio where humans and AI agent swarms co-create, simulate, stress-test, and synthesize production cloud infrastructure in real-time through the W3C WebMCP standard.</strong>
+</p>
+
+[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 28 WebMCP Tools](#-complete-28-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Render](#-1-click-render-deployment)
+
+</div>
 
 ---
 
 ## 🌟 Executive Summary
 
-Instead of forcing AI agents to guess visual layouts, simulate imprecise mouse clicks, or stay trapped in separate text windows, **OmniFlow Studio** registers its entire visual graph topology, NVIDIA GPU cluster engine, real-time FinOps cost calculator, Autonomous Auto-Pilot self-healing loop, Chaos engineering fault injector, traffic physics engine, security scanner, and multi-cloud code synthesizer directly into the browser tab via `document.modelContext.registerTool()`.
+Traditional AI coding assistants are confined to disconnected text boxes, blind to spatial canvases, and forced to hallucinate coordinate systems or rely on clunky screenshots. **OmniFlow Studio** breaks this limitation by turning the browser tab itself into a high-performance **WebMCP (Web Model Context Protocol)** server.
 
-Human architects sketch and iterate on visual topologies; AI agent swarms (Architect, SecOps, Chaos Engineer, FinOps Advisor) analyze bottlenecks, debate in a live **Swarm Consensus Protocol**, execute 50,000 RPS DDoS traffic stress tests, remediate vulnerabilities, and compile production Terraform, Helm, and CloudFormation manifests using **28 structured browser tools**.
+Through `document.modelContext.registerTool()`, OmniFlow Studio registers its entire visual graph topology, 60 FPS particle physics engine, NVIDIA H100 cluster modeler, real-time FinOps calculator, Chaos Engineering fault injector, security scanner, and multi-cloud code synthesizer directly into the browser runtime.
 
----
+Human engineers sketch systems; specialized AI agent swarms (Lead Architect, SecOps Auditor, FinOps Advisor, and Chaos Daemon) debate in a **Live Swarm Consensus Protocol**, stress-test with 50,000 RPS DDoS traffic, auto-heal bottlenecks 24/7 with an **Autonomous Auto-Pilot**, and compile production Terraform, Helm, and CloudFormation infrastructure in milliseconds.
 
-## 🏆 Category-Defining Features & Innovations
-
-1. **Autonomous Self-Healing Auto-Pilot Loop (`AutoPilotEngine`)**:
-   - Continuously monitors node load, latency spikes, and DDoS floods.
-   - Automatically auto-scales worker replicas, balances gateway throughput, and defragments GPU memory to ensure 99.999% cluster SLA 24/7.
-
-2. **Frontier AI Model & Inference Benchmark Lab (`BenchmarkEngine`)**:
-   - Compares **Claude 3.7 Sonnet**, **GPT-4o**, **Gemini 2.0 Flash**, and **DeepSeek-R1** on the active canvas topology.
-   - Evaluates TTFT latency, token throughput (tok/s), FP8/FP16 KV-cache VRAM footprint, and API pricing trade-offs.
-
-3. **Multi-Region Anycast Global Edge & Geo Latency SLA (`GeoDistributor`)**:
-   - Simulates global CDN edge replication across **US-East**, **Europe (Frankfurt)**, **Tokyo**, and **São Paulo**.
-   - Displays real-time Anycast DNS PoP status, cache hit rates (94%+), and regional compliance tags (GDPR, SOC2, HIPAA).
-
-4. **Autonomous Multi-Agent Swarm Consensus Protocol**:
-   - Live debate and voting stream between 4 specialized AI agents:
-     - 🧠 **Lead Architect** (`Claude 3.7 / GPT-4o`)
-     - 🛡️ **SecOps Auditor** (`Google SAIF / OWASP`)
-     - 💰 **FinOps Advisor** (`AWS / Vercel Pricing`)
-     - ⚡ **Chaos Daemon** (`NVIDIA / Cloudflare`)
-
-5. **Chaos Engineering & Fault Injection Lab**:
-   - `inject_ddos_attack`: Simulates a 50,000 RPS flood against API Gateways.
-   - `kill_random_node`: Chaos Monkey terminating backend microservices to test Kafka queue failover.
-   - `simulate_gpu_oom`: Simulates GPU Out-Of-Memory on NVIDIA H100 clusters.
-   - `auto_heal_cluster`: Recovers failed services, attaches Cloudflare WAF, and defragments GPU memory.
-
-6. **Interactive Visual Port Wiring & 30-Step Undo/Redo Stack**:
-   - Direct click-and-drag from node Output Ports to connect wires visually with glowing live bezier curves.
-   - Full history snapshots with `Ctrl+Z` / `Ctrl+Y` and UI controls.
-
-7. **Multi-Cloud Infrastructure Synthesizer & Architecture Manifesto**:
-   - Compiles graph topologies into **Terraform (HCL)**, **Kubernetes Helm Charts (`values.yaml`)**, **AWS CloudFormation (YAML)**, **Docker Compose**, and an executive **Markdown/Mermaid Architecture Manifesto**.
-
----
-
-## 🏆 WebMCP Challenge Submission Details
-
-### 1. Why is this use case a strong fit for WebMCP?
-- **Active In-Browser Session State**: Cloud architecture design is inherently spatial, graph-oriented, and stateful. Traditional backend MCP servers cannot see the active canvas viewport, transient node coordinates, or live canvas selections. WebMCP allows the browser tab itself to expose interactive tools that operate directly on the user's active visual canvas.
-- **Bi-Directional Co-Creation**: Rather than the agent outputting a static Markdown block of text, the agent calls `create_node`, `connect_nodes`, and `simulate_traffic`, causing the visual canvas in front of the human user to update in real-time at 60 FPS.
-- **Safety Boundaries**: Using WebMCP's standard hints (`readOnlyHint: true` for `inspect_canvas_state`, `run_security_audit`, `generate_infrastructure_code` vs mutating tools like `batch_build_architecture`), the browser enforces clear trust boundaries.
-
-### 2. How does it create a better user experience?
-- **No More Hallucinated Coordinates or Clunky Screenshots**: Agents invoke atomic tools with strict JSON schemas, ensuring 100% reliable system topology construction.
-- **Real-Time Visual Telemetry**: Simulated traffic stress tests render animated glowing packets flowing across connections with dynamic request rate (RPS), latency heatmaps, and bottleneck alerts.
-- **Instant DevTools Observability**: The built-in **WebMCP Live Inspector HUD** gives users and judges a complete real-time view of all 16 registered tools, JSON input schemas, execution counts, average latency, and a manual tool test runner.
-
-### 3. What can humans and agents do together that was difficult or impossible before?
-| Capability | Before WebMCP (Screen Parsing / Chat) | With OmniFlow Studio & WebMCP |
-| :--- | :--- | :--- |
-| **System Architecture Synthesis** | Human draws manually or agent generates ASCII art / text lists. | Agent calls `batch_build_architecture` or `create_node`, instantly building interactive 2D node graphs. |
-| **Traffic Stress Testing** | Static theoretical estimates in text. | Agent triggers `simulate_traffic`, rendering live particle physics and bottleneck telemetry on the canvas. |
-| **Vulnerability Remediation** | Manual copy-pasting of security advice. | Agent calls `run_security_audit`, identifies single points of failure (SPOF) or exposed DBs, and applies `optimize_architecture` fixes with 1 click. |
-| **Infrastructure as Code (IaC)** | Disconnected manual templates. | Atomic synthesis of Terraform, Docker Compose, and Kubernetes YAML directly from the live graph topology. |
-
----
-
-## 🛠️ WebMCP Implementation Architecture
-
-OmniFlow Studio implements both the **Imperative JavaScript API** (`document.modelContext.registerTool`) and the **Declarative HTML Form API** (`<form toolname="...">`).
-
-```mermaid
-graph TD
-    subgraph Browser Tab Runtime
-        Human[Human Architect] -->|Direct Canvas Interaction| Canvas[Interactive HTML5 Canvas Engine]
-        Agent[AI Agent / ChatGPT / Chrome WebMCP] -->|Discovers & Calls Tools| ModelContext[document.modelContext]
-        ModelContext -->|Dispatches Tool Calls| Registry[WebMCP Tool Registry]
-        Registry -->|Executes Action| Canvas
-        Registry -->|Streams Telemetry| HUD[WebMCP DevTools Live Inspector]
-        Canvas -->|Graph Topology| Scanner[Security & SPOF Scanner]
-        Canvas -->|Graph Topology| Generator[IaC Synthesis: Terraform / K8s]
-        Canvas -->|Particle Physics| Sim[Traffic & Stress Simulator]
-    end
+```
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  [Logo] OmniFlow Studio (WEBMCP)  │  RPS: 19.2k • FinOps: $4,617/mo • Health: 100%                                           │
+│  [Blueprints ▾]  [🤝 Swarm Consensus]  [⚡ Chaos ▾]  [🤖 Auto-Pilot]  [▶ Sim]  [🛡️ Audit]  │  [🧠 AI Bench]  [🌍 Geo]  [IaC]  │
+├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│  [Cloud & Compute]  │  (gw-ai) [Cloudflare AI Gateway] ──(HTTP/3 Quic)──► (ingress-ai) [FastAPI Ingress]                     │
+│  • NVIDIA H100 8x   │       │                                                  │                                     │
+│  • Claude / GPT-4o  │       ▼ (mTLS JWT)                                       ▼ (gRPC Stream)                       │
+│  • Milvus Vector    │  (auth-ai) [OAuth2 Tokenizer]                      (ray-orch) [Ray Head Node]                  │
+│  • ECS Fargate      │       │                                                  │                                     │
+│  • Redis Cluster    │       ▼ (Redis TCP)                                      ▼ (NVLink 900 GB/s)                   │
+│  • Kafka / MSK      │  (cache-sem) [Redis Semantic Cache]               (gpu-h100) [NVIDIA 8x H100 SXM5]             │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Complete Registered Tool Suite
+---
 
-| Tool Name | Type | Safety Hint | Description |
-| :--- | :--- | :--- | :--- |
-| `inspect_canvas_state` | Imperative | `readOnlyHint: true` | Returns complete node topology, health scores, CPU/MEM telemetry, and connection matrices. |
-| `create_node` | Imperative | State Mutating | Creates an architecture node (Gateway, Microservice, Database, Redis Cache, Kafka, LLM Model, Vector DB, S3, Auth). |
-| `delete_node` | Imperative | State Mutating | Deletes a node and cleans up connected links. |
-| `connect_nodes` | Imperative | State Mutating | Connects two nodes with protocol tagging (gRPC, HTTPS, Kafka, Redis TCP, PostgreSQL) and latency. |
-| `disconnect_nodes` | Imperative | State Mutating | Removes a link between two nodes. |
-| `batch_build_architecture`| Imperative | State Mutating | Atomically constructs an entire multi-tier system topology in a single transaction. |
-| `simulate_traffic` | Imperative | State Mutating | Initiates real-time packet particle simulation with configurable RPS and bottleneck detection. |
-| `stop_simulation` | Imperative | State Mutating | Halts active traffic stress simulation. |
-| `run_security_audit` | Imperative | `readOnlyHint: true` | Scans canvas for OWASP/Cloud Security risks (public DB exposure, missing IAM gateway, SPOFs). |
-| `optimize_architecture` | Imperative | State Mutating | Applies architectural refactorings for latency, cost, security, or high-availability. |
-| `generate_infrastructure_code`| Imperative | `readOnlyHint: true` | Generates Terraform (`main.tf`), Docker Compose, Kubernetes YAML, and TypeScript manifests. |
-| `apply_layout_preset` | Imperative | State Mutating | Auto-organizes nodes using hierarchical tiered alignment. |
-| `load_architecture_template` | Imperative | State Mutating | Loads curated blueprints (`ecommerce`, `rag-pipeline`, `fintech`, `streaming`). |
-| `clear_canvas` | Imperative | State Mutating | Resets and clears the canvas. |
-| `quick_add_component` | Declarative | Form Tool | HTML `<form toolname="quick_add_component">` for declarative component insertion. |
-| `trigger_quick_optimization` | Declarative | Form Tool | HTML `<form toolname="trigger_quick_optimization">` for declarative optimization trigger. |
+## 🏛️ Comprehensive System Architecture
+
+The following diagram illustrates how human interactions, browser runtime events, and AI agent swarms interact through the WebMCP bridge:
+
+```mermaid
+graph TB
+    subgraph Client Runtime ["🖥️ Client Browser Window (Single-Tab Runtime)"]
+        subgraph HumanLayer ["👤 Human Architect Interface"]
+            UI_Canvas["Interactive HTML5 Canvas<br/>(60 FPS Particle Physics)"]
+            UI_Toolbar["Action Bar & FinOps Strip<br/>(RPS, Cost, Health SLA)"]
+            UI_Forms["Declarative WebMCP Forms<br/>(&lt;form toolname=...&gt;)"]
+            UI_HUD["WebMCP DevTools Live Inspector HUD<br/>(Schema & Latency Telemetry)"]
+        end
+
+        subgraph ProtocolLayer ["⚡ WebMCP Standard Bridge"]
+            ModelCtx["document.modelContext<br/>(W3C Standard Tool Registry)"]
+            Dispatcher["WebMCP Tool Execution Engine<br/>(JSON Schema Validation)"]
+            EventBus["Synchronous Event Bus & State History<br/>(30-Step Undo/Redo Stack)"]
+        end
+
+        subgraph EnginesLayer ["⚙️ Autonomous System Subsystems"]
+            AutoPilot["🤖 AutoPilotEngine<br/>(Autonomous Self-Healing Loop)"]
+            BenchLab["🧠 BenchmarkEngine<br/>(Claude 3.7 / GPT-4o / DeepSeek)"]
+            GeoEngine["🌍 GeoDistributor<br/>(Anycast Edge Latency Simulation)"]
+            FinOps["💰 CostEngine<br/>(Compute, Memory & Egress Billing)"]
+            Chaos["⚡ Chaos Lab & Fault Injector<br/>(DDoS, Node Kill, GPU OOM)"]
+            SecScan["🛡️ SecurityScanner<br/>(OWASP & SPOF Vulnerability Audit)"]
+            IaCSynth["📦 IaCGenerator & Manifesto<br/>(Terraform, Helm, K8s, CFN)"]
+        end
+    end
+
+    subgraph AgentSwarm ["🤖 AI Multi-Agent Collaborative Swarm"]
+        LeadArch["🧠 Lead Architect Agent<br/>(Topology & Scalability)"]
+        SecOps["🛡️ SecOps Auditor Agent<br/>(Zero-Trust & Compliance)"]
+        FinOpsAg["💰 FinOps Advisor Agent<br/>(Cost Optimization)"]
+        ChaosDaemon["⚡ Chaos Daemon Agent<br/>(Resilience & Failover)"]
+    end
+
+    %% Flow Connections
+    UI_Canvas <-->|Direct Drag, Wire & Inspect| EventBus
+    UI_Forms -->|HTML Form Submit| ModelCtx
+    AgentSwarm <-->|Discover & Invoke 28 Tools| ModelCtx
+    ModelCtx -->|Validate & Route| Dispatcher
+    Dispatcher -->|Execute Mutations| EventBus
+    EventBus -->|Update Graph Topology| UI_Canvas
+    EventBus -->|Emit Real-Time Metrics| UI_HUD
+
+    %% Engine Bindings
+    EventBus <--> AutoPilot
+    EventBus <--> BenchLab
+    EventBus <--> GeoEngine
+    EventBus <--> FinOps
+    EventBus <--> Chaos
+    EventBus <--> SecScan
+    EventBus <--> IaCSynth
+```
+
+---
+
+## 🤖 Swarm Consensus Protocol Sequence
+
+OmniFlow Studio features a live, multi-agent debate and voting protocol where 4 specialized AI agents evaluate architectural decisions, debate trade-offs, and reach consensus:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as 👤 Human Architect
+    participant MCP as ⚡ WebMCP Runtime
+    participant Arch as 🧠 Lead Architect
+    participant Sec as 🛡️ SecOps Auditor
+    participant Fin as 💰 FinOps Advisor
+    participant Chaos as ⚡ Chaos Daemon
+    participant Canvas as 🎨 Canvas Engine
+
+    User->>MCP: Click "Swarm Consensus" or prompt Agent
+    MCP->>MCP: Call inspect_canvas_state() & run_security_audit()
+    
+    par Agent Analysis
+        MCP->>Arch: Analyze bottlenecks & scale factor
+        MCP->>Sec: Check exposed ports & IAM boundaries
+        MCP->>Fin: Audit provisioned cloud expenditure
+        MCP->>Chaos: Simulate fault injection scenarios
+    end
+
+    Note over Arch,Chaos: 💬 Live Multi-Agent Debate & Consensus Phase
+    Arch-->>MCP: "Recommend scaling vLLM workers to 4x for high concurrency."
+    Sec-->>MCP: "VETO: Direct ingress lacks WAF; attach Cloudflare AI Gateway."
+    Fin-->>MCP: "Approving with 3-year Reserved Instance savings (-38% cost)."
+    Chaos-->>MCP: "Tested failover: Kafka buffering mitigates downstream delay."
+
+    Note over Arch,Chaos: 🗳️ Voting Threshold Met: Consensus Approved (4/4)
+    MCP->>Canvas: Execute batch_build_architecture() + auto_heal_cluster()
+    Canvas-->>User: 60 FPS Visual Graph Updated & IaC Manifest Re-compiled
+```
+
+---
+
+## ⚡ Chaos Engineering & Auto-Pilot Self-Healing Loop
+
+The Autonomous Auto-Pilot engine runs a continuous 24/7 background telemetry loop to maintain 99.999% cluster SLA:
+
+```mermaid
+flowchart LR
+    subgraph Monitor ["1. Telemetry Monitoring"]
+        T1["Traffic Physics (RPS)"]
+        T2["CPU / MEM / GPU Load"]
+        T3["Network Latency Spike"]
+    end
+
+    subgraph Detect ["2. Anomaly Detection"]
+        A1{"SLA Threshold<br/>Breached?"}
+    end
+
+    subgraph ChaosTrigger ["3. Chaos Faults"]
+        C1["DDoS Flood (50k RPS)"]
+        C2["Chaos Monkey (Node Kill)"]
+        C3["GPU Out-of-Memory"]
+    end
+
+    subgraph SelfHeal ["4. Autonomous Self-Healing"]
+        H1["Auto-Scale Pod Replicas"]
+        H2["Attach WAF / Rate Limiter"]
+        H3["Defragment Tensor VRAM"]
+        H4["Reroute Traffic via Anycast"]
+    end
+
+    Monitor --> Detect
+    ChaosTrigger -.->|Injects Failure| Monitor
+    Detect -- Yes --> SelfHeal
+    Detect -- No -->|Steady State| Monitor
+    SelfHeal -->|Restore 100% Health| Monitor
+```
+
+---
+
+## 🌍 Multi-Region Global Edge Architecture
+
+OmniFlow Studio models Anycast routing and global CDN edge replication with real-time latency and compliance enforcement:
+
+```mermaid
+flowchart TD
+    UserClient(["🌐 Global End-User Request"])
+    AnycastDNS{"🌍 Anycast Edge DNS<br/>(356 Global PoPs)"}
+
+    subgraph RegUS ["🇺🇸 North America (us-east-1)"]
+        EdgeUS["Edge PoP: Virginia<br/>⚡ 12ms Latency<br/>🎯 96.4% Cache Hit"]
+        OrigUS["Origin VPC: FastAPI + H100 Cluster"]
+    end
+
+    subgraph RegEU ["🇪🇺 Europe (eu-central-1)"]
+        EdgeEU["Edge PoP: Frankfurt<br/>⚡ 18ms Latency<br/>🛡️ GDPR Compliant"]
+        OrigEU["Origin VPC: European Mirror"]
+    end
+
+    subgraph RegAP ["🇯🇵 Asia Pacific (ap-northeast-1)"]
+        EdgeAP["Edge PoP: Tokyo<br/>⚡ 28ms Latency<br/>🎯 94.2% Cache Hit"]
+        OrigAP["Origin VPC: Tokyo Region"]
+    end
+
+    subgraph RegSA ["🇧🇷 South America (sa-east-1)"]
+        EdgeSA["Edge PoP: São Paulo<br/>⚡ 42ms Latency<br/>🎯 91.8% Cache Hit"]
+        OrigSA["Origin VPC: São Paulo Region"]
+    end
+
+    UserClient --> AnycastDNS
+    AnycastDNS -->|Geo Proximity| EdgeUS
+    AnycastDNS -->|Geo Proximity| EdgeEU
+    AnycastDNS -->|Geo Proximity| EdgeAP
+    AnycastDNS -->|Geo Proximity| EdgeSA
+
+    EdgeUS <--> OrigUS
+    EdgeEU <--> OrigEU
+    EdgeAP <--> OrigAP
+    EdgeSA <--> OrigSA
+```
+
+---
+
+## 🛠️ Complete 28-Tool WebMCP Registry
+
+OmniFlow Studio exposes 28 structured tools registered directly on `document.modelContext`:
+
+| # | Tool Name | Mode | Safety Hint | Description |
+| :---: | :--- | :--- | :--- | :--- |
+| `1` | `inspect_canvas_state` | Imperative | `readOnlyHint: true` | Returns complete node graph, link matrix, FinOps cost, and cluster health. |
+| `2` | `inspect_node_details` | Imperative | `readOnlyHint: true` | Returns hardware specs, replica counts, CPU/memory history, and port statuses for a specific node. |
+| `3` | `inspect_connection_details` | Imperative | `readOnlyHint: true` | Inspects protocol, latency SLA, bandwidth throughput, and packet telemetry for a connection link. |
+| `4` | `estimate_cloud_costs` | Imperative | `readOnlyHint: true` | Calculates real-time cloud expenditure ($/mo, $/hr) with Spot instance discount analysis. |
+| `5` | `benchmark_ai_models` | Imperative | `readOnlyHint: true` | Benchmarks Claude 3.7, GPT-4o, Gemini 2.0 Flash, and DeepSeek-R1 inference metrics. |
+| `6` | `simulate_global_geo_distribution` | Imperative | `readOnlyHint: true` | Evaluates Anycast Edge PoPs, cache hit rates, and global latency SLAs across 4 continents. |
+| `7` | `create_node` | Imperative | Mutating | Instantiates an infrastructure component (GPU Cluster, Gateway, Database, Vector DB, Cache, Kafka, Auth). |
+| `8` | `update_node` | Imperative | Mutating | Updates node label, instance type, replica scaling, or hardware attributes. |
+| `9` | `delete_node` | Imperative | Mutating | Deletes a node and cleans up connected links. |
+| `10` | `connect_nodes` | Imperative | Mutating | Wires two nodes with protocol tagging (NVLink, gRPC, HTTPS, Redis TCP, Kafka, Postgres). |
+| `11` | `disconnect_nodes` | Imperative | Mutating | Removes a network connection between two nodes. |
+| `12` | `batch_build_architecture` | Imperative | Mutating | Atomically constructs an entire multi-tier enterprise architecture in a single transaction. |
+| `13` | `apply_layout_preset` | Imperative | Mutating | Auto-arranges nodes into balanced horizontal or tiered hierarchical layouts. |
+| `14` | `load_architecture_template` | Imperative | Mutating | Loads curated blueprints (`nvidia-gpu-ai`, `agent-swarm`, `ecommerce`, `fintech`). |
+| `15` | `clear_canvas` | Imperative | Mutating | Resets and clears the canvas to an empty state. |
+| `16` | `simulate_traffic` | Imperative | Mutating | Starts 60 FPS animated particle simulation with configurable RPS and bottleneck analysis. |
+| `17` | `stop_simulation` | Imperative | Mutating | Halts active traffic stress simulation. |
+| `18` | `inject_ddos_attack` | Imperative | Mutating | Injects 50,000 RPS flood against API Gateways to evaluate resilience. |
+| `19` | `kill_random_node` | Imperative | Mutating | Chaos Monkey terminating a random service to test queue failover and circuit breaking. |
+| `20` | `simulate_gpu_oom` | Imperative | Mutating | Simulates GPU Out-Of-Memory on NVIDIA H100 nodes to test tensor memory recovery. |
+| `21` | `auto_heal_cluster` | Imperative | Mutating | Restores failed nodes, defragments memory, and recovers 100% cluster health. |
+| `22` | `toggle_autonomous_autopilot` | Imperative | Mutating | Toggles 24/7 background self-healing auto-pilot loop. |
+| `23` | `run_security_audit` | Imperative | `readOnlyHint: true` | Scans topology for OWASP & cloud vulnerabilities (exposed DBs, missing WAF, SPOFs). |
+| `24` | `optimize_architecture` | Imperative | Mutating | Refactors topology for cost reduction, latency minimization, or high availability. |
+| `25` | `generate_infrastructure_code` | Imperative | `readOnlyHint: true` | Generates Terraform (HCL), Kubernetes Helm (`values.yaml`), AWS CloudFormation, and Docker Compose. |
+| `26` | `generate_architecture_manifesto` | Imperative | `readOnlyHint: true` | Compiles an executive Markdown manifesto with live Mermaid diagrams and SOC2 compliance matrices. |
+| `27` | `export_canvas_image` | Imperative | `readOnlyHint: true` | Downloads a high-resolution PNG diagram of the active canvas topology. |
+| `28` | `quick_add_component` | Declarative | HTML Form | Standard HTML `<form toolname="quick_add_component">` for declarative component creation. |
+
+---
+
+## 🧠 Frontier AI Model Benchmark Lab
+
+OmniFlow Studio includes a dedicated inference benchmark lab comparing top-tier frontier models:
+
+| Model | Provider | TTFT (ms) | Throughput (tok/s) | Context Window | KV-Cache VRAM | Cost / 1M Tokens (In / Out) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Claude 3.7 Sonnet** | Anthropic | **145ms** | 88 tok/s | 200,000 | 18.4 GB (FP16) | $3.00 / $15.00 |
+| **GPT-4o** | OpenAI | **162ms** | 94 tok/s | 128,000 | 16.2 GB (FP16) | $2.50 / $10.00 |
+| **Gemini 2.0 Flash** | Google | **98ms** | **142 tok/s** | **1,000,000** | **9.8 GB (FP8)** | **$0.10 / $0.40** |
+| **DeepSeek-R1** | DeepSeek | **185ms** | 72 tok/s | 64,000 | 14.5 GB (FP8) | **$0.55 / $2.19** |
+
+---
+
+## ⚖️ Why WebMCP? (Paradigm Shift)
+
+| Capability | Traditional AI Approach (Chat / Screen Scraping) | OmniFlow Studio with WebMCP |
+| :--- | :--- | :--- |
+| **Canvas Awareness** | Agent is blind to viewport coordinates, selections, and zooming. | Agent queries `inspect_canvas_state` for real-time spatial graph context. |
+| **System Construction** | Agent outputs ASCII art or disconnected markdown lists. | Agent invokes `batch_build_architecture` to render interactive 2D node graphs at 60 FPS. |
+| **Traffic Stress Testing** | Static theoretical estimates. | Agent calls `simulate_traffic`, streaming live particle physics and latency heatmaps across connection links. |
+| **Security Remediation** | Manual copy-pasting of generic best practices. | Agent runs `run_security_audit`, pinpoints SPOFs, and executes `optimize_architecture` with 1 click. |
+| **Safety & Trust** | Black-box execution without boundaries. | Strict JSON schema validation and `readOnlyHint` safety annotations. |
 
 ---
 
 ## 🚀 Quickstart & Local Setup
 
 ### Prerequisites
-- Node.js 18+ and npm
+- **Node.js 18+** and **npm**
 
-### Installation
+### 1. Clone & Run Locally
 ```bash
 # Clone the repository
 git clone https://github.com/your-username/omniflow-studio-webmcp.git
@@ -133,102 +298,104 @@ cd omniflow-studio-webmcp
 # Install dependencies
 npm install
 
-# Start local development server
+# Launch Vite dev server
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
 ## 🧪 Testing with WebMCP
 
 ### 1. Google Chrome 149+ (with Experimental Flag)
-1. Open Google Chrome.
-2. Navigate to `chrome://flags/#enable-webmcp-testing`.
-3. Set the flag to **Enabled** and restart Chrome.
-4. Open the deployed application or `http://localhost:3000`.
-5. Open Chrome DevTools (`F12` or `Ctrl+Shift+I`) → Inspect registered tools in the WebMCP panel or console via `document.modelContext.listTools()`.
+1. Navigate to `chrome://flags/#enable-webmcp-testing` in Chrome 149+.
+2. Set the flag to **Enabled** and restart Chrome.
+3. Open `http://localhost:3000`.
+4. Open Chrome DevTools (`F12`) → Inspect registered tools via `document.modelContext.listTools()`.
 
-### 2. ChatGPT In-App Browser & ChatGPT Sites
-1. Deploy OmniFlow Studio to any static host (Vercel, Netlify, Cloudflare Pages, Render).
-2. Open the live URL inside ChatGPT's in-app browser.
-3. ChatGPT's native agent will automatically discover registered tools on `document.modelContext` and can be prompted to manipulate the canvas directly.
+### 2. Built-In Multi-Agent Swarm Co-Pilot (Universal in Any Browser)
+- Click **`Agent Swarm`** in the top-right navbar.
+- Select quick prompts or type custom instructions:
+  - *"Build an NVIDIA H100 cluster with vLLM, Milvus Vector DB, and FastAPI Ingress, then simulate 18,000 RPS."*
+  - *"Run security audit and resolve all single points of failure."*
+  - *"Benchmark Claude 3.7 vs Gemini 2.0 Flash for our inference pipeline."*
 
-### 3. Built-In Agent Co-Pilot (Universal Testing in Any Browser)
-- Click the **Agent Co-Pilot** button in the top right.
-- Try prompt suggestions such as:
-  - *"Build an AI RAG pipeline with FastAPI Gateway, Milvus Vector DB, Redis Cache, and Claude 3.7 LLM, then simulate 6,000 RPS traffic."*
-  - *"Audit this architecture for security vulnerabilities and auto-remediate any single points of failure."*
-  - *"Optimize this topology for low latency and generate Terraform HCL."*
-- Watch the live tool execution trace stream and observe the canvas updating synchronously.
-
-### 4. Built-In WebMCP Live Inspector DevTools HUD
-- Click **WebMCP HUD** in the top navigation bar to inspect registered tools, view parameter JSON schemas, monitor real-time execution latency, and execute manual tests with custom JSON payloads.
+### 3. WebMCP DevTools Live Inspector HUD
+- Click **`HUD (28)`** in the top navigation bar to inspect registered tool schemas, view execution latency metrics, and test custom JSON payloads manually.
 
 ---
 
-## 🚢 Deployment Guide (Powered by Render)
+## 🚢 1-Click Render Deployment
 
-OmniFlow Studio is fully client-side and zero-dependency at runtime, pre-configured for **1-click deployment on Render**:
+OmniFlow Studio is fully client-side and pre-configured for **Render Blueprint Deployment**:
 
-### Deploy on Render (Recommended)
-1. Push your repository to GitHub / GitLab.
-2. Go to your [Render Dashboard](https://dashboard.render.com/).
-3. Click **New +** → **Blueprint** (or **Static Site**).
-4. Connect your repository. Render automatically reads [`render.yaml`](./render.yaml) and deploys your site!
+1. Fork or push this repository to GitHub / GitLab.
+2. Navigate to your [Render Dashboard](https://dashboard.render.com/).
+3. Click **New +** → **Blueprint**.
+4. Select your repository. Render automatically parses [`render.yaml`](./render.yaml) and deploys your static site!
 
-#### Manual Static Site Settings on Render:
-- **Build Command**: `npm install && npm run build`
-- **Publish Directory**: `dist`
-- **Rewrite Rules**: `/*` → `/index.html`
-
-### Alternative Providers
-- **Netlify**: `npm run build && npx netlify deploy --prod --dir=dist`
-- **Cloudflare Pages**: `npm run build && npx wrangler pages deploy dist --project-name=omniflow-studio`
+```yaml
+# render.yaml blueprint
+services:
+  - type: web
+    name: omniflow-studio
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+```
 
 ---
 
-## 📂 Project Structure
+## 📂 Repository Structure
 
 ```
 omniflow-studio-webmcp/
-├── index.html                   # Semantic HTML entry with declarative WebMCP forms
-├── package.json                 # Project manifest & scripts
-├── vite.config.js               # Vite build configuration
-├── LICENSE                      # Official MIT Open Source License
-├── README.md                    # Comprehensive documentation & testing guide
+├── index.html                     # Semantic HTML5 entry with WebMCP declarative forms
+├── render.yaml                    # Official 1-Click Render Blueprint configuration
+├── package.json                   # Project scripts and dependencies
+├── vite.config.js                 # Vite build pipeline
+├── LICENSE                        # MIT Open Source License
+├── README.md                      # Complete documentation and system architecture
 └── src/
-    ├── app.js                   # Application bootstrap & event orchestration
+    ├── app.js                     # Application entry point & orchestration
     ├── styles/
-    │   └── index.css            # Dark glassmorphic design system
+    │   └── index.css              # Glassmorphic dark theme design system
     ├── webmcp/
-    │   ├── webmcp-core.js       # Standard WebMCP polyfill, registry & event bus
-    │   └── tools.js             # 28 Enterprise WebMCP tool registrations
+    │   ├── webmcp-core.js         # WebMCP polyfill, registry, & event bus
+    │   └── tools.js               # 28 Registered WebMCP Enterprise Tools
     ├── canvas/
-    │   ├── canvas-engine.js     # 60 FPS Interactive HTML5 Canvas Engine
-    │   ├── traffic-simulator.js # Real-time particle stress & bottleneck physics
-    │   ├── security-scanner.js  # OWASP & SPOF vulnerability audit engine
-    │   ├── iac-generator.js     # Terraform, Docker Compose & K8s synthesizer
-    │   ├── cost-engine.js       # Real-time FinOps & bandwidth egress calculator
-    │   ├── autopilot-engine.js  # Autonomous self-healing auto-pilot engine
-    │   ├── benchmark-engine.js  # LLM inference hardware & model benchmark lab
-    │   ├── geo-distributor.js   # Multi-region global edge & Anycast latency SLA
-    │   ├── manifesto-generator.js # Executive architecture manifesto generator
-    │   └── templates.js         # Curated architectural blueprints
+    │   ├── canvas-engine.js       # 60 FPS HTML5 Canvas Engine & Visual Port Wiring
+    │   ├── autopilot-engine.js    # Autonomous Self-Healing 24/7 Daemon
+    │   ├── benchmark-engine.js    # Frontier LLM Inference Benchmark Lab
+    │   ├── geo-distributor.js     # Multi-Region Global Edge Latency Engine
+    │   ├── cost-engine.js         # Real-time FinOps & Egress Bandwidth Calculator
+    │   ├── traffic-simulator.js   # Real-time Particle Stress & Bottleneck Physics
+    │   ├── security-scanner.js    # OWASP & Cloud SPOF Vulnerability Scanner
+    │   ├── iac-generator.js       # Terraform, Helm, CloudFormation & K8s Synthesizer
+    │   ├── manifesto-generator.js # Executive Markdown/Mermaid Architecture Manifesto
+    │   └── templates.js           # Curated Enterprise Blueprints
     └── components/
-        ├── agent-copilot.js     # Human-Agent collaborative swarm co-pilot
-        ├── swarm-consensus.js   # Multi-agent live debate & consensus protocol
-        ├── hud-inspector.js     # WebMCP DevTools Live Inspector HUD
-        ├── code-modal.js        # Multi-language IaC export viewer
-        ├── audit-panel.js       # Security report & 1-click remediation
-        ├── benchmark-modal.js   # AI model benchmark lab modal
-        ├── geo-modal.js         # Global multi-region edge latency modal
-        └── declarative-forms.js # Declarative WebMCP forms manager
+        ├── agent-copilot.js       # Human-Agent Collaborative Swarm Co-Pilot
+        ├── swarm-consensus.js     # Multi-Agent Live Debate & Consensus Protocol
+        ├── hud-inspector.js       # WebMCP DevTools Live Inspector HUD
+        ├── benchmark-modal.js     # AI Model Benchmark Lab Modal Component
+        ├── geo-modal.js           # Multi-Region Global Edge SLA Modal Component
+        ├── code-modal.js          # Multi-Language IaC Export Viewer
+        ├── audit-panel.js         # Security Audit Report & 1-Click Fix Drawer
+        ├── node-inspector.js      # Interactive Node Hardware & Telemetry Drawer
+        └── declarative-forms.js   # HTML Declarative WebMCP Forms Manager
 ```
 
 ---
 
 ## 📄 Open Source License
 
-This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details.
+Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for full terms and conditions.
+
+<div align="center">
+  <sub>Built with ❤️ for the WebMCP Challenge • Engineered with W3C Web Model Context Protocol standards.</sub>
+</div>
