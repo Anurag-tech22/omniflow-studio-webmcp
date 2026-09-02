@@ -198,26 +198,32 @@ omniflow-studio-webmcp/
 ├── vite.config.js               # Vite build configuration
 ├── LICENSE                      # Official MIT Open Source License
 ├── README.md                    # Comprehensive documentation & testing guide
-├── SUBMISSION.md                # Devpost submission copy-paste answers
-├── DEMO_SCRIPT.md               # 3-minute demo video script
 └── src/
     ├── app.js                   # Application bootstrap & event orchestration
     ├── styles/
     │   └── index.css            # Dark glassmorphic design system
     ├── webmcp/
     │   ├── webmcp-core.js       # Standard WebMCP polyfill, registry & event bus
-    │   └── tools.js             # 14+ Imperative WebMCP tool registrations
+    │   └── tools.js             # 28 Enterprise WebMCP tool registrations
     ├── canvas/
     │   ├── canvas-engine.js     # 60 FPS Interactive HTML5 Canvas Engine
     │   ├── traffic-simulator.js # Real-time particle stress & bottleneck physics
     │   ├── security-scanner.js  # OWASP & SPOF vulnerability audit engine
     │   ├── iac-generator.js     # Terraform, Docker Compose & K8s synthesizer
+    │   ├── cost-engine.js       # Real-time FinOps & bandwidth egress calculator
+    │   ├── autopilot-engine.js  # Autonomous self-healing auto-pilot engine
+    │   ├── benchmark-engine.js  # LLM inference hardware & model benchmark lab
+    │   ├── geo-distributor.js   # Multi-region global edge & Anycast latency SLA
+    │   ├── manifesto-generator.js # Executive architecture manifesto generator
     │   └── templates.js         # Curated architectural blueprints
     └── components/
-        ├── agent-copilot.js     # Human-Agent interactive chat & tool tracer
+        ├── agent-copilot.js     # Human-Agent collaborative swarm co-pilot
+        ├── swarm-consensus.js   # Multi-agent live debate & consensus protocol
         ├── hud-inspector.js     # WebMCP DevTools Live Inspector HUD
         ├── code-modal.js        # Multi-language IaC export viewer
         ├── audit-panel.js       # Security report & 1-click remediation
+        ├── benchmark-modal.js   # AI model benchmark lab modal
+        ├── geo-modal.js         # Global multi-region edge latency modal
         └── declarative-forms.js # Declarative WebMCP forms manager
 ```
 
