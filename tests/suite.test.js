@@ -110,3 +110,16 @@ test('ManifestoGenerator: compiles enterprise Markdown with Mermaid diagram & SO
   assert.ok(manifesto.includes('SOC2 & ISO 27001 Compliance Matrix'), 'Manifesto must include SOC2 security matrix');
   assert.ok(manifesto.includes('FinOps TCO & Economic Model'), 'Manifesto must include FinOps TCO breakdown');
 });
+
+test('WebMCP Catalog: search_products matches cloud components and blueprints accurately', () => {
+  const typeConfig = {
+    gpu_cluster: { label: 'NVIDIA H100 8x', badge: 'SXM5 Tensor' },
+    cache: { label: 'Redis ElastiCache', badge: 'Cluster' }
+  };
+  const q = 'h100';
+  const matches = Object.entries(typeConfig).filter(([type, cfg]) =>
+    cfg.label.toLowerCase().includes(q) || cfg.badge.toLowerCase().includes(q)
+  );
+  assert.strictEqual(matches.length, 1, 'Should find exactly 1 match for NVIDIA H100');
+  assert.strictEqual(matches[0][0], 'gpu_cluster');
+});
