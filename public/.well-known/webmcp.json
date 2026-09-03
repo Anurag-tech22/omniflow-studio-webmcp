@@ -1,5 +1,4 @@
 {
-  "$schema": "https://webmachinelearning.github.io/webmcp/schema/v1/webmcp.json",
   "name": "OmniFlow Studio",
   "description": "Human-Agent Collaborative Visual Systems & Cloud Architecture Studio powered by W3C WebMCP",
   "version": "1.0.0",
