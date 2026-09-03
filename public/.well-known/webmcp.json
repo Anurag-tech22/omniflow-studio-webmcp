@@ -5,7 +5,7 @@
   "specification": "W3C Web Model Context Protocol Draft 2026",
   "homepage": "https://github.com/Anurag-tech22/omniflow-studio-webmcp",
   "capabilities": {
-    "imperativeTools": 28,
+    "imperativeTools": 29,
     "declarativeFormTools": 2,
     "autonomousAutoPilot": true,
     "multiAgentSwarm": true,
@@ -42,6 +42,7 @@
     { "name": "toggle_autonomous_autopilot", "mode": "mutating", "description": "Toggles 24/7 background self-healing auto-pilot loop" },
     { "name": "benchmark_ai_models", "mode": "readOnly", "description": "Evaluates Claude 3.7, GPT-4o, Gemini 2.0 Flash, and DeepSeek-R1 inference metrics" },
     { "name": "simulate_global_geo_distribution", "mode": "readOnly", "description": "Simulates Anycast Edge PoP cache hit ratios and regional latency SLAs across 4 continents" },
+    { "name": "search_products", "mode": "readOnly", "description": "Search the product catalog of available cloud components, blueprints, and infrastructure modules" },
     { "name": "quick_add_component", "mode": "declarativeForm", "description": "HTML form tool for instant component creation" },
     { "name": "trigger_quick_optimization", "mode": "declarativeForm", "description": "HTML form tool for instant architecture optimization" }
   ]

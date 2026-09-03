@@ -579,6 +579,56 @@ export function registerAllWebMCPTools(canvasEngine) {
     }
   });
 
+  // 29. search_products (Catalog Search for Cloud & Infrastructure Products)
+  document.modelContext.registerTool({
+    name: 'search_products',
+    description: 'Search the product catalog of available cloud components, blueprints, and infrastructure modules.',
+    readOnlyHint: true,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: {
+          type: 'string',
+          description: 'Keyword, category, or product name to search (e.g. "h100", "database", "ai", "redis", "gateway", "blueprint").'
+        }
+      },
+      required: ['query']
+    },
+    execute: async ({ query = '' } = {}) => {
+      const q = (query || '').toLowerCase().trim();
+      const allComponents = Object.entries(canvasEngine.typeConfig).map(([type, config]) => ({
+        id: type,
+        name: config.label,
+        category: config.badge,
+        icon: config.icon,
+        type: type
+      }));
+
+      const allTemplates = Object.entries(ARCHITECTURE_TEMPLATES).map(([id, t]) => ({
+        id,
+        name: t.name,
+        category: 'Architecture Blueprint',
+        description: t.description,
+        type: 'blueprint'
+      }));
+
+      const catalog = [...allComponents, ...allTemplates];
+      const results = q
+        ? catalog.filter(item =>
+            item.name.toLowerCase().includes(q) ||
+            item.category.toLowerCase().includes(q) ||
+            (item.description && item.description.toLowerCase().includes(q))
+          )
+        : catalog;
+
+      return {
+        query,
+        count: results.length,
+        products: results
+      };
+    }
+  });
+
   function updateFinOpsUI(engine) {
     const rps = engine.simulator.isRunning ? engine.simulator.trafficRps : 0;
     const stats = CostEngine.calculate(engine.nodes, rps);
