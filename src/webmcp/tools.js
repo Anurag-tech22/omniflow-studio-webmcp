@@ -14,7 +14,7 @@ import { GeoDistributor } from '../canvas/geo-distributor.js';
 import { ManifestoGenerator } from '../canvas/manifesto-generator.js';
 
 export function registerAllWebMCPTools(canvasEngine) {
-  console.log('[WebMCP] Registering 28 comprehensive enterprise tools on document.modelContext...');
+  console.log('[WebMCP] Registering 29 comprehensive enterprise tools on document.modelContext (31 total tools)...');
 
   const chaos = new ChaosEngine(canvasEngine);
 

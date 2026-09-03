@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const autoPilot = new AutoPilotEngine(canvas);
   canvas.autoPilot = autoPilot;
 
-  // 3. Register 28 Enterprise WebMCP Tools on document.modelContext
+  // 3. Register 29 Enterprise WebMCP Tools on document.modelContext (31 total with declarative forms)
   registerAllWebMCPTools(canvas);
 
   // 4. Initialize UI Components & Modals

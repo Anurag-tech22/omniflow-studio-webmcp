@@ -62,7 +62,7 @@ export class ManifestoGenerator {
     doc += `| **TOTAL ESTIMATED CLOUD BILL** | | | | **$${cost.monthlyTotal}/mo** |\n\n`;
 
     doc += `## 6. WebMCP Interoperability Metadata\n`;
-    doc += `All visual nodes and links are programmatically bound to \`document.modelContext\` via 28 registered tools, allowing autonomous agents to simulate traffic, run security audits, and execute self-healing protocols in real-time.\n`;
+    doc += `All visual nodes and links are programmatically bound to \`document.modelContext\` via 31 registered tools (29 imperative + 2 declarative forms), allowing autonomous agents to simulate traffic, run security audits, and execute self-healing protocols in real-time.\n`;
 
     return doc;
   }
