@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "specification": "W3C Web Model Context Protocol Draft 2026",
   "homepage": "https://github.com/Anurag-tech22/omniflow-studio-webmcp",
+  "appUrl": "https://omniflow-studio-webmcp.vercel.app",
+  "manifestUrl": "https://omniflow-studio-webmcp.vercel.app/.well-known/webmcp.json",
   "capabilities": {
     "imperativeTools": 29,
     "declarativeFormTools": 2,

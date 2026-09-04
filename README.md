@@ -6,14 +6,14 @@
 [![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(31%20Tools)-00f0ff.svg?style=for-the-badge&logo=w3c&logoColor=black)](https://webmachinelearning.github.io/webmcp/)
 [![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg?style=for-the-badge&logo=nvidia&logoColor=white)](https://www.nvidia.com/)
 [![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-6366f1.svg?style=for-the-badge&logo=probot&logoColor=white)](./src/canvas/autopilot-engine.js)
-[![Vercel Deploy](https://img.shields.io/badge/Deploy-Vercel%20Zero--Config-000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](./vercel.json)
+[![Live Demo](https://img.shields.io/badge/Live%20App-omniflow--studio--webmcp.vercel.app-00f0ff.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://omniflow-studio-webmcp.vercel.app/)
 [![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-f59e0b.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](chrome://flags/#enable-webmcp-testing)
 
 <p align="center">
   <strong>The open, bi-directional visual systems engineering studio where humans and AI agent swarms co-create, simulate, stress-test, and synthesize production cloud infrastructure in real-time through the W3C WebMCP standard.</strong>
 </p>
 
-[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Vercel](#-free-tier-cloud-deployment-vercel)
+[✨ Live Demo](https://omniflow-studio-webmcp.vercel.app/) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🌐 Live Deployment](#-live-production-deployment)
 
 </div>
 
@@ -328,23 +328,16 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
-## 🚢 Free Tier Cloud Deployment (Vercel)
+## 🌐 Live Production Deployment
 
-OmniFlow Studio is built with an **in-browser, client-side WebMCP architecture**. It has **zero backend server dependencies**, compiles into a pure static bundle (`dist/`), and runs at 60 FPS directly in the browser's JavaScript engine.
+OmniFlow Studio is deployed and live in production on Vercel's global Anycast Edge CDN with 0ms cold-start latency:
 
-This makes it **100% free to host** on Vercel's Anycast Edge CDN with **0ms cold-start latency** (never sleeps or times out during hackathon evaluations).
+🚀 **Production Web App**: [https://omniflow-studio-webmcp.vercel.app/](https://omniflow-studio-webmcp.vercel.app/)
 
-### 🚀 1-Click Zero-Config Vercel Deployment
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAnurag-tech22%2Fomniflow-studio-webmcp)
-
-1. Sign in to [vercel.com](https://vercel.com) using your GitHub account (No credit card required).
-2. Click **"Add New..."** ➜ **"Project"** and import `omniflow-studio-webmcp`.
-3. Vercel automatically detects [`vercel.json`](./vercel.json):
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-4. Click **"Deploy"**. Your site goes live in ~15 seconds with automatic SSL and global Edge CDN caching!
+* **Live Interactive Canvas**: [https://omniflow-studio-webmcp.vercel.app/](https://omniflow-studio-webmcp.vercel.app/)
+* **WebMCP Discovery Manifest**: [`https://omniflow-studio-webmcp.vercel.app/.well-known/webmcp.json`](https://omniflow-studio-webmcp.vercel.app/.well-known/webmcp.json)
+* **Agent LLM Documentation**: [`https://omniflow-studio-webmcp.vercel.app/llms.txt`](https://omniflow-studio-webmcp.vercel.app/llms.txt)
+* **Hosting Platform**: Vercel Global Anycast Edge Network with zero server downtime, HTTP/3 QUIC, and full CORS headers (`Access-Control-Allow-Origin: *`) for AI agent discovery.
 
 ---
 

@@ -13,6 +13,7 @@ This browser application exposes 31 structured tools (29 imperative via `window.
 - **Security & Synthesis**: `run_security_audit`, `optimize_architecture`, `generate_infrastructure_code`, `generate_architecture_manifesto`, `export_canvas_image`, `export_architecture_json`, `import_architecture_json`, `clear_canvas`
 - **Declarative Form Tools**: `<form toolname="quick_add_component">`, `<form toolname="trigger_quick_optimization">`
 
-### Discovery Manifest
-- WebMCP Manifest: `/.well-known/webmcp.json`
+### Discovery & Live Deployment
+- Live Application URL: `https://omniflow-studio-webmcp.vercel.app`
+- WebMCP Manifest: `https://omniflow-studio-webmcp.vercel.app/.well-known/webmcp.json`
 - Source Code & Architecture: `https://github.com/Anurag-tech22/omniflow-studio-webmcp`
