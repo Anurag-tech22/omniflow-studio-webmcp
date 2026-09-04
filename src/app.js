@@ -205,6 +205,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const autoLayoutBtn = document.getElementById('btn-auto-layout');
+  if (autoLayoutBtn) {
+    autoLayoutBtn.addEventListener('click', () => {
+      canvas.applyAutoLayout('hierarchical');
+      announceA11y('Nodes arranged neatly in clean architectural hierarchy.');
+    });
+  }
+
   // Palette Drag & Drop Setup
   document.querySelectorAll('.palette-node-item').forEach(item => {
     item.addEventListener('dragstart', (e) => {
@@ -271,6 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('btn-open-swarm')?.click();
     } else if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
       document.getElementById('btn-open-agent-copilot')?.click();
+    } else if (e.key.toLowerCase() === 'l' && !e.ctrlKey && !e.metaKey) {
+      canvas.applyAutoLayout('hierarchical');
+      announceA11y('Nodes arranged neatly in clean architectural hierarchy.');
     }
   });
 

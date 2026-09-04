@@ -6,6 +6,7 @@ import { IaCGenerator } from '../src/canvas/iac-generator.js';
 import { BenchmarkEngine } from '../src/canvas/benchmark-engine.js';
 import { GeoDistributor } from '../src/canvas/geo-distributor.js';
 import { ManifestoGenerator } from '../src/canvas/manifesto-generator.js';
+import { ARCHITECTURE_TEMPLATES } from '../src/canvas/templates.js';
 
 test('CostEngine: calculates compute, RAM, and egress billing accurately', () => {
   const nodes = [
@@ -123,3 +124,20 @@ test('WebMCP Catalog: search_products matches cloud components and blueprints ac
   assert.strictEqual(matches.length, 1, 'Should find exactly 1 match for NVIDIA H100');
   assert.strictEqual(matches[0][0], 'gpu_cluster');
 });
+
+test('ArchitectureTemplates: guarantees neat Left-to-Right layout with zero backward loops', () => {
+  for (const [key, tpl] of Object.entries(ARCHITECTURE_TEMPLATES)) {
+    const nodeMap = new Map(tpl.nodes.map(n => [n.id, n]));
+    for (const conn of tpl.connections) {
+      const fromNode = nodeMap.get(conn.from);
+      const toNode = nodeMap.get(conn.to);
+      assert.ok(fromNode, `Template ${key} connection ${conn.id} fromNode exists`);
+      assert.ok(toNode, `Template ${key} connection ${conn.id} toNode exists`);
+      assert.ok(
+        toNode.x > fromNode.x,
+        `Template ${key} connection ${conn.id} (${conn.from} -> ${conn.to}) must flow forward (from.x=${fromNode.x}, to.x=${toNode.x})`
+      );
+    }
+  }
+});
+

@@ -7,14 +7,13 @@
 [![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg?style=for-the-badge&logo=nvidia&logoColor=white)](https://www.nvidia.com/)
 [![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-6366f1.svg?style=for-the-badge&logo=probot&logoColor=white)](./src/canvas/autopilot-engine.js)
 [![Vercel Deploy](https://img.shields.io/badge/Deploy-Vercel%20Zero--Config-000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](./vercel.json)
-[![Render Deploy](https://img.shields.io/badge/Deploy-Render%20Blueprint-46e3b7.svg?style=for-the-badge&logo=render&logoColor=black)](./render.yaml)
 [![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-f59e0b.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](chrome://flags/#enable-webmcp-testing)
 
 <p align="center">
   <strong>The open, bi-directional visual systems engineering studio where humans and AI agent swarms co-create, simulate, stress-test, and synthesize production cloud infrastructure in real-time through the W3C WebMCP standard.</strong>
 </p>
 
-[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy (Vercel / Render)](#-free-tier-cloud-deployment-vercel-render-netlify)
+[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Vercel](#-free-tier-cloud-deployment-vercel--netlify)
 
 </div>
 
@@ -329,7 +328,7 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
-## 🚢 Free Tier Cloud Deployment (Vercel, Render, Netlify)
+## 🚢 Free Tier Cloud Deployment (Vercel & Netlify)
 
 OmniFlow Studio is built with an **in-browser, client-side WebMCP architecture**. It has **zero backend server dependencies**, compiles into a pure static bundle (`dist/`), and runs at 60 FPS directly in the browser's JavaScript engine.
 
@@ -347,16 +346,7 @@ This makes it **100% free to host** on any modern Edge CDN with **0ms cold-start
    - **Output Directory**: `dist`
 4. Click **"Deploy"**. Your site goes live in ~15 seconds with automatic SSL and global Edge CDN caching!
 
-### 🥈 Option 2: Render (Static Site Blueprint)
-
-OmniFlow Studio includes a pre-configured [`render.yaml`](./render.yaml) blueprint:
-
-1. Go to your [Render Dashboard](https://dashboard.render.com/).
-2. Click **New +** ➜ **Blueprint**.
-3. Select your `omniflow-studio-webmcp` repository.
-4. Render automatically provisions a **Free Static Site** (which does not sleep), builds with Vite, and serves all assets with security and CORS headers.
-
-### 🥉 Option 3: Netlify (Starter Tier)
+### 🥈 Option 2: Netlify (Starter Tier)
 
 OmniFlow Studio includes a pre-configured [`netlify.toml`](./netlify.toml):
 
@@ -376,7 +366,6 @@ omniflow-studio-webmcp/
 │   └── llms.txt                   # LLM context documentation for AI agents & crawlers
 ├── index.html                     # Semantic HTML5 entry with WebMCP declarative forms
 ├── vercel.json                    # Vercel zero-config Edge CDN & CORS deployment configuration
-├── render.yaml                    # Official 1-Click Render Blueprint configuration
 ├── netlify.toml                   # Netlify static deployment & CORS routing rules
 ├── package.json                   # Project scripts and dependencies
 ├── vite.config.js                 # Vite build pipeline

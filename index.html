@@ -395,6 +395,10 @@
             <button class="btn-icon-sm" id="btn-zoom-reset" title="Fit to View">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
             </button>
+            <div style="width: 1px; height: 16px; background: rgba(255,255,255,0.1); margin: 0 2px;"></div>
+            <button class="btn-icon-sm" id="btn-auto-layout" title="Arrange Neatly (Auto-Align)" style="color: #00f0ff;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+            </button>
           </div>
 
           <div class="canvas-mode-badge" id="canvas-status-badge">
@@ -862,6 +866,7 @@ document.modelContext.registerTool({
               <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Toggle Agent Co-Pilot</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">C</kbd></td></tr>
               <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Toggle Autonomous Auto-Pilot</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">A</kbd></td></tr>
               <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Toggle Swarm Consensus</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">S</kbd></td></tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 8px 4px; color: var(--text-secondary);">Auto-Arrange Canvas (Neat Layout)</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">L</kbd></td></tr>
               <tr><td style="padding: 8px 4px; color: var(--text-secondary);">Open Shortcuts Cheatsheet</td><td style="text-align: right;"><kbd style="background: var(--bg-tertiary); padding: 3px 7px; border-radius: 4px; border: 1px solid var(--border-medium); font-family: monospace;">?</kbd></td></tr>
             </tbody>
           </table>

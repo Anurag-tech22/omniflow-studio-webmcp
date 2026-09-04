@@ -500,6 +500,96 @@ export class CanvasEngine {
     this.checkEmptyState();
   }
 
+  applyAutoLayout(layout = 'hierarchical') {
+    if (this.nodes.length === 0) return;
+    this.pushHistory();
+
+    if (layout === 'hierarchical') {
+      const adj = new Map();
+      const inDegree = new Map();
+      this.nodes.forEach(n => {
+        adj.set(n.id, []);
+        inDegree.set(n.id, 0);
+      });
+
+      this.connections.forEach(c => {
+        if (adj.has(c.from) && inDegree.has(c.to)) {
+          adj.get(c.from).push(c.to);
+          inDegree.set(c.to, inDegree.get(c.to) + 1);
+        }
+      });
+
+      const layers = new Map();
+      const queue = [];
+      this.nodes.forEach(n => {
+        if (inDegree.get(n.id) === 0) {
+          queue.push({ id: n.id, depth: 0 });
+          layers.set(n.id, 0);
+        }
+      });
+
+      if (queue.length === 0 && this.nodes.length > 0) {
+        queue.push({ id: this.nodes[0].id, depth: 0 });
+        layers.set(this.nodes[0].id, 0);
+      }
+
+      while (queue.length > 0) {
+        const { id, depth } = queue.shift();
+        const neighbors = adj.get(id) || [];
+        neighbors.forEach(nextId => {
+          const currentDepth = layers.get(nextId) ?? -1;
+          if (depth + 1 > currentDepth) {
+            layers.set(nextId, depth + 1);
+            queue.push({ id: nextId, depth: depth + 1 });
+          }
+        });
+      }
+
+      const layerBuckets = new Map();
+      this.nodes.forEach(n => {
+        const d = layers.get(n.id) || 0;
+        if (!layerBuckets.has(d)) layerBuckets.set(d, []);
+        layerBuckets.get(d).push(n);
+      });
+
+      const startX = 80;
+      const colSpacing = 300;
+      const rowSpacing = 140;
+
+      layerBuckets.forEach((bucketNodes, depth) => {
+        const totalHeight = (bucketNodes.length - 1) * rowSpacing;
+        const startY = Math.max(90, 260 - totalHeight / 2);
+
+        bucketNodes.forEach((node, idx) => {
+          node.x = startX + depth * colSpacing;
+          node.y = startY + idx * rowSpacing;
+        });
+      });
+    } else if (layout === 'grid') {
+      const cols = Math.ceil(Math.sqrt(this.nodes.length));
+      const colSpacing = 280;
+      const rowSpacing = 150;
+      this.nodes.forEach((n, idx) => {
+        const r = Math.floor(idx / cols);
+        const c = idx % cols;
+        n.x = 80 + c * colSpacing;
+        n.y = 90 + r * rowSpacing;
+      });
+    } else if (layout === 'circular') {
+      const centerX = 600;
+      const centerY = 350;
+      const radius = Math.max(180, this.nodes.length * 35);
+      this.nodes.forEach((n, idx) => {
+        const angle = (idx / this.nodes.length) * 2 * Math.PI - Math.PI / 2;
+        n.x = Math.round(centerX + radius * Math.cos(angle) - (n.width || 190) / 2);
+        n.y = Math.round(centerY + radius * Math.sin(angle) - (n.height || 85) / 2);
+      });
+    }
+
+    this.autoFitView();
+    this.playSfx(580, 'sine', 0.12);
+  }
+
   autoFitView() {
     if (this.nodes.length === 0) {
       this.transform.x = 60;
@@ -722,15 +812,55 @@ export class CanvasEngine {
       const toNode = nodeMap.get(conn.to);
       if (!fromNode || !toNode) return;
 
-      const x1 = fromNode.x + fromNode.width;
-      const y1 = fromNode.y + fromNode.height / 2;
-      const x2 = toNode.x;
-      const y2 = toNode.y + toNode.height / 2;
+      let x1, y1, x2, y2, cp1x, cp1y, cp2x, cp2y;
 
-      const dx = Math.max(45, (x2 - x1) * 0.45);
+      if (toNode.x >= fromNode.x + fromNode.width - 20) {
+        x1 = fromNode.x + fromNode.width;
+        y1 = fromNode.y + fromNode.height / 2;
+        x2 = toNode.x;
+        y2 = toNode.y + toNode.height / 2;
+        const dist = Math.max(45, (x2 - x1) * 0.45);
+        cp1x = x1 + dist;
+        cp1y = y1;
+        cp2x = x2 - dist;
+        cp2y = y2;
+      } else if (toNode.x + toNode.width <= fromNode.x + 20) {
+        x1 = fromNode.x;
+        y1 = fromNode.y + fromNode.height / 2;
+        x2 = toNode.x + toNode.width;
+        y2 = toNode.y + toNode.height / 2;
+        const dist = Math.max(45, (x1 - x2) * 0.45);
+        cp1x = x1 - dist;
+        cp1y = y1;
+        cp2x = x2 + dist;
+        cp2y = y2;
+      } else {
+        if (toNode.y >= fromNode.y) {
+          x1 = fromNode.x + fromNode.width / 2;
+          y1 = fromNode.y + fromNode.height;
+          x2 = toNode.x + toNode.width / 2;
+          y2 = toNode.y;
+          const dist = Math.max(30, (y2 - y1) * 0.45);
+          cp1x = x1;
+          cp1y = y1 + dist;
+          cp2x = x2;
+          cp2y = y2 - dist;
+        } else {
+          x1 = fromNode.x + fromNode.width / 2;
+          y1 = fromNode.y;
+          x2 = toNode.x + toNode.width / 2;
+          y2 = toNode.y + toNode.height;
+          const dist = Math.max(30, (y1 - y2) * 0.45);
+          cp1x = x1;
+          cp1y = y1 - dist;
+          cp2x = x2;
+          cp2y = y2 + dist;
+        }
+      }
+
       ctx.beginPath();
       ctx.moveTo(x1, y1);
-      ctx.bezierCurveTo(x1 + dx, y1, x2 - dx, y2, x2, y2);
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x2, y2);
 
       const isNvlink = conn.protocol.includes('NVLink');
       const isGrpc = conn.protocol.includes('gRPC');
