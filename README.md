@@ -6,6 +6,7 @@
 [![WebMCP Standard](https://img.shields.io/badge/Standard-W3C%20WebMCP%20(31%20Tools)-00f0ff.svg?style=for-the-badge&logo=w3c&logoColor=black)](https://webmachinelearning.github.io/webmcp/)
 [![NVIDIA AI Architecture](https://img.shields.io/badge/NVIDIA-H100%20GPU%20Ready-76b900.svg?style=for-the-badge&logo=nvidia&logoColor=white)](https://www.nvidia.com/)
 [![Auto-Pilot Active](https://img.shields.io/badge/Auto--Pilot-Self--Healing%2024%2F7-6366f1.svg?style=for-the-badge&logo=probot&logoColor=white)](./src/canvas/autopilot-engine.js)
+[![Vercel Deploy](https://img.shields.io/badge/Deploy-Vercel%20Zero--Config-000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](./vercel.json)
 [![Render Deploy](https://img.shields.io/badge/Deploy-Render%20Blueprint-46e3b7.svg?style=for-the-badge&logo=render&logoColor=black)](./render.yaml)
 [![Chrome AI Testing](https://img.shields.io/badge/Chrome-149%2B%20%23enable--webmcp--testing-f59e0b.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](chrome://flags/#enable-webmcp-testing)
 
@@ -13,7 +14,7 @@
   <strong>The open, bi-directional visual systems engineering studio where humans and AI agent swarms co-create, simulate, stress-test, and synthesize production cloud infrastructure in real-time through the W3C WebMCP standard.</strong>
 </p>
 
-[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Render](#-1-click-render-deployment)
+[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy (Vercel / Render)](#-free-tier-cloud-deployment-vercel-render-netlify)
 
 </div>
 
@@ -324,32 +325,44 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
   - *"Benchmark Claude 3.7 vs Gemini 2.0 Flash for our inference pipeline."*
 
 ### 3. WebMCP DevTools Live Inspector HUD
-- Click **`HUD (28)`** in the top navigation bar to inspect registered tool schemas, view execution latency metrics, and test custom JSON payloads manually.
+- Click **`HUD (31)`** in the top navigation bar to inspect registered tool schemas, view execution latency metrics, and test custom JSON payloads manually.
 
 ---
 
-## 🚢 1-Click Render Deployment
+## 🚢 Free Tier Cloud Deployment (Vercel, Render, Netlify)
 
-OmniFlow Studio is fully client-side and pre-configured for **Render Blueprint Deployment**:
+OmniFlow Studio is built with an **in-browser, client-side WebMCP architecture**. It has **zero backend server dependencies**, compiles into a pure static bundle (`dist/`), and runs at 60 FPS directly in the browser's JavaScript engine.
 
-1. Fork or push this repository to GitHub / GitLab.
-2. Navigate to your [Render Dashboard](https://dashboard.render.com/).
-3. Click **New +** → **Blueprint**.
-4. Select your repository. Render automatically parses [`render.yaml`](./render.yaml) and deploys your static site!
+This makes it **100% free to host** on any modern Edge CDN with **0ms cold-start latency** (never sleeps or times out during hackathon evaluations).
 
-```yaml
-# render.yaml blueprint
-services:
-  - type: web
-    name: omniflow-studio
-    env: static
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-```
+### 🥇 Option 1: Vercel (Recommended — Zero Config & 0ms Delay)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAnurag-tech22%2Fomniflow-studio-webmcp)
+
+1. Sign in to [vercel.com](https://vercel.com) using your GitHub account (No credit card required).
+2. Click **"Add New..."** ➜ **"Project"** and import `omniflow-studio-webmcp`.
+3. Vercel automatically detects [`vercel.json`](./vercel.json):
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+4. Click **"Deploy"**. Your site goes live in ~15 seconds with automatic SSL and global Edge CDN caching!
+
+### 🥈 Option 2: Render (Static Site Blueprint)
+
+OmniFlow Studio includes a pre-configured [`render.yaml`](./render.yaml) blueprint:
+
+1. Go to your [Render Dashboard](https://dashboard.render.com/).
+2. Click **New +** ➜ **Blueprint**.
+3. Select your `omniflow-studio-webmcp` repository.
+4. Render automatically provisions a **Free Static Site** (which does not sleep), builds with Vite, and serves all assets with security and CORS headers.
+
+### 🥉 Option 3: Netlify (Starter Tier)
+
+OmniFlow Studio includes a pre-configured [`netlify.toml`](./netlify.toml):
+
+1. Go to your [Netlify Dashboard](https://app.netlify.com/).
+2. Click **"Add new site"** ➜ **"Import an existing project"**.
+3. Select this repository. Netlify reads `netlify.toml` and deploys to global Edge nodes with full CORS support.
 
 ---
 
@@ -357,19 +370,27 @@ services:
 
 ```
 omniflow-studio-webmcp/
+├── .github/workflows/ci.yml       # Automated GitHub Actions CI test & build pipeline
+├── public/
+│   ├── .well-known/webmcp.json    # Machine discovery manifest (31 WebMCP Tools + Schema)
+│   └── llms.txt                   # LLM context documentation for AI agents & crawlers
 ├── index.html                     # Semantic HTML5 entry with WebMCP declarative forms
+├── vercel.json                    # Vercel zero-config Edge CDN & CORS deployment configuration
 ├── render.yaml                    # Official 1-Click Render Blueprint configuration
+├── netlify.toml                   # Netlify static deployment & CORS routing rules
 ├── package.json                   # Project scripts and dependencies
 ├── vite.config.js                 # Vite build pipeline
 ├── LICENSE                        # MIT Open Source License
 ├── README.md                      # Complete documentation and system architecture
+├── tests/
+│   └── suite.test.js              # Native automated unit test suite (11 test suites)
 └── src/
     ├── app.js                     # Application entry point & orchestration
     ├── styles/
     │   └── index.css              # Glassmorphic dark theme design system
     ├── webmcp/
     │   ├── webmcp-core.js         # WebMCP polyfill, registry, & event bus
-    │   └── tools.js               # 28 Registered WebMCP Enterprise Tools
+    │   └── tools.js               # 31 Registered WebMCP Enterprise Tools
     ├── canvas/
     │   ├── canvas-engine.js       # 60 FPS HTML5 Canvas Engine & Visual Port Wiring
     │   ├── autopilot-engine.js    # Autonomous Self-Healing 24/7 Daemon

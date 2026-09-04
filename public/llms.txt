@@ -4,13 +4,13 @@
 
 ## AI Agent Integration
 
-This browser application exposes 28 structured tools directly on `window.document.modelContext`. When loaded in an agent-enabled browser (such as Google Chrome 149+ with `#enable-webmcp-testing` or ChatGPT Sites), agents can discover and invoke these tools to interact with the user's active canvas.
+This browser application exposes 31 structured tools (29 imperative via `window.document.modelContext` and 2 declarative HTML forms). When loaded in an agent-enabled browser (such as Google Chrome 149+ with `#enable-webmcp-testing` or ChatGPT Sites), agents can discover and invoke these tools to interact with the user's active canvas.
 
 ### Core Tool Categories
-- **Canvas Inspection & FinOps**: `inspect_canvas_state`, `estimate_cloud_costs`, `benchmark_ai_models`, `simulate_global_geo_distribution`
+- **Canvas Inspection & FinOps**: `inspect_canvas_state`, `estimate_cloud_costs`, `benchmark_ai_models`, `simulate_global_geo_distribution`, `search_products`
 - **Graph Topology Construction**: `create_node`, `update_node`, `delete_node`, `connect_nodes`, `disconnect_nodes`, `batch_build_architecture`, `apply_layout_preset`, `load_architecture_template`
 - **Traffic Physics & Chaos Lab**: `simulate_traffic`, `stop_simulation`, `inject_ddos_attack`, `kill_random_node`, `simulate_gpu_oom`, `auto_heal_cluster`, `toggle_autonomous_autopilot`
-- **Security & Synthesis**: `run_security_audit`, `optimize_architecture`, `generate_infrastructure_code`, `generate_architecture_manifesto`, `export_canvas_image`
+- **Security & Synthesis**: `run_security_audit`, `optimize_architecture`, `generate_infrastructure_code`, `generate_architecture_manifesto`, `export_canvas_image`, `export_architecture_json`, `import_architecture_json`, `clear_canvas`
 - **Declarative Form Tools**: `<form toolname="quick_add_component">`, `<form toolname="trigger_quick_optimization">`
 
 ### Discovery Manifest
