@@ -35,8 +35,8 @@ jobs:
             const toolsContent = fs.readFileSync('./src/webmcp/tools.js', 'utf8');
             const tools = [...toolsContent.matchAll(/name:\s*'([^']+)'/g)].map(m => m[1]);
             console.log('Verified registered imperative tools (' + tools.length + '):', tools);
-            if (tools.length < 28) {
-              console.error('Error: Insufficient WebMCP tools registered. Expected at least 28 tools.');
+            if (tools.length < 29) {
+              console.error('Error: Insufficient WebMCP tools registered. Expected at least 29 imperative tools.');
               process.exit(1);
             }
           "

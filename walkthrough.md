@@ -13,7 +13,7 @@ graph TD
     User[Human Cloud Architect] -->|Visual Direct Manipulation| Canvas[60 FPS Vector Canvas & Particle Physics]
     User -->|Inspect & Tune Hardware| Inspector[Interactive Node Inspector Drawer]
     
-    subgraph WebMCP document.modelContext: 24 Tools
+    subgraph WebMCP document.modelContext: 31 Tools
         Canvas <--> Registry[WebMCP Tools & Schemas]
         Inspector <--> FinOps[FinOps Cloud Cost Engine: $/mo & $/hr]
         Registry <--> Chaos[Chaos Lab: DDoS 50k RPS, Node Outage, GPU OOM]
@@ -44,15 +44,13 @@ graph TD
 - Injected **DDoS Flood (50,000 RPS)** against the API Gateway; observed traffic spiking to 51.0k req/s and red alert glow across ingress nodes.
 - Executed **Auto-Heal Cluster** to recover all microservices and attach Cloudflare Edge WAF.
 
-### 4. 24 Comprehensive WebMCP Tools
-- Validated that **24 tools** are registered on `document.modelContext` with JSON schemas, parameter types, and `readOnlyHint` attributes.
+### 4. 31 Comprehensive WebMCP Tools
+- Validated that **31 tools** (29 imperative + 2 declarative HTML forms) are registered on `document.modelContext` with JSON schemas, parameter types, and `readOnlyHint` attributes.
 
 ---
 
 ## 📁 Repository Deliverables
 
 - 📄 **[README.md](file:///c:/Users/jagta/Downloads/Webmcp/README.md)**: Full architecture guide and Chrome/ChatGPT testing instructions.
-- 📝 **[SUBMISSION.md](file:///c:/Users/jagta/Downloads/Webmcp/SUBMISSION.md)**: Official Devpost submission answers.
-- 🎬 **[DEMO_SCRIPT.md](file:///c:/Users/jagta/Downloads/Webmcp/DEMO_SCRIPT.md)**: 3-minute video recording script.
-- 📜 **[render.yaml](file:///c:/Users/jagta/Downloads/Webmcp/render.yaml)**: 1-click Render blueprint configuration.
+- ⚡ **[vercel.json](file:///c:/Users/jagta/Downloads/Webmcp/vercel.json)**: Zero-config Edge CDN & CORS deployment configuration.
 - ⚖️ **[LICENSE](file:///c:/Users/jagta/Downloads/Webmcp/LICENSE)**: MIT License.

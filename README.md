@@ -1,4 +1,4 @@
-# 🌌 OmniFlow Studio — Human-Agent Collaborative Visual Cloud & Systems Studio (WebMCP)
+# 🌌 OmniFlow Studio — Human-Agent Collaborative Visual Cloud & Systems Studio powered by W3C WebMCP (31 Tools)
 
 <div align="center">
 
@@ -85,7 +85,7 @@ graph TB
     %% Flow Connections
     UI_Canvas <-->|Direct Drag, Wire & Inspect| EventBus
     UI_Forms -->|HTML Form Submit| ModelCtx
-    AgentSwarm <-->|Discover & Invoke 28 Tools| ModelCtx
+    AgentSwarm <-->|Discover & Invoke 31 Tools| ModelCtx
     ModelCtx -->|Validate & Route| Dispatcher
     Dispatcher -->|Execute Mutations| EventBus
     EventBus -->|Update Graph Topology| UI_Canvas

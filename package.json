@@ -2,7 +2,7 @@
   "name": "omniflow-studio-webmcp",
   "version": "1.0.0",
   "private": true,
-  "description": "OmniFlow Studio - Human-Agent Collaborative Visual Systems & Cloud Architecture Studio powered by WebMCP",
+  "description": "OmniFlow Studio — Human-Agent Collaborative Visual Cloud & Systems Studio powered by W3C WebMCP (31 Tools)",
   "type": "module",
   "scripts": {
     "dev": "vite",
