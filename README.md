@@ -13,7 +13,7 @@
   <strong>The open, bi-directional visual systems engineering studio where humans and AI agent swarms co-create, simulate, stress-test, and synthesize production cloud infrastructure in real-time through the W3C WebMCP standard.</strong>
 </p>
 
-[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Vercel](#-free-tier-cloud-deployment-vercel--netlify)
+[✨ Live Demo](#-quickstart--local-setup) • [🛠️ 31 WebMCP Tools](#-complete-31-tool-webmcp-registry) • [🤖 Swarm Consensus](#-swarm-consensus-protocol-sequence) • [🧠 AI Benchmark Lab](#-frontier-ai-model-benchmark-lab) • [🌍 Global Edge SLA](#-multi-region-global-edge-architecture) • [🚀 Deploy on Vercel](#-free-tier-cloud-deployment-vercel)
 
 </div>
 
@@ -328,13 +328,13 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
-## 🚢 Free Tier Cloud Deployment (Vercel & Netlify)
+## 🚢 Free Tier Cloud Deployment (Vercel)
 
 OmniFlow Studio is built with an **in-browser, client-side WebMCP architecture**. It has **zero backend server dependencies**, compiles into a pure static bundle (`dist/`), and runs at 60 FPS directly in the browser's JavaScript engine.
 
-This makes it **100% free to host** on any modern Edge CDN with **0ms cold-start latency** (never sleeps or times out during hackathon evaluations).
+This makes it **100% free to host** on Vercel's Anycast Edge CDN with **0ms cold-start latency** (never sleeps or times out during hackathon evaluations).
 
-### 🥇 Option 1: Vercel (Recommended — Zero Config & 0ms Delay)
+### 🚀 1-Click Zero-Config Vercel Deployment
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAnurag-tech22%2Fomniflow-studio-webmcp)
 
@@ -345,14 +345,6 @@ This makes it **100% free to host** on any modern Edge CDN with **0ms cold-start
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
 4. Click **"Deploy"**. Your site goes live in ~15 seconds with automatic SSL and global Edge CDN caching!
-
-### 🥈 Option 2: Netlify (Starter Tier)
-
-OmniFlow Studio includes a pre-configured [`netlify.toml`](./netlify.toml):
-
-1. Go to your [Netlify Dashboard](https://app.netlify.com/).
-2. Click **"Add new site"** ➜ **"Import an existing project"**.
-3. Select this repository. Netlify reads `netlify.toml` and deploys to global Edge nodes with full CORS support.
 
 ---
 
@@ -366,7 +358,6 @@ omniflow-studio-webmcp/
 │   └── llms.txt                   # LLM context documentation for AI agents & crawlers
 ├── index.html                     # Semantic HTML5 entry with WebMCP declarative forms
 ├── vercel.json                    # Vercel zero-config Edge CDN & CORS deployment configuration
-├── netlify.toml                   # Netlify static deployment & CORS routing rules
 ├── package.json                   # Project scripts and dependencies
 ├── vite.config.js                 # Vite build pipeline
 ├── LICENSE                        # MIT Open Source License

@@ -55,4 +55,4 @@ OmniFlow Studio implements the complete **W3C Web Model Context Protocol** draft
 3. **Machine Discovery & Zero-Config Delivery**:
    * Machine discovery manifest deployed at `/.well-known/webmcp.json` with strict parameter schemas and tool modes (`readOnly`, `mutating`, `destructive`).
    * Agent documentation exposed at `/llms.txt`.
-   * Global CORS headers (`Access-Control-Allow-Origin: *`) configured via `vercel.json` and `netlify.toml` to support in-app browsers (ChatGPT, Chrome Canary `#enable-webmcp-testing`) with zero friction.
+   * Global CORS headers (`Access-Control-Allow-Origin: *`) configured via `vercel.json` to support in-app browsers (ChatGPT, Chrome Canary `#enable-webmcp-testing`) with zero friction.
