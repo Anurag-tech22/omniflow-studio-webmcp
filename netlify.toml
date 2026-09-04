@@ -2,7 +2,28 @@
   publish = "dist"
   command = "npm run build"
 
+[[headers]]
+  for = "/.well-known/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+    Content-Type = "application/json"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Access-Control-Allow-Origin = "*"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
